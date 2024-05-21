@@ -30,6 +30,9 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	runtimeOnly 'com.h2database:h2'
 
+	// docker compose
+	testAndDevelopmentOnly("org.springframework.boot:spring-boot-docker-compose")
+
 	// 테스트에서 lombok 사용
 	testCompileOnly 'org.projectlombok:lombok'
 	testAnnotationProcessor 'org.projectlombok:lombok'
