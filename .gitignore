@@ -49,3 +49,4 @@ jdks/
 native/
 wrapper/
 *.idea
+.tmp/
