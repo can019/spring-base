@@ -35,6 +35,21 @@ spring:
   config:
     activate:
       on-profile: dev
+  docker:
+    compose:
+      enabled: false
+  jpa:
+    hibernate:
+      ddl-auto: create  # option type: create, create-drop, update, validate, none
+    hikari:
+      connection-timeout: 3000
+      validation-timeout: 3000
+      minimum-idle: 5
+      max-lifetime: 240000
+      maximum-pool-size: 20**
+    logging:
+      level:
+        com.zaxxer.hikari: DEBUG
 ---
 spring:
   config:
@@ -43,3 +58,15 @@ spring:
   docker:
     compose:
         enabled: false
+  jpa:
+    hibernate:
+      ddl-auto: create  # option type: create, create-drop, update, validate, none
+    hikari:
+      connection-timeout: 3000
+      validation-timeout: 3000
+      minimum-idle: 5
+      max-lifetime: 240000
+      maximum-pool-size: 20**
+    logging:
+      level:
+        com.zaxxer.hikari: INFO
