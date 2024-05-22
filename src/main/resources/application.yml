@@ -40,7 +40,7 @@ spring:
       enabled: false
   jpa:
     hibernate:
-      ddl-auto: create  # option type: create, create-drop, update, validate, none
+      ddl-auto: validate # update or validate
     hikari:
       connection-timeout: 3000
       validation-timeout: 3000
@@ -60,7 +60,7 @@ spring:
         enabled: false
   jpa:
     hibernate:
-      ddl-auto: create  # option type: create, create-drop, update, validate, none
+      ddl-auto: none # validate 또는 none
     hikari:
       connection-timeout: 3000
       validation-timeout: 3000
