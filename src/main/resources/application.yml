@@ -6,6 +6,30 @@ spring:
   config:
     activate:
       on-profile: local
+  docker:
+    compose:
+      enabled: true
+      lifecycle-management: start_and_stop
+      start:
+        command: up
+      stop:
+        command: down
+        timeout: 1m
+      file: ./docker-compose.local.yml
+      skip:
+        in-tests: false
+  jpa:
+    hibernate:
+      ddl-auto: create  # option type: create, create-drop, update, validate, none
+    hikari:
+      connection-timeout: 3000
+      validation-timeout: 3000
+      minimum-idle: 5
+      max-lifetime: 240000
+      maximum-pool-size: 20**
+  logging:
+    level:
+      com.zaxxer.hikari: DEBUG
 ---
 spring:
   config:
@@ -16,3 +40,6 @@ spring:
   config:
     activate:
       on-profile: prod
+  docker:
+    compose:
+        enabled: false
