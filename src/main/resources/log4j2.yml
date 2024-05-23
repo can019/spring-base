@@ -1,0 +1,94 @@
+Configuration:
+  name: default
+
+  properties:
+    property:
+      - name: "log-path"
+        value: "./logs"
+      - name: "charset-UTF-8"
+        value: "UTF-8"
+      - name: "layout-pattern"
+        value: "%highlight{[%-5level]} %d{yyyy-MM-dd HH:mm:ss.SSS} [%t][%F] %c{1} - %msg%n"
+      - name: "info-log"
+        value: ${log-path}/base/info.log
+      - name: "error-log"
+        value: ${log-path}/base/error.log
+      - name: "auth-log"
+        value: ${log-path}/base/auth.log
+      - name: "json-log"
+        value: ${log-path}/base/json-info.log
+  # [Appenders] 로그 기록방식 정의
+  Appenders:
+    # [Appenders - Console] 콘솔에 로그를 출력하는 방식 정의
+    Console:
+      name: console-appender
+      target: SYSTEM_OUT
+      PatternLayout:
+        pattern: ${layout-pattern}
+    # [Appenders - RollingFile] 로그를 파일들을 압축파일로 출력하는 방식 정의
+    RollingFile:
+      name: rolling-file-appender
+      fileName: ${log-path}/rolling-file.log
+      filePattern: "logs/archive/rolling-file.log.%d{yyyy-MM-dd-hh-mm}_%i.gz"
+      PatternLayout:
+        charset: ${charset-UTF-8}
+        pattern: ${layout-pattern}
+      Policies:
+        SizeBasedTriggeringPolicy:
+          size: "200KB"
+        TimeBasedTriggeringPolicy:
+          interval: "1"
+      DefaultRollOverStrategy:
+        max: "30"
+        fileIndex: "max"
+    # [Appenders - File] 로그를 파일로 기록하는 방식 정의
+    File:
+      - name: file-info-appender
+        fileName: ${info-log}
+        PatternLayout:
+          pattern: "%d %p %C{1.} [%t] %m%n"
+      - name: file-error-appender
+        fileName: ${error-log}
+        PatternLayout:
+          pattern: "%d %p %C{1.} [%t] %m%n"
+      - name: file-auth-appender
+        fileName: ${auth-log}
+        PatternLayout:
+          pattern: "%d %p %C{1.} [%t] %m%n"
+      - name: file-json-info-appender
+        fileName: ${json-log}
+        PatternLayout:
+          pattern: "%d %p %C{1.} [%t] %m%n"
+  # [Loggers] 로그 출력 범위를 정의
+  Loggers:
+    # [Loggers - Root] 모든 로그를 기록하는 최상위 로그를 정의
+    Root:
+      level: OFF
+      AppenderRef:
+        - ref: console-appender
+        - ref: rolling-file-appender
+    # [Loggers - Loggers] 특정 패키지나 클래스에 대한 로그를 정의
+    Logger:
+      # 1. Spring Framework 로그 레벨 'INFO' 정의
+      - name: org.springframework
+        additivity: "false" # 중복로깅여부, true or false
+        level: INFO
+        AppenderRef:
+          - ref: console-appender
+          - ref: file-info-appender
+          - ref: file-error-appender
+      # 2. Spring Framework 로그 레벨 'DEBUG' 정의
+      - name: com.example.base
+        additivity: "false"
+        level: DEBUG
+        AppenderRef:
+          - ref: console-appender
+          - ref: file-info-appender
+          - ref: file-error-appender
+      # 3 JPA
+      - name: com.zaxxer.hikari
+        level: DEBUG
+      - name: org.hibernate.SQL
+        level: DEBUG
+      - name : org.hibernate.orm.jdbc.bind
+        level: trace
