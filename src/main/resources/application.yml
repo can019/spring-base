@@ -19,7 +19,7 @@ spring:
     properties:
       hibernate:
         format_sql: true # 여러줄로 만들어 이쁘게 출력
-        show_sql: true
+#        show_sql: true # log4j2에서 debug 레벨로 설정했기 때문에 비활성화
         use_sql_comments: true # format_sql을 true로 둘 경우 sql 주변에 /**/을 추가
         highlight_sql: true
   output:
