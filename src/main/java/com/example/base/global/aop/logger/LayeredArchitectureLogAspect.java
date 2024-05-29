@@ -60,7 +60,7 @@ public class LayeredArchitectureLogAspect {
                 return result;
             } finally {
                 // After
-                log.error("class :{}", joinPoint.getSignature().toShortString());
+                log.trace("Clear ThreadContext");
                 ThreadContext.clearMap();
                 return result;
             }
