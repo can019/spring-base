@@ -4,8 +4,6 @@ import com.example.base.domain.user.domain.User;
 import com.example.base.domain.user.repository.UserRepository;
 import com.example.base.global.util.convertor.TypeConvertor;
 import jakarta.transaction.Transactional;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +21,6 @@ public class UserService {
     public String createUser(User user){
         this.userRepository.save(user);
         String id = TypeConvertor.byteArrayToHexString(user.getId());
-
         return id;
     }
-
 }
