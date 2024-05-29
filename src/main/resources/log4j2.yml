@@ -7,8 +7,10 @@ Configuration:
         value: "./logs"
       - name: "charset-UTF-8"
         value: "UTF-8"
+#      - name: "developer-layout-pattern"
+#        value: "%highlight{[%-5level]} %d{MM-dd HH:mm:ss} [%t(%T)] [%M() in %highlight{%C{1.}}] %n [MSG] %msg%n%n"
       - name: "developer-layout-pattern"
-        value: "%highlight{[%-5level]} %d{MM-dd HH:mm:ss} [%t(%T)] [%M() in %highlight{%C{1.}}] %n [MSG] %msg%n%n"
+        value: "%highlight{[%-5level]} %d{MM-dd HH:mm:ss} %u{RANDOM} %n %msg%n%n"
       - name: "layout-pattern"
         value: "%highlight{[%-5level]} %d{yyyy-MM-dd HH:mm:ss.SSS} %u{RANDOM} [%t] [%M() in %C{1.}] - %msg%n"
       - name: "info-log"
@@ -82,14 +84,14 @@ Configuration:
       # 2. Spring Framework 로그 레벨 'DEBUG' 정의
       - name: com.example.base
         additivity: "false"
-        level: DEBUG
+        level: TRACE
         AppenderRef:
           - ref: console-appender
           - ref: file-info-appender
           - ref: file-error-appender
       # 3 JPA
       - name: com.zaxxer.hikari
-        level: DEBUG
+        level: OFF
       - name: org.hibernate.SQL
         level: DEBUG
       - name : org.hibernate.orm.jdbc.bind
