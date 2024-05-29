@@ -18,13 +18,10 @@ spring:
       ddl-auto: create # option type: create, create-drop, update, validate, none
     properties:
       hibernate:
-        format_sql: true # 실행 query
-        show_sql: true
-        use_sql_comments: true
-  logging:
-    level:
-      com.zaxxer.hikari: DEBUG
-      org.hibernate.SQL: DEBUG
+        format_sql: true # 여러줄로 만들어 이쁘게 출력
+#        show_sql: true # System.out 으로 출력
+        use_sql_comments: true # format_sql을 true로 둘 경우 sql 주변에 /**/을 추가
+        highlight_sql: true
   output:
     ansi:
       enabled: ALWAYS
@@ -33,6 +30,8 @@ spring:
   config:
     activate:
       on-profile: local
+  logging:
+    config: classpath:log4j2.yml
 ---
 spring:
   config:

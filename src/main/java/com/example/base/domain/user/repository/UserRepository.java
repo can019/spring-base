@@ -17,7 +17,6 @@ public class UserRepository  {
     EntityManager em;
 
     public void save(User user){
-        Logger logger = LoggerFactory.getLogger(UserRepository.class);
         em.persist(user);
     }
 

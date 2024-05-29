@@ -36,8 +36,6 @@ public class UUID {
         ByteBuffer bb = ByteBuffer.wrap(new byte[16]);
         bb.putLong(Long.parseUnsignedLong(uuidWithoutHyphen.substring(0, 16), 16));
         bb.putLong(Long.parseUnsignedLong(uuidWithoutHyphen.substring(16), 16));
-        System.out.println(uuidWithoutHyphen);
-        System.out.println(bb.array());
         return bb.array();
     }
 }

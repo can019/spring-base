@@ -32,6 +32,10 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'com.mysql:mysql-connector-j'
+
+	// aop
+	implementation 'org.springframework.boot:spring-boot-starter-aop'
+
 	// docker compose
 	testAndDevelopmentOnly("org.springframework.boot:spring-boot-docker-compose")
 
@@ -39,8 +43,9 @@ dependencies {
 	testCompileOnly 'org.projectlombok:lombok'
 	testAnnotationProcessor 'org.projectlombok:lombok'
 
-	//
+	// Logback을 log4j2로 대체
 	implementation("org.springframework.boot:spring-boot-starter-log4j2")
+	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml'
 	modules {
 		module("org.springframework.boot:spring-boot-starter-logging") {
 			replacedBy("org.springframework.boot:spring-boot-starter-log4j2")

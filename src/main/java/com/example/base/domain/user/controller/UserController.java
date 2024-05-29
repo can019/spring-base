@@ -17,7 +17,7 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public String test(){
+    public String createUser(){
         return this.userService.createUser(new User()).toString();
     }
 }
