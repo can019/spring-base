@@ -4,7 +4,10 @@ import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.ThreadContext;
-
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.web.util.ContentCachingRequestWrapper;
+import org.springframework.web.util.ContentCachingResponseWrapper;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -21,12 +24,19 @@ public class LogFilter implements Filter {
         if(ThreadContext.isEmpty()) {
             ThreadContext.put("id", UUID.randomUUID().toString().substring(0,8));
         }
-        String idAddress = request.getRemoteAddr();
-        String hostName = request.getServerName();
+        ContentCachingRequestWrapper httpRequest = new ContentCachingRequestWrapper((HttpServletRequest) request);
+        ContentCachingResponseWrapper httpResponse = new ContentCachingResponseWrapper((HttpServletResponse) response);
+
         ThreadContext.put("ipAddress", request.getRemoteAddr());
         ThreadContext.put("hostName", request.getServerName());
-        log.trace("Add ipAddress :: {} and hostName :: {} to ThreadContext",idAddress, hostName );
+
+        log.trace("Add ipAddress :: {} and hostName :: {} to ThreadContext",
+                request.getRemoteAddr(), request.getServerName() );
+
         chain.doFilter(request, response);
+
+        log.info("Response {} {} {} {}",httpRequest.getMethod(),
+                httpRequest.getRequestURI(), httpResponse.getContentType(), httpResponse.getStatus());
         log.trace("Clear ThreadContext");
         ThreadContext.clearMap();
     }
