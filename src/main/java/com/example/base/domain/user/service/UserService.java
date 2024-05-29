@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final Logger logger = LoggerFactory.getLogger(UserService.class);
+
     @Autowired
     public UserService(UserRepository userRepository){
         this.userRepository = userRepository;
@@ -23,8 +23,6 @@ public class UserService {
     public String createUser(User user){
         this.userRepository.save(user);
         String id = TypeConvertor.byteArrayToHexString(user.getId());
-
-        this.logger.warn(id);
 
         return id;
     }
