@@ -12,7 +12,7 @@ Configuration:
       - name: "developer-layout-pattern"
         value: "%highlight{[%-5level]} %d{MM-dd HH:mm:ss} [%t] %n [%X{id}] %msg%n%n"
       - name: "layout-pattern"
-        value: "%highlight{[%-5level]} %d{yyyy-MM-dd HH:mm:ss.SSS} %u{RANDOM} [%t] [%M() in %C{1.}] - %msg%n"
+        value: "%highlight{[%-5level]} %d{yyyy-MM-dd HH:mm:ss.SSS} %u{RANDOM} [%t] [%X{id}] - %msg%n"
       - name: "info-log"
         value: ${log-path}/base/info.log
       - name: "error-log"
