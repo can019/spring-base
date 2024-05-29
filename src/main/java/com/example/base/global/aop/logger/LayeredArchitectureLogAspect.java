@@ -37,11 +37,8 @@ public class LayeredArchitectureLogAspect {
     @Aspect
     @Component
     public static class BaseLogAspect{
-        @Around("com.example.base.global.aop.PointCut.allControllerUnderBasePackage()")
+        @Around("com.example.base.global.aop.PointCut.allControllerServiceRepositoryUnderBasePackage()")
         public static Object logControllerUnderBasePackage(ProceedingJoinPoint joinPoint) throws Throwable{
-            if(ThreadContext.isEmpty()) {
-                ThreadContext.put("id", UUID.randomUUID().toString().substring(0,8));
-            }
             Object result = null;
             try {
                 // Before
@@ -53,56 +50,11 @@ public class LayeredArchitectureLogAspect {
                 // After return
                 defaultTraceOutputLog(joinPoint, result);
 
-                return result;
             } catch (Exception e) {
                 // AfterThrowing
                 errorLog(joinPoint, e);
-                return result;
             } finally {
-                // After
-                log.trace("Clear ThreadContext");
-                ThreadContext.clearMap();
-                return result;
-            }
-        }
-    }
-    @Aspect
-    @Component
-    public static class ServiceLogAspect{
-        @Around("com.example.base.global.aop.PointCut.allServiceUnderBasePackage()")
-        public static Object logControllerUnderBasePackage(ProceedingJoinPoint joinPoint) throws Throwable{
-            Object result = null;
-            try {
-                defaultTraceInputLog(joinPoint);
-
-                result = joinPoint.proceed();
-
-                defaultTraceOutputLog(joinPoint, result);
-                return result;
-            } catch (Exception e){
-                errorLog(joinPoint, e);
-            } finally {
-                return result;
-            }
-        }
-    }
-
-    @Aspect
-    @Component
-    public static class RepositoryLogAspect {
-        @Around("com.example.base.global.aop.PointCut.allRepositoryUnderBasePackage()")
-        public static Object logControllerUnderBasePackage(ProceedingJoinPoint joinPoint) throws Throwable {
-            Object result = null;
-            try {
-                defaultTraceInputLog(joinPoint);
-
-                result = joinPoint.proceed();
-
-                defaultTraceOutputLog(joinPoint, result);
-
-            } catch (Exception e) {
-                errorLog(joinPoint, e);
-            } finally {
+                // after
                 return result;
             }
         }
