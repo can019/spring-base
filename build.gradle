@@ -32,6 +32,10 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'com.mysql:mysql-connector-j'
+
+	// aop
+	implementation 'org.springframework.boot:spring-boot-starter-aop'
+
 	// docker compose
 	testAndDevelopmentOnly("org.springframework.boot:spring-boot-docker-compose")
 
