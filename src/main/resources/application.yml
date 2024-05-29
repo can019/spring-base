@@ -1,0 +1,108 @@
+spring:
+  application:
+    name: base
+  docker:
+    compose:
+      enabled: false
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  datasource:
+    url: jdbc:h2:mem:local;NON_KEYWORDS=USER
+    username: local
+    password: test
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create # option type: create, create-drop, update, validate, none
+    properties:
+      hibernate:
+        format_sql: true # 여러줄로 만들어 이쁘게 출력
+#        show_sql: true # System.out 으로 출력
+        use_sql_comments: true # format_sql을 true로 둘 경우 sql 주변에 /**/을 추가
+        highlight_sql: true
+  output:
+    ansi:
+      enabled: ALWAYS
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  logging:
+    config: classpath:log4j2.yml
+---
+spring:
+  config:
+    activate:
+      on-profile: local_docker
+  logging:
+    config: classpath:log4j2.yml
+  docker:
+    compose:
+      enabled: true
+      lifecycle-management: start_and_stop
+      start:
+        command: up
+      stop:
+        command: down
+        timeout: 1m
+      file: ./docker-compose.local.yml
+      skip:
+        in-tests: false
+  jpa:
+    hibernate:
+      ddl-auto: create  # option type: create, create-drop, update, validate, none
+    properties:
+      hibernate:
+#        format_sql: true # json처럼 여러 줄로 나뉘어 출력
+        show_sql: true
+#        use_sql_comments: true
+        highlight_sql: true # 색상 설정
+    hikari:
+      connection-timeout: 3000
+      validation-timeout: 3000
+      minimum-idle: 5
+      max-lifetime: 240000
+      maximum-pool-size: 20**
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  docker:
+    compose:
+      enabled: false
+  jpa:
+    hibernate:
+      ddl-auto: validate # update or validate
+    hikari:
+      connection-timeout: 3000
+      validation-timeout: 3000
+      minimum-idle: 5
+      max-lifetime: 240000
+      maximum-pool-size: 20**
+    logging:
+      level:
+        com.zaxxer.hikari: DEBUG
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  docker:
+    compose:
+        enabled: false
+  jpa:
+    hibernate:
+      ddl-auto: none # validate 또는 none
+    hikari:
+      connection-timeout: 3000
+      validation-timeout: 3000
+      minimum-idle: 5
+      max-lifetime: 240000
+      maximum-pool-size: 20**
+    logging:
+      level:
+        com.zaxxer.hikari: INFO
