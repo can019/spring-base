@@ -11,12 +11,6 @@ java {
 	sourceCompatibility = '21'
 }
 
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-}
-
 repositories {
 	mavenCentral()
 }
@@ -53,6 +47,44 @@ dependencies {
 	}
 }
 
-tasks.named('test') {
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+	integrationTestImplementation.extendsFrom implementation
+	integrationTestImplementation.extendsFrom testImplementation
+	integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
+
+	unitTestImplementation.extendsFrom implementation
+	unitTestImplementation.extendsFrom testImplementation
+	unitTestRuntimeOnly.extendsFrom testRuntimeOnly
+}
+
+sourceSets {
+	integrationTest {
+		java.srcDir "$projectDir/src/test/integration/java"
+		resources.srcDir "$projectDir/src/test/integration/resources"
+		compileClasspath += main.output + test.output
+		runtimeClasspath += main.output + test.output
+	}
+
+	unitTest {
+		java.srcDir "$projectDir/src/test/unit/java"
+		resources.srcDir "$projectDir/src/test/unit/resources"
+		compileClasspath += main.output + test.output
+		runtimeClasspath += main.output + test.output
+	}
+}
+
+task integrationTest(type: Test) {
+	testClassesDirs = sourceSets.integrationTest.output.classesDirs
+	classpath = sourceSets.integrationTest.runtimeClasspath
 	useJUnitPlatform()
 }
+
+task unitTest(type: Test) {
+	testClassesDirs = sourceSets.integrationTest.output.classesDirs
+	classpath = sourceSets.integrationTest.runtimeClasspath
+	useJUnitPlatform()
+}
+
