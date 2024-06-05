@@ -1,14 +1,9 @@
 package com.example.base.global.aop.logger;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.ThreadContext;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
-import org.hibernate.mapping.Join;
 import org.springframework.stereotype.Component;
-
-import java.util.UUID;
 
 @Slf4j
 public class LayeredArchitectureLogAspect {
@@ -28,7 +23,7 @@ public class LayeredArchitectureLogAspect {
                 result,
                 joinPoint.getTarget().getClass());
     }
-    public static void errorLog(JoinPoint joinPoint, Exception e){
+    public static void errorLog(JoinPoint joinPoint, Throwable e){
         log.error(DEFAULT_ERROR_MESSAGE_FORMAT, joinPoint.getSignature().toShortString(),
                 e.getMessage(),
                 joinPoint.getTarget().getClass() ,e);
@@ -37,26 +32,19 @@ public class LayeredArchitectureLogAspect {
     @Aspect
     @Component
     public static class BaseLogAspect{
-        @Around("com.example.base.global.aop.PointCut.allControllerServiceRepositoryUnderBasePackage()")
-        public static Object logControllerUnderBasePackage(ProceedingJoinPoint joinPoint) throws Throwable{
-            Object result = null;
-            try {
-                // Before
-                defaultTraceInputLog(joinPoint);
+        @Before("com.example.base.global.aop.PointCut.allControllerServiceRepositoryUnderBasePackage()")
+        public static void doBefore(JoinPoint joinPoint){
+            defaultTraceInputLog(joinPoint);
+        }
 
-                // Proceed
-                result = joinPoint.proceed();
+        @AfterReturning(pointcut = "com.example.base.global.aop.PointCut.allControllerServiceRepositoryUnderBasePackage()", returning = "result")
+        public void doAfterReturning(JoinPoint joinPoint, Object result){
+            defaultTraceOutputLog(joinPoint, result);
+        }
 
-                // After return
-                defaultTraceOutputLog(joinPoint, result);
-
-            } catch (Exception e) {
-                // AfterThrowing
-                errorLog(joinPoint, e);
-            } finally {
-                // after
-                return result;
-            }
+        @AfterThrowing(pointcut = "com.example.base.global.aop.PointCut.allControllerServiceRepositoryUnderBasePackage()", throwing="e")
+        public void doAfterThrowing(JoinPoint joinPoint, Throwable e){
+            errorLog(joinPoint, e);
         }
     }
 }
