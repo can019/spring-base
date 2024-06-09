@@ -1,6 +1,5 @@
 package com.example.base.global.filter;
 
-import com.example.base.global.filter.mock.GenerateThreadContextIdTestMockController;
 import org.apache.logging.log4j.ThreadContext;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -17,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(controllers = {GenerateThreadContextIdTestMockController.class},
+@WebMvcTest(controllers = {GenerateThreadContextIdTestController.class},
         properties = {"spring.profiles.active=GENERATE_THREAD_CONTEXT_ID_TEST"})
 public class GenerateThreadContextIdFilterTest {
     private MockMvc mockMvc; // 특정 filter만을 target으로 하기 위해 Autowired를 사용하지 않음.

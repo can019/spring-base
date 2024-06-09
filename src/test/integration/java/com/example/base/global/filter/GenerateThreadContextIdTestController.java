@@ -1,4 +1,4 @@
-package com.example.base.global.filter.mock;
+package com.example.base.global.filter;
 
 
 import org.apache.logging.log4j.ThreadContext;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Profile("GENERATE_THREAD_CONTEXT_ID_TEST")
 // 또는 @Conditional 사용
 @RestController
-public class GenerateThreadContextIdTestMockController {
+public class GenerateThreadContextIdTestController {
 
     @GetMapping("/foo")
     public ResponseEntity foo() {
