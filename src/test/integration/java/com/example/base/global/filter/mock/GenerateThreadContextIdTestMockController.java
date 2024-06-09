@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Profile({"!production" , "prod"})
+@Profile("GENERATE_THREAD_CONTEXT_ID_TEST")
 // 또는 @Conditional 사용
 @RestController
 public class GenerateThreadContextIdTestMockController {
