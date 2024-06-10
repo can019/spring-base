@@ -10,14 +10,9 @@ public class UnknownException extends RuntimeException implements ErrorResponse 
     private final ProblemDetail body ;
     private final static String DEFAULT_DETAIL = "Unchecked exception(fatal) occurred";
     private final static String TILE = "Unknown exception";
-    private final Throwable originCause;
 
     public UnknownException(String message){
         this(message, null);
-    }
-
-    public Throwable getOriginCause() {
-        return originCause;
     }
 
     public UnknownException(Throwable cause){
@@ -25,10 +20,11 @@ public class UnknownException extends RuntimeException implements ErrorResponse 
     }
 
     public UnknownException(String message, Throwable cause){
+        super(cause);
         this.httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         this.body = ProblemDetail.forStatusAndDetail(getStatusCode(), message);
         this.body.setTitle(DEFAULT_DETAIL);
-        this.originCause = cause;
+
     }
 
     @Override
