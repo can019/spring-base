@@ -9,7 +9,7 @@ import org.springframework.web.ErrorResponse;
 public class ApplicationException extends RuntimeException implements ErrorResponse {
     private HttpStatus httpStatus;
     private final ProblemDetail body ;
-    private final static String DEFAULT_DETAIL = "Unaccepted exception occurred in application";
+    private final static String DEFAULT_DETAIL = "Application exception occurred";
     private final static String TILE = "Application exception";
     private final Throwable originCause;
 
