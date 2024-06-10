@@ -13,9 +13,6 @@ public class LoggingInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-        if(ThreadContext.isEmpty()) {
-            ThreadContext.put("id", UUID.randomUUID().toString().substring(0,8));
-        }
         ThreadContext.put("ipAddress", request.getRemoteAddr());
         ThreadContext.put("hostName", request.getServerName());
 
@@ -30,7 +27,7 @@ public class LoggingInterceptor implements HandlerInterceptor {
         log.info("Response {} {} {} {}",request.getMethod(),
                 request.getRequestURI(), response.getContentType(), response.getStatus());
         log.trace("Clear ThreadContext");
-        ThreadContext.clearMap();
+//        ThreadContext.clearMap();
     }
 
 
