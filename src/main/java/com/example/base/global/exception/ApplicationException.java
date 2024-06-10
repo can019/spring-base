@@ -6,7 +6,7 @@ import org.springframework.http.ProblemDetail;
 import org.springframework.web.ErrorResponse;
 
 
-public class ApplicationException extends Exception implements ErrorResponse {
+public class ApplicationException extends RuntimeException implements ErrorResponse {
     private HttpStatus httpStatus;
     private final ProblemDetail body ;
     private final static String DEFAULT_DETAIL = "Unaccepted exception occurred in application";
