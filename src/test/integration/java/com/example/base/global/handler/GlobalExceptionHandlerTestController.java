@@ -15,7 +15,7 @@ public class GlobalExceptionHandlerTestController {
     public static final String GET_MAPPING_URI = "/simple-test-controller/get";
     public static final String WRONG_METHOD_URI_WHEN_USE_GET = "/simple-test-controller/wrong-method-use-get";
     public static final String APPLICATION_EXCEPTION_URI = "/simple-test-controller/application-exception";
-
+    public static final String RUNTIME_EXCEPTION_URI = "/simple-test-controller/runtime-exception";
     @GetMapping(GET_MAPPING_URI)
     public ResponseEntity get(){
         return ResponseEntity.status(HttpStatus.OK).body(GET_RESPONSE_BODY);
@@ -29,5 +29,10 @@ public class GlobalExceptionHandlerTestController {
     @GetMapping(APPLICATION_EXCEPTION_URI)
     public ResponseEntity applicationException() throws ApplicationException {
         throw new ApplicationException("message");
+    }
+
+    @GetMapping(RUNTIME_EXCEPTION_URI)
+    public ResponseEntity runtimeException() throws ApplicationException {
+        throw new RuntimeException("message");
     }
 }
