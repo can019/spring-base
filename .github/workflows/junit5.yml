@@ -30,7 +30,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Setup Gradle with cache
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           arguments: build unitTest
           add-job-summary-as-pr-comment: on-failure
