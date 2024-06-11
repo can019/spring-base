@@ -2,6 +2,7 @@ package com.example.base.domain.user.repository;
 
 
 import com.example.base.domain.user.domain.User;
+import com.example.base.global.exception.ApplicationException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;

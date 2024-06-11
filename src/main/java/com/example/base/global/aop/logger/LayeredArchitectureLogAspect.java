@@ -10,7 +10,7 @@ public class LayeredArchitectureLogAspect {
 
     private static String DEFAULT_INPUT_MESSAGE_FORMAT = "[{}] >> Input :: {} :: {}";
     private static String DEFAULT_OUTPUT_MESSAGE_FORMAT = "[{}] << Output :: {} :: {}";
-    private static String DEFAULT_ERROR_MESSAGE_FORMAT = "[{}] {} :: {}";
+    private static String DEFAULT_ERROR_MESSAGE_FORMAT = "[{}] {} :: {} {}";
 
     public static void defaultTraceInputLog(JoinPoint joinPoint){
         log.trace(DEFAULT_INPUT_MESSAGE_FORMAT, joinPoint.getSignature().toShortString(),
@@ -24,9 +24,8 @@ public class LayeredArchitectureLogAspect {
                 joinPoint.getTarget().getClass());
     }
     public static void errorLog(JoinPoint joinPoint, Throwable e){
-        log.error(DEFAULT_ERROR_MESSAGE_FORMAT, joinPoint.getSignature().toShortString(),
-                e.getMessage(),
-                joinPoint.getTarget().getClass() ,e);
+        log.error(DEFAULT_ERROR_MESSAGE_FORMAT, joinPoint.getSignature().toShortString() ,
+                e.getMessage(), e.getStackTrace()[0], e.getClass().getName());
     }
 
     @Aspect
@@ -42,7 +41,7 @@ public class LayeredArchitectureLogAspect {
             defaultTraceOutputLog(joinPoint, result);
         }
 
-        @AfterThrowing(pointcut = "com.example.base.global.aop.PointCut.allControllerServiceRepositoryUnderBasePackage()", throwing="e")
+        @AfterThrowing(pointcut = "com.example.base.global.aop.PointCut.allControllerUnderBasePackage()", throwing="e")
         public void doAfterThrowing(JoinPoint joinPoint, Throwable e){
             errorLog(joinPoint, e);
         }
