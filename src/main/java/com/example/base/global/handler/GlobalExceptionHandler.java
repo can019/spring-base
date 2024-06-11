@@ -5,6 +5,7 @@ import com.example.base.global.exception.UnknownException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.ThreadContext;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.*;
 import org.springframework.lang.Nullable;
@@ -51,7 +52,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 errorResponse.getBody().setProperty("code", ExceptionCode.APPLICATION_ERROR_CODE.getExceptionCode());
             } else{
                 errorResponse.getBody().setProperty("code", ExceptionCode.FATAL_ERROR_CODE.getExceptionCode());
+
             }
+            errorResponse.getBody().setProperty("uuid", ThreadContext.get("id"));
             body = errorResponse.updateAndGetBody(getMessageSource(), LocaleContextHolder.getLocale());
         }
 
