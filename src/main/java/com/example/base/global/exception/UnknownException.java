@@ -20,7 +20,7 @@ public class UnknownException extends RuntimeException implements ErrorResponse 
     }
 
     public UnknownException(String message, Throwable cause){
-        super(cause);
+        super(message, cause);
         this.httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         this.body = ProblemDetail.forStatusAndDetail(getStatusCode(), message);
         this.body.setTitle(DEFAULT_DETAIL);
