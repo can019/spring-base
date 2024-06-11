@@ -52,8 +52,7 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
-          files: '**/build/test-results/unitTest/test/TEST-*.xml'
-
+          files: 'build/test-results/unitTest/TEST-*.xml'
 
   Integration:
     runs-on: ubuntu-latest
@@ -93,4 +92,4 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
-          files: '**/build/test-results/integrationTest/test/TEST-*.xml'
+          files: 'build/test-results/integrationTest/TEST-*.xml'
