@@ -4,7 +4,10 @@
 ``` shell
 ./init.sh
 ```
-
+## 환경
+- Java version: 21
+  - distribution: 'temuri
+- Gradle version: 8.7
 ## 환경변수
 ### 유효 프로퍼티
 - local_docker
