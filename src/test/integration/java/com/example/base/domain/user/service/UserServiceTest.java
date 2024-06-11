@@ -1,4 +1,4 @@
-package com.example.base.global.util.generator.domain.user.service;
+package com.example.base.domain.user.service;
 
 import com.example.base.domain.user.domain.User;
 import com.example.base.domain.user.repository.UserRepository;
