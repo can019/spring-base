@@ -26,6 +26,16 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
+      - name: Gradle Caching
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+              ${{ runner.os }}-gradle-
+
       - name: grant execute permission for gradlew
         run: chmod +x gradlew
 
@@ -35,6 +45,8 @@ jobs:
       - name: Run test
         run: ./gradlew unitTest
 
+      - name: test
+        run: cd build/test-results && ls -al
 
       - name: publish unit test results
         uses: EnricoMi/publish-unit-test-result-action@v2
@@ -55,6 +67,15 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
+      - name: Gradle Caching
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
       - name: grant execute permission for gradlew
         run: chmod +x gradlew
@@ -65,7 +86,8 @@ jobs:
       - name: Run test
         run: ./gradlew integrationTest
 
-
+      - name: test
+        run: ls ./build/test-results
       - name: publish unit test results
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
