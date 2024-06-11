@@ -52,7 +52,7 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
-          files: build/test-results/unitTest/test/TEST-*.xml
+          files: '**/build/test-results/integrationTest/test/TEST-*.xml'
 
 
   Integration:
@@ -88,8 +88,9 @@ jobs:
 
       - name: test
         run: ls ./build/test-results
+
       - name: publish unit test results
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
-          files: build/test-results/integrationTest/test/TEST-*.xml
+          files: '**/build/test-results/integrationTest/test/TEST-*.xml'
