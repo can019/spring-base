@@ -83,8 +83,8 @@ task integrationTest(type: Test) {
 }
 
 task unitTest(type: Test) {
-	testClassesDirs = sourceSets.integrationTest.output.classesDirs
-	classpath = sourceSets.integrationTest.runtimeClasspath
+	testClassesDirs = sourceSets.unitTest.output.classesDirs
+	classpath = sourceSets.unitTest.runtimeClasspath
 	useJUnitPlatform()
 }
 

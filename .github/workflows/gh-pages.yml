@@ -1,0 +1,71 @@
+name: "Set up gh page resource"
+on:
+ pull_request:
+     types: [closed]
+
+jobs:
+  devlop:
+    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'develop'
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get commit ID
+        id: get_commit_id
+        run: echo "::set-output name=commit_id::$(git rev-parse HEAD)"
+
+      - name: Set environment variable
+        run: echo "COMMIT_ID=${{ steps.get_commit_id.outputs.commit_id }}" >> $GITHUB_ENV
+
+      - name: Save scripts, config
+        uses: actions/upload-artifact@v3
+        with:
+          name: docs
+          path: |
+            .github/config/gh-pages.yml
+            .github/scripts
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: 'gh-pages'
+
+      - name: Configure Git # commit을 위한 git config 설정
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+      - name: Set python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install python3 dependencies
+        run: pip3 install pyyaml
+
+      - name: Download integrationTest test reports
+        uses: actions/download-artifact@v3
+        with:
+          name: docs
+          path: .github
+
+      - name: ls
+        run: ls -R
+
+      - name: Generate develop docs resource
+        run: python3 .github/scripts/link_develop_docs.py -i $COMMIT_ID
+
+      - name: Commit to gh-pages
+        run: |
+          git add docs/ -f
+          git status
+          git commit -m "docs: Init docs linking $COMMIT_ID"
+
+      - name: Push changes to gh-pages branch
+        uses: ad-m/github-push-action@master
+        with:
+          branch: gh-pages
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
