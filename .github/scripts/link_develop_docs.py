@@ -16,11 +16,13 @@ latest_pattern = r"### Latest\n(.+?)(?=\n- - -)"
 other_pattern = r"### Other\n(.+?)(?=\n- - -)"
 
 
+
 def init_develop_markdown():
     develop_config = get_config_by_name("develop", global_config.get("main"))
     description = develop_config.get("description")
     content = f"## develop\n### description\n{description}\n\n"
-    content += "### Latest\n- - - \n### Other\n- - - \n"
+    content += "### Latest\n<!-- Latest -->\n\n"
+    content += "### Other\n<!-- Other --> \n\n"
 
     create_markdown_file('/'.join([root_dir,"develop","index.md"]), content)
 
@@ -30,12 +32,11 @@ def update_develop_markdown(text):
         init_develop_markdown()
 
     latest_line = find_line_number(develop_markdown_path,"## Latest")
-    latest_end_line =  find_line_number(develop_markdown_path,"- - -", start_line=latest_line)
+    latest_end_line =  find_line_number(develop_markdown_path,"<!-- Latest -->", start_line=latest_line)
 
     other_line = find_line_number(develop_markdown_path,"### Other")
-    other_end_line =  find_line_number(develop_markdown_path,"- - -", start_line = other_line)
 
-    if latest_end_line - latest_line is 1 :
+    if latest_end_line - latest_line == 1 :
         # 현재 Latest가 비어있는 경우
         add_line_to_file(develop_markdown_path, latest_line +1 , text)
     else:
