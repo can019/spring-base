@@ -1,4 +1,4 @@
-package test.unit.com.example.base.global.exception;
+package com.example.base.global.exception;
 
 import com.example.base.global.exception.UnknownException;
 import org.junit.jupiter.api.*;
