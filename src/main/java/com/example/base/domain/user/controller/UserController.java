@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 public class UserController {
     private final UserService userService;
@@ -21,6 +24,10 @@ public class UserController {
     @PostMapping("/user")
     public ResponseEntity createUser(){
         String userId =  this.userService.createUser(new User()).toString();
-        return new ResponseEntity(userId, HttpStatus.CREATED);
+
+        Map<String, String> body = new HashMap<>();
+        body.put("id", userId);
+
+        return new ResponseEntity(body, HttpStatus.CREATED);
     }
 }
