@@ -24,7 +24,8 @@ public class UserController {
 
     @PostMapping("/user")
     public ResponseEntity createUser(){
-        String userId =  this.userService.createUser(new User()).toString();
+        User user = new User();
+        String userId =  this.userService.createUser(user);
 
         Map<String, String> body = new HashMap<>();
         body.put("id", userId);
