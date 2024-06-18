@@ -2,12 +2,10 @@ package com.example.base.domain.user.service;
 
 import com.example.base.domain.user.domain.User;
 import com.example.base.domain.user.repository.UserRepository;
-import com.example.base.global.util.convertor.TypeConvertor;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static com.example.base.global.util.convertor.TypeConvertor.byteArrayToHexString;
 import static com.example.base.global.util.convertor.TypeConvertor.hexStringToByte;
 
 @Service

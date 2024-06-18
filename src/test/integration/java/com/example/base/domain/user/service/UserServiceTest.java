@@ -2,12 +2,10 @@ package com.example.base.domain.user.service;
 
 import com.example.base.domain.user.domain.User;
 import com.example.base.domain.user.repository.UserRepository;
-import com.example.base.domain.user.service.UserService;
 import com.example.base.global.util.convertor.TypeConvertor;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

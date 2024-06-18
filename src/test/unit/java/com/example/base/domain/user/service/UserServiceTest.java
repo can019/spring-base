@@ -3,7 +3,6 @@ package com.example.base.domain.user.service;
 import com.example.base.domain.user.domain.User;
 import com.example.base.domain.user.repository.UserRepository;
 import com.example.base.global.util.convertor.TypeConvertor;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
