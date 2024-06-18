@@ -24,7 +24,7 @@ public class UserService {
     @Transactional
     public String createUser(User user){
         this.userRepository.save(user);
-        String id = byteArrayToHexString(user.getId());
+        String id = user.getIdAsString();
         return id;
     }
 
