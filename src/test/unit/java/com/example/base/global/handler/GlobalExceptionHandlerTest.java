@@ -1,4 +1,4 @@
-package test.unit.com.example.base.global.handler;
+package com.example.base.global.handler;
 
 import com.example.base.global.exception.ApplicationException;
 import com.example.base.global.exception.UnknownException;

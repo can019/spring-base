@@ -1,4 +1,4 @@
-package test.unit.com.example.base.global.filter;
+package com.example.base.global.filter;
 
 import com.example.base.global.filter.GenerateThreadContextIdFilter;
 import jakarta.servlet.FilterChain;
