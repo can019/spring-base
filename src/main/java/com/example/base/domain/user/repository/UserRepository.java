@@ -6,6 +6,7 @@ import com.example.base.global.exception.ApplicationException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class UserRepository  {
@@ -13,11 +14,14 @@ public class UserRepository  {
     @PersistenceContext
     EntityManager em;
 
-    public void save(User user){
+    @Transactional
+    public User save(User user){
         em.persist(user);
+        return user;
     }
 
-    public User findOne(byte[] id){
+    @Transactional
+    public User findOneById(byte[] id){
         return em.find(User.class, id);
     }
 
