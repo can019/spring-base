@@ -4,6 +4,8 @@ import com.fasterxml.uuid.Generators;
 
 import java.nio.ByteBuffer;
 
+import static com.example.base.global.util.convertor.TypeConvertor.hexStringToByte;
+
 public class UUID {
     /**
      *
@@ -33,9 +35,6 @@ public class UUID {
 
     public static byte[] generateSequentialUUIDV1WithoutHyphenAsByte(){
         String uuidWithoutHyphen = generateSequentialUUIDV1WithoutHyphen();
-        ByteBuffer bb = ByteBuffer.wrap(new byte[16]);
-        bb.putLong(Long.parseUnsignedLong(uuidWithoutHyphen.substring(0, 16), 16));
-        bb.putLong(Long.parseUnsignedLong(uuidWithoutHyphen.substring(16), 16));
-        return bb.array();
+        return hexStringToByte(uuidWithoutHyphen);
     }
 }
