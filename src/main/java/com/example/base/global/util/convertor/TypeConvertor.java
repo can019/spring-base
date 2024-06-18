@@ -20,7 +20,7 @@ public class TypeConvertor {
      * @param str 숫자로만 이루어져야 하며 16자가 넘어야 합니다.
      * @return
      */
-    public static byte[] hexStringToByte(String str){
+    public static byte[] hexStringToByte(String str) throws NumberFormatException{
         if(str.length() < 16) throw new StringIndexOutOfBoundsException("Input string length should over 16");
         if(str.length() > 32) throw new StringIndexOutOfBoundsException("Input string length should under 32");
 
