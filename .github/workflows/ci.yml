@@ -40,7 +40,7 @@ jobs:
         run: ./gradlew unitTestJacocoReport
 
       - name: Generate integration jacoco report
-        run: ./gradlew unitTestJacocoReport
+        run: ./gradlew integrationTestJacocoReport
 
       - name: Generate over all jacoco report
         run: ./gradlew overAllJacocoTestReport
