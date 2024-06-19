@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - UserRepositoryTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>UserRepositoryTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.example.base.domain.user.repository.html">com.example.base.domain.user.repository</a> &gt; UserRepositoryTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">2</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.599s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Method name</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">UserRepository.save()로 유저 생성 후 데이터베이스에 raw query 시 데이터가 존재해야한다</td>
+<td class="success">createUser()</td>
+<td class="success">0.585s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">유저 생성 후 UserRepository.findOneById()로 가져온 데이터는 해당 데이터와 같아야 한다.</td>
+<td class="success">findOneById()</td>
+<td class="success">0.014s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>?[32m[INFO ]?[m 06-19 12:30:15 [Test worker] 
+ [] Restart disabled due to context in which it is running
+
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+?[32m :: Spring Boot :: ?[39m              ?[2m (v3.2.5)?[0;39m
+
+?[32m[INFO ]?[m 06-19 12:30:15 [Test worker] 
+ [] Starting UserRepositoryTest using Java 21.0.3 with PID 2050 (started by runner in /home/runner/work/spring-base/spring-base)
+
+?[36m[DEBUG]?[m 06-19 12:30:15 [Test worker] 
+ [] Running with Spring Boot v3.2.5, Spring v6.1.6
+
+?[32m[INFO ]?[m 06-19 12:30:15 [Test worker] 
+ [] No active profile set, falling back to 1 default profile: &quot;default&quot;
+
+?[32m[INFO ]?[m 06-19 12:30:15 [Test worker] 
+ [] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+
+?[32m[INFO ]?[m 06-19 12:30:15 [Test worker] 
+ [] Finished Spring Data repository scanning in 6 ms. Found 0 JPA repository interfaces.
+
+?[32m[INFO ]?[m 06-19 12:30:16 [Test worker] 
+ [] No LoadTimeWeaver setup: ignoring JPA class transformer
+
+?[36m[DEBUG]?[m 06-19 12:30:16 [Test worker] 
+ [] 
+    ?[34mdrop?[0m ?[34mtable?[0m ?[34mif?[0m ?[34mexists?[0m ?[34muser?[0m ?[34mcascade?[0m 
+
+?[36m[DEBUG]?[m 06-19 12:30:16 [Test worker] 
+ [] 
+    ?[34mcreate?[0m ?[34mtable?[0m ?[34muser?[0m (
+        created_time ?[34mtimestamp?[0m(6),
+        updated_time ?[34mtimestamp?[0m(6),
+        id ?[34mBINARY?[0m(16) ?[34mnot?[0m ?[34mnull?[0m,
+        ?[34mprimary?[0m ?[34mkey?[0m (id)
+    )
+
+?[32m[INFO ]?[m 06-19 12:30:16 [Test worker] 
+ [] Initialized JPA EntityManagerFactory for persistence unit 'default'
+
+?[33m[WARN ]?[m 06-19 12:30:16 [Test worker] 
+ [] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+
+?[32m[INFO ]?[m 06-19 12:30:16 [Test worker] 
+ [] H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:local'
+
+?[32m[INFO ]?[m 06-19 12:30:16 [Test worker] 
+ [] Started UserRepositoryTest in 1.33 seconds (process running for 11.816)
+
+?[36m[DEBUG]?[m 06-19 12:30:17 [Test worker] 
+ [] 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.example.base.domain.?[34muser?[0m.domain.?[34mUser?[0m */?[34minsert?[0m 
+    ?[34minto?[0m
+        ?[34muser?[0m (created_time, updated_time, id) 
+    ?[34mvalues?[0m
+        (?, ?, ?)
+
+?[30m[TRACE]?[m 06-19 12:30:17 [Test worker] 
+ [] binding parameter (1:TIMESTAMP) &lt;- [2024-06-19T12:30:17.007707]
+
+?[30m[TRACE]?[m 06-19 12:30:17 [Test worker] 
+ [] binding parameter (2:TIMESTAMP) &lt;- [2024-06-19T12:30:17.007743]
+
+?[30m[TRACE]?[m 06-19 12:30:17 [Test worker] 
+ [] binding parameter (3:VARBINARY) &lt;- [[17, -17, 46, 55, -81, 64, 36, -36, -70, 75, -57, -104, -55, 18, 90, 50]]
+
+?[30m[TRACE]?[m 06-19 12:30:17 [Test worker] 
+ [] [UserRepository.findOneById(..)] &gt;&gt; Input :: [[17, -17, 46, 55, -81, 64, 36, -36, -70, 75, -57, -104, -55, 18, 90, 50]] :: class com.example.base.domain.user.repository.UserRepository
+
+?[30m[TRACE]?[m 06-19 12:30:17 [Test worker] 
+ [] [UserRepository.findOneById(..)] &lt;&lt; Output :: com.example.base.domain.user.domain.User@278a76e4 :: class com.example.base.domain.user.repository.UserRepository
+
+?[30m[TRACE]?[m 06-19 12:30:17 [Test worker] 
+ [] [UserRepository.save(..)] &gt;&gt; Input :: [com.example.base.domain.user.domain.User@42e73c7b] :: class com.example.base.domain.user.repository.UserRepository
+
+?[30m[TRACE]?[m 06-19 12:30:17 [Test worker] 
+ [] [UserRepository.save(..)] &lt;&lt; Output :: com.example.base.domain.user.domain.User@42e73c7b :: class com.example.base.domain.user.repository.UserRepository
+
+?[36m[DEBUG]?[m 06-19 12:30:17 [Test worker] 
+ [] 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.example.base.domain.?[34muser?[0m.domain.?[34mUser?[0m */?[34minsert?[0m 
+    ?[34minto?[0m
+        ?[34muser?[0m (created_time, updated_time, id) 
+    ?[34mvalues?[0m
+        (?, ?, ?)
+
+?[30m[TRACE]?[m 06-19 12:30:17 [Test worker] 
+ [] binding parameter (1:TIMESTAMP) &lt;- [2024-06-19T12:30:17.531929]
+
+?[30m[TRACE]?[m 06-19 12:30:17 [Test worker] 
+ [] binding parameter (2:TIMESTAMP) &lt;- [2024-06-19T12:30:17.532024]
+
+?[30m[TRACE]?[m 06-19 12:30:17 [Test worker] 
+ [] binding parameter (3:VARBINARY) &lt;- [[17, -17, 46, 55, -81, 66, 110, -51, -70, 75, -117, -14, -120, -128, -74, -20]]
+
+?[36m[DEBUG]?[m 06-19 12:30:17 [Test worker] 
+ [] 
+    /* ?[34mselect?[0m
+        u 
+    ?[34mfrom?[0m
+        ?[34mUser?[0m ?[34mas?[0m u 
+    ?[34mwhere?[0m
+        u.id = :userId */ ?[34mselect?[0m
+            u1_0.id,
+            u1_0.created_time,
+            u1_0.updated_time 
+        ?[34mfrom?[0m
+            ?[34muser?[0m u1_0 
+        ?[34mwhere?[0m
+            u1_0.id=?
+
+?[30m[TRACE]?[m 06-19 12:30:17 [Test worker] 
+ [] binding parameter (1:VARBINARY) &lt;- [[17, -17, 46, 55, -81, 66, 110, -51, -70, 75, -117, -14, -120, -128, -74, -20]]
+
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 8.7</a> at Jun 19, 2024, 12:30:20 PM</p>
+</div>
+</div>
+</body>
+</html>
