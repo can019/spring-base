@@ -36,9 +36,6 @@ jobs:
           add-job-summary-as-pr-comment: on-failure
           cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
 
-      - name: Run test
-        run: ./gradlew unitTest
-
       - name: Save test reports
         uses: actions/upload-artifact@v3
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
@@ -73,11 +70,8 @@ jobs:
       - name: Setup Gradle with cache
         uses: gradle/gradle-build-action@v3
         with:
-          arguments: integration --info
+          arguments: integrationTest --info
           cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
-
-      - name: Run test
-        run: ./gradlew integrationTest
 
       - name: Save test reports
         uses: actions/upload-artifact@v3
