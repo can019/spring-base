@@ -1,0 +1,96 @@
+name: "Junit5"
+on:
+  push:
+    branches:
+      - 'main'
+      - 'release'
+      - 'develop'
+  pull_request:
+    branches:
+      - '**'
+      # - '*'         # matches every branch that doesn't contain a '/'
+      # - '*/*'       # matches every branch containing a single '/'
+      # - '**'        # matches every branch
+      # - '!main'   # excludes main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build and test with gradle cache
+        uses: gradle/gradle-build-action@v3
+        with:
+          arguments: build --info
+          add-job-summary-as-pr-comment: on-failure
+          cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
+
+      - name: Generate unit jacoco report
+        run: ./gradlew unitTestJacocoReport
+
+      - name: Generate integration jacoco report
+        run: ./gradlew unitTestJacocoReport
+
+      - name: Generate over all jacoco report
+        run: ./gradlew overAllJacocoTestReport
+
+      - name: Save test reports
+        uses: actions/upload-artifact@v3
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+        with:
+          name: reports
+          path: |
+            build/reports
+
+#      - name: publish unit test results
+#        uses: EnricoMi/publish-unit-test-result-action@v2
+#        if: always()
+#        with:
+#          files: 'build/test-results/unitTest/TEST-*.xml'
+#          check_name: 'Unit test'
+
+  Commit_reports_to_gh_pages_develop:
+    runs-on: ubuntu-latest
+    permissions: write-all
+    needs: [Unit, Integration]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get commit ID
+        id: get_commit_id
+        run: echo "::set-output name=commit_id::$(git rev-parse HEAD)"
+
+      - name: Set environment variable
+        run: echo "COMMIT_ID=${{ steps.get_commit_id.outputs.commit_id }}" >> $GITHUB_ENV
+
+      - name: Checkout gh-pages branch
+        uses: actions/checkout@v4
+        with:
+          ref: 'gh-pages'
+          fetch-depth: '0'
+
+      - name: Configure Git # commit을 위한 git config 설정
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+      - name: Download test reports
+        uses: actions/download-artifact@v3
+        with:
+          name: reports
+          path: build/reports
+
+      - name:
+        run: ls -R
