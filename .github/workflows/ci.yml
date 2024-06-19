@@ -71,16 +71,16 @@ jobs:
 
       - name: Add all coverage to PR
         id: jacocoAll
-        if: always()
         uses: madrapps/jacoco-report@v1.6.1
+        if: always()
         with:
           paths: |
             ${{ github.workspace }}/**/build/reports/jacoco/all/index.xml
 
       - name: Add unit coverage to PR
         id: jacocoUnit
-        if: always()
         uses: madrapps/jacoco-report@v1.6.1
+        if: always()
         with:
           paths: |
             ${{ github.workspace }}/**/build/reports/jacoco/unitTest/index.xml,
