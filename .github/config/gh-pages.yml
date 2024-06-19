@@ -1,5 +1,5 @@
 list:
-  ["tests"]
+  ["tests", "jacoco"]
 main:
   - name: develop
     description: "Commit id로 정렬"

@@ -1,4 +1,4 @@
-name: "Junit5"
+name: "CI"
 on:
   push:
     branches:
@@ -13,7 +13,7 @@ on:
       # - '**'        # matches every branch
       # - '!main'   # excludes main
 jobs:
-  Unit:
+  build:
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
@@ -29,20 +29,29 @@ jobs:
       - name: grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Run unit test with gradle cache
+      - name: Build and test with gradle cache
         uses: gradle/gradle-build-action@v3
         with:
-          arguments: unitTest --info
+          arguments: build --info
           add-job-summary-as-pr-comment: on-failure
           cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
 
+      - name: Generate unit jacoco report
+        run: ./gradlew unitTestJacocoReport
+
+      - name: Generate integration jacoco report
+        run: ./gradlew unitTestJacocoReport
+
+      - name: Generate over all jacoco report
+        run: ./gradlew overAllJacocoTestReport
+
       - name: Save test reports
-        uses: actions/upload-artifact@v3
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+        uses: actions/upload-artifact@v3
         with:
-          name: unit
+          name: reports
           path: |
-            build/reports/tests/unitTest
+            build/reports
 
       - name: publish unit test results
         uses: EnricoMi/publish-unit-test-result-action@v2
@@ -51,49 +60,48 @@ jobs:
           files: 'build/test-results/unitTest/TEST-*.xml'
           check_name: 'Unit test'
 
-  Integration:
-    runs-on: ubuntu-latest
-    permissions: write-all
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up JDK
-        uses: actions/setup-java@v3
-        with:
-          java-version: '21'
-          distribution: 'temurin'
-
-      - name: grant execute permission for gradlew
-        run: chmod +x gradlew
-
-      - name: Run integration test with gradle cache
-        uses: gradle/gradle-build-action@v3
-        with:
-          arguments: integrationTest --info
-          cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
-
-      - name: Save test reports
-        uses: actions/upload-artifact@v3
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
-        with:
-          name: integration
-          path: |
-            build/reports/tests/integrationTest
-
-      - name: publish unit test results
+      - name: publish integration test results
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
           files: 'build/test-results/integrationTest/TEST-*.xml'
-          add-job-summary-as-pr-comment: on-failure
           check_name: 'Integration test'
 
-  Commit_reports_to_gh_pages_develop:
+      - name: Add total coverage to PR
+        id: jacocoAll
+        uses: madrapps/jacoco-report@v1.6.1
+        if: always()
+        with:
+          paths: |
+            ${{ github.workspace }}/**/build/reports/jacoco/total/index.xml
+          title: Total coverage
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Add unit coverage to PR
+        id: jacocoUnit
+        uses: madrapps/jacoco-report@v1.6.1
+        if: always()
+        with:
+          paths: |
+            ${{ github.workspace }}/**/build/reports/jacoco/unitTest/index.xml
+          title: Unit test coverage
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Add integration coverage to PR
+        id: jacocoIntegration
+        uses: madrapps/jacoco-report@v1.6.1
+        if: always()
+        with:
+          paths: |
+            ${{ github.workspace }}/**/build/reports/jacoco/integrationTest/index.xml
+          title: Integration test coverage
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  Commit_reports:
     if: github.ref == 'refs/heads/develop'
     runs-on: ubuntu-latest
     permissions: write-all
-    needs: [Unit, Integration]
+    needs: [build]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -116,37 +124,38 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
 
-      - name: Download integrationTest test reports
+      - name: Download test reports
         uses: actions/download-artifact@v3
         with:
-          name: integration
-          path: build/reports/tests/integrationTest
+          name: reports
+          path: build/reports
 
-      - name: Download unit test reports
-        uses: actions/download-artifact@v3
-        with:
-          name: unit
-          path: build/reports/tests/unit
+      - name: ls
+        run: ls -R
 
       - name: Commit reports to gh-pages branch (merged into develop)
         run: |
           
           mkdir -p docs/develop/$COMMIT_ID
+          
           cp -R build/reports/tests docs/develop/$COMMIT_ID
+          cp -R build/reports/jacoco docs/develop/$COMMIT_ID
           
           echo "## Test reports" > docs/develop/$COMMIT_ID/tests/index.md
           echo "[Unit](/unit/index.html) | [Integration](integrationTest/index.html)" >> docs/develop/$COMMIT_ID/tests/index.md
           
+          echo "## Coverage reports" > docs/develop/$COMMIT_ID/jacoco/index.md
+          echo "[Total](total/html/index.html)  | [Unit](unit/html/index.html) | [Integration](integrationTest/html/index.html)" >> docs/develop/$COMMIT_ID/tests/index.md
+
           ls build/reports/tests
           rm -rf build/reports
           
           git add docs -f
           git status
-          git commit -m "docs: Test result $COMMIT_ID"
+          git commit -m "docs: Test reports $COMMIT_ID"
 
       - name: Push changes to gh-pages branch
         uses: ad-m/github-push-action@master
         with:
           branch: gh-pages
           github_token: ${{ secrets.GITHUB_TOKEN }}
-
