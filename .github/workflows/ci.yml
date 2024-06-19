@@ -46,20 +46,55 @@ jobs:
         run: ./gradlew overAllJacocoTestReport
 
       - name: Save test reports
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
         uses: actions/upload-artifact@v3
         with:
           name: reports
           path: |
             build/reports
 
-#      - name: publish unit test results
-#        uses: EnricoMi/publish-unit-test-result-action@v2
-#        if: always()
-#        with:
-#          files: 'build/test-results/unitTest/TEST-*.xml'
-#          check_name: 'Unit test'
+      - name: PR Comment
 
-  Commit_reports_to_gh_pages_develop:
+      - name: publish unit test results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: 'build/test-results/unitTest/TEST-*.xml'
+          check_name: 'Unit test'
+
+      - name: publish integration test results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: 'build/test-results/integrationTest/TEST-*.xml'
+          check_name: 'Integration test'
+
+      - name: Add coverage to PR
+        id: jacocoAll
+        if: always()
+        uses: madrapps/jacoco-report@v1.6.1
+        with:
+          paths: |
+            ${{ github.workspace }}/**/build/reports/jacoco/all/index.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
+#          min-coverage-overall: 40
+#          min-coverage-changed-files: 60
+
+      - name: Add coverage to PR
+        id: jacocoUnit
+        if: always()
+        uses: madrapps/jacoco-report@v1.6.1
+        with:
+          paths: |
+            ${{ github.workspace }}/**/build/reports/jacoco/unitTest/index.xml,
+            ${{ github.workspace }}/**/build/reports/jacoco/integrationTest/index.xml,
+          title: Unit, integration test
+          token: ${{ secrets.GITHUB_TOKEN }}
+#          min-coverage-overall: 40
+#          min-coverage-changed-files: 60
+
+  Commit_reports:
+    if: github.ref == 'refs/heads/develop'
     runs-on: ubuntu-latest
     permissions: write-all
     needs: [build]
@@ -93,3 +128,30 @@ jobs:
 
       - name: ls
         run: ls -R
+
+      - name: Commit reports to gh-pages branch (merged into develop)
+        run: |
+          
+          mkdir -p docs/develop/$COMMIT_ID
+          
+          cp -R build/reports/tests docs/develop/$COMMIT_ID
+          cp -R build/reports/jacoco docs/develop/$COMMIT_ID
+          
+          echo "## Test reports" > docs/develop/$COMMIT_ID/tests/index.md
+          echo "[Unit](/unit/index.html) | [Integration](integrationTest/index.html)" >> docs/develop/$COMMIT_ID/tests/index.md
+          
+          echo "## Coverage reports" > docs/develop/$COMMIT_ID/jacoco/index.md
+          echo "[Total](all/html/index.html)  | [Unit](unit/html/index.html) | [Integration](integrationTest/html/index.html)" >> docs/develop/$COMMIT_ID/tests/index.md
+
+          ls build/reports/tests
+          rm -rf build/reports
+          
+          git add docs -f
+          git status
+          git commit -m "docs: Test reports $COMMIT_ID"
+
+      - name: Push changes to gh-pages branch
+        uses: ad-m/github-push-action@master
+        with:
+          branch: gh-pages
+          github_token: ${{ secrets.GITHUB_TOKEN }}

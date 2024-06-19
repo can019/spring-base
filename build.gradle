@@ -130,8 +130,8 @@ task overAllJacocoTestReport(type: JacocoReport) {
 	executionData fileTree(dir: "$buildDir/jacoco/", include: "**/*.exec")
 	sourceSets sourceSets.main
 	reports {
-		xml.destination file("$buildDir/reports/jacoco/all/index.xml")
-		html.destination file("$buildDir/reports/jacoco/all/html")
+		xml.destination file("$buildDir/reports/jacoco/total/index.xml")
+		html.destination file("$buildDir/reports/jacoco/total/html")
 	}
 }
 
