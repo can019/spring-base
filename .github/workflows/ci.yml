@@ -1,4 +1,4 @@
-name: "Junit5"
+name: "CI"
 on:
   push:
     branches:
@@ -63,7 +63,7 @@ jobs:
   Commit_reports_to_gh_pages_develop:
     runs-on: ubuntu-latest
     permissions: write-all
-    needs: [Unit, Integration]
+    needs: [build]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -92,5 +92,5 @@ jobs:
           name: reports
           path: build/reports
 
-      - name:
+      - name: ls
         run: ls -R
