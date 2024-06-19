@@ -32,15 +32,12 @@ jobs:
       - name: Setup Gradle with cache
         uses: gradle/gradle-build-action@v3
         with:
-          arguments: build
+          arguments: unitTest --info
           add-job-summary-as-pr-comment: on-failure
           cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
 
       - name: Run test
         run: ./gradlew unitTest
-
-      - name: test
-        run: cd build/test-results && ls -al
 
       - name: Save test reports
         uses: actions/upload-artifact@v3
@@ -56,6 +53,7 @@ jobs:
         with:
           files: 'build/test-results/unitTest/TEST-*.xml'
           check_name: 'Unit test'
+
   Integration:
     runs-on: ubuntu-latest
     permissions: write-all
@@ -75,14 +73,11 @@ jobs:
       - name: Setup Gradle with cache
         uses: gradle/gradle-build-action@v3
         with:
-          arguments: build
+          arguments: integration --info
           cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
 
       - name: Run test
         run: ./gradlew integrationTest
-
-      - name: test
-        run: ls ./build/test-results
 
       - name: Save test reports
         uses: actions/upload-artifact@v3
