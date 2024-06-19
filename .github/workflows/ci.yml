@@ -69,18 +69,15 @@ jobs:
           files: 'build/test-results/integrationTest/TEST-*.xml'
           check_name: 'Integration test'
 
-      - name: Add coverage to PR
+      - name: Add all coverage to PR
         id: jacocoAll
         if: always()
         uses: madrapps/jacoco-report@v1.6.1
         with:
           paths: |
             ${{ github.workspace }}/**/build/reports/jacoco/all/index.xml
-          token: ${{ secrets.GITHUB_TOKEN }}
-#          min-coverage-overall: 40
-#          min-coverage-changed-files: 60
 
-      - name: Add coverage to PR
+      - name: Add unit coverage to PR
         id: jacocoUnit
         if: always()
         uses: madrapps/jacoco-report@v1.6.1
@@ -90,8 +87,7 @@ jobs:
             ${{ github.workspace }}/**/build/reports/jacoco/integrationTest/index.xml,
           title: Unit, integration test
           token: ${{ secrets.GITHUB_TOKEN }}
-#          min-coverage-overall: 40
-#          min-coverage-changed-files: 60
+
 
   Commit_reports:
     if: github.ref == 'refs/heads/develop'
