@@ -53,8 +53,6 @@ jobs:
           path: |
             build/reports
 
-      - name: PR Comment
-
       - name: publish unit test results
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
@@ -87,7 +85,6 @@ jobs:
             ${{ github.workspace }}/**/build/reports/jacoco/integrationTest/index.xml,
           title: Unit, integration test
           token: ${{ secrets.GITHUB_TOKEN }}
-
 
   Commit_reports:
     if: github.ref == 'refs/heads/develop'
