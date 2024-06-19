@@ -47,7 +47,6 @@ jobs:
 
       - name: Save test reports
         uses: actions/upload-artifact@v3
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
         with:
           name: reports
           path: |
