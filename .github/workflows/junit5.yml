@@ -32,7 +32,7 @@ jobs:
       - name: Setup Gradle with cache
         uses: gradle/gradle-build-action@v3
         with:
-          arguments: build unitTest
+          arguments: build
           add-job-summary-as-pr-comment: on-failure
           cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
 
@@ -75,7 +75,7 @@ jobs:
       - name: Setup Gradle with cache
         uses: gradle/gradle-build-action@v3
         with:
-          arguments: build integrationTest
+          arguments: build
           cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
 
       - name: Run test
