@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.2.5'
 	id 'io.spring.dependency-management' version '1.1.4'
+	id 'jacoco'
 }
 
 group = 'com.example'
@@ -9,6 +10,10 @@ version = '0.0.1-SNAPSHOT'
 
 java {
 	sourceCompatibility = '21'
+}
+
+jacoco {
+	toolVersion = "0.8.11"
 }
 
 repositories {
@@ -75,16 +80,60 @@ sourceSets {
 		runtimeClasspath += main.output + test.output
 	}
 }
+tasks.withType(JacocoReport) {
+	reports {
+		html.required = true
+		xml.required = true
+		csv.required = false
+	}
+}
+
+tasks.withType(Test){
+	useJUnitPlatform()
+}
 
 task integrationTest(type: Test) {
 	testClassesDirs = sourceSets.integrationTest.output.classesDirs
 	classpath = sourceSets.integrationTest.runtimeClasspath
-	useJUnitPlatform()
+	jacoco {
+		destinationFile = layout.buildDirectory.file("jacoco/${name}.exec").get().asFile
+	}
 }
 
 task unitTest(type: Test) {
 	testClassesDirs = sourceSets.unitTest.output.classesDirs
 	classpath = sourceSets.unitTest.runtimeClasspath
-	useJUnitPlatform()
+	jacoco {
+		destinationFile = layout.buildDirectory.file("jacoco/${name}.exec").get().asFile
+	}
 }
 
+task unitTestJacocoReport(type: JacocoReport) {
+	executionData fileTree(dir: "$buildDir/jacoco/", include: "**/unitTest.exec")
+	sourceSets sourceSets.main
+	reports {
+		xml.destination file("$buildDir/reports/jacoco/unitTest/index.xml")
+		html.destination file("$buildDir/reports/jacoco/unitTest/html")
+	}
+}
+
+task integrationTestJacocoReport(type: JacocoReport) {
+	executionData fileTree(dir: "$buildDir/jacoco/", include: "**/integrationTest.exec")
+	sourceSets sourceSets.main
+	reports {
+		xml.destination file("$buildDir/reports/jacoco/integrationTest/index.xml")
+		html.destination file("$buildDir/reports/jacoco/integrationTest/html")
+	}
+}
+
+task overAllJacocoTestReport(type: JacocoReport) {
+	executionData fileTree(dir: "$buildDir/jacoco/", include: "**/*.exec")
+	sourceSets sourceSets.main
+	reports {
+		xml.destination file("$buildDir/reports/jacoco/all/index.xml")
+		html.destination file("$buildDir/reports/jacoco/all/html")
+	}
+}
+
+check.dependsOn integrationTest
+check.dependsOn unitTest
