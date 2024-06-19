@@ -145,7 +145,7 @@ jobs:
           echo "[Unit](/unit/index.html) | [Integration](integrationTest/index.html)" >> docs/develop/$COMMIT_ID/tests/index.md
           
           echo "## Coverage reports" > docs/develop/$COMMIT_ID/jacoco/index.md
-          echo "[Total](total/html/index.html)  | [Unit](unit/html/index.html) | [Integration](integrationTest/html/index.html)" >> docs/develop/$COMMIT_ID/tests/index.md
+          echo "[Total](total/html/index.html)  | [Unit](unitTest/html/index.html) | [Integration](integrationTest/html/index.html)" >> docs/develop/$COMMIT_ID/jacoco/index.md
 
           ls build/reports/tests
           rm -rf build/reports
