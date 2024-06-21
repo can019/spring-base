@@ -51,3 +51,5 @@ wrapper/
 *.idea
 .tmp/
 logs/
+
+.github/scripts/__pycache__/
