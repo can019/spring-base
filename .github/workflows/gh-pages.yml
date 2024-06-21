@@ -75,7 +75,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
   release:
-    if: github.event.action == 'created
+    if: github.event.action == 'created'
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
