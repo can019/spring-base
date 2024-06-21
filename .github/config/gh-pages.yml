@@ -1,0 +1,7 @@
+list:
+  ["tests", "jacoco"]
+main:
+  - name: develop
+    description: "Commit id로 정렬"
+  - name: release
+    description: "Commit id로 정렬"

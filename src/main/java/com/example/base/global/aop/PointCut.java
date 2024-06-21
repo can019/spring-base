@@ -26,6 +26,6 @@ public class PointCut {
     @Pointcut("basePackage() && allRepository()")
     public void allRepositoryUnderBasePackage(){}
 
-    @Pointcut("basePackage() && allRepository() && allService() && allController()")
+    @Pointcut("basePackage() && (allRepository() || allService() || allController()) ")
     public void allControllerServiceRepositoryUnderBasePackage(){}
 }

@@ -4,11 +4,8 @@ package com.example.base.domain.user.repository;
 import com.example.base.domain.user.domain.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class UserRepository  {
@@ -16,11 +13,14 @@ public class UserRepository  {
     @PersistenceContext
     EntityManager em;
 
-    public void save(User user){
+    @Transactional
+    public User save(User user){
         em.persist(user);
+        return user;
     }
 
-    public User findOne(byte[] id){
+    @Transactional
+    public User findOneById(byte[] id){
         return em.find(User.class, id);
     }
 
