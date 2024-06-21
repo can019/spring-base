@@ -7,11 +7,12 @@ from file_util import *
 
 ## global var
 root_dir = "docs"
-identifier = ""
+commit_id = ""
+
 identifier_dir_path = ""
 config_path = ".github/config/gh-pages.yml"
 global_config = {}
-
+release_version=""
 mode = ""
 latest_pattern = r"### Latest\n(.+?)(?=\n- - -)"
 other_pattern = r"### Other\n(.+?)(?=\n- - -)"
@@ -75,20 +76,31 @@ if __name__ == "__main__":
     )
 
     ## init set up
-    parser.add_argument("-i", "--id", type=str, help="Commit id or release version", required=True)
+    parser.add_argument("-i", "--id", type=str, help="Commit id", required=True)
     parser.add_argument("-t", "--type", type=str, choices=["release", "develop"], help="Commit id (release or develop)", required=True)
+    parser.add_argument("-rv", "--rversion", type=str, help="Release version", required=False)
     args = parser.parse_args()
 
-    identifier = args.id # commit id or release tag
     mode = args.type
-    identifier_dir_path = '/'.join([root_dir, mode, identifier]) # docs/${mode}/${identifier}
+    commit_id = args.id # commit id or release tag
 
+    identifier_link = ""
+    print(release_version)
+    if mode == "release":
+        release_version = args.rversion
+        if release_version is None:
+            raise ValueError("Release version이 존재하지 않습니다.")
+        identifier_dir_path = '/'.join([root_dir, mode, release_version]) # docs/${mode}/${identifier}
+        identifier_link = create_markdown_link_text(release_version, f"{identifier_dir_path}/index.md")   # [release_version](release_version/index.md)
+    elif mode == "develop":
+        identifier_dir_path = '/'.join([root_dir, mode, commit_id]) # docs/${mode}/${identifier}
+        identifier_link = create_markdown_link_text(commit_id, f"{identifier_dir_path}/index.md")   # [commit_id]($identifier/index.md)
+    else:
+        raise ValueError("Type이 올바르지 않습니다")
     global_config = read_yaml(config_path)
 
     create_folder(identifier_dir_path)
     create_id_markdown('/'.join([identifier_dir_path, "index.md"]), global_config.get('list'))
 
-    link = create_markdown_link_text(identifier, f"{identifier_dir_path}/index.md") # [$identifier]($identifier/index.md)
-
-    update_second_root_markdown(create_markdown_list(link))
+    update_second_root_markdown(create_markdown_list(identifier_link))
 

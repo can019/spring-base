@@ -42,3 +42,15 @@ def create_commit_id_markdown(file_path, list):
     content = "\n".join([header, main])
 
     create_markdown_file(file_path, content)
+
+
+def create_id_markdown(file_path, list):
+    header = "## List"
+    main = ""
+
+    for target in list:
+        main+="\n".join([f"### {target}", create_markdown_link_text(target, f"{target}/index.md"),"","---", ""])
+
+    content = "\n".join([header, main])
+
+    create_markdown_file(file_path, content)
