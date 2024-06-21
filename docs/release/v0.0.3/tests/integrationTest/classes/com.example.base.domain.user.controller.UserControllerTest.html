@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - UserControllerTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>UserControllerTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.example.base.domain.user.controller.html">com.example.base.domain.user.controller</a> &gt; UserControllerTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">3</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">1.207s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+<li>
+<a href="#tab2">Standard error</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Method name</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">유저 생성 (api로 생성 후 entityManager로 저장 여부 확인), [Post] /user</td>
+<td class="success">createUser()</td>
+<td class="success">0.088s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">단일 유저 조회 (api로 user 생성 후 api 조회)| [Get] /user -&gt; [Post] /user</td>
+<td class="success">createUserAndGetUser()</td>
+<td class="success">0.043s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">단일 유저 조회 (데이터 베이스 entityManager로 생성 후 api로 조회) | [Get] /user</td>
+<td class="success">getUser()</td>
+<td class="success">1.076s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>?[32m[INFO ]?[m 06-21 08:18:07 [Test worker] 
+ [] Restart disabled due to context in which it is running
+
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+?[32m :: Spring Boot :: ?[39m              ?[2m (v3.2.5)?[0;39m
+
+?[32m[INFO ]?[m 06-21 08:18:08 [Test worker] 
+ [] Starting UserControllerTest using Java 21.0.3 with PID 2040 (started by runner in /home/runner/work/spring-base/spring-base)
+
+?[36m[DEBUG]?[m 06-21 08:18:08 [Test worker] 
+ [] Running with Spring Boot v3.2.5, Spring v6.1.6
+
+?[32m[INFO ]?[m 06-21 08:18:08 [Test worker] 
+ [] No active profile set, falling back to 1 default profile: &quot;default&quot;
+
+?[32m[INFO ]?[m 06-21 08:18:09 [Test worker] 
+ [] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+
+?[32m[INFO ]?[m 06-21 08:18:09 [Test worker] 
+ [] Finished Spring Data repository scanning in 27 ms. Found 0 JPA repository interfaces.
+
+?[32m[INFO ]?[m 06-21 08:18:10 [Test worker] 
+ [] No LoadTimeWeaver setup: ignoring JPA class transformer
+
+?[36m[DEBUG]?[m 06-21 08:18:12 [Test worker] 
+ [] 
+    ?[34mdrop?[0m ?[34mtable?[0m ?[34mif?[0m ?[34mexists?[0m ?[34muser?[0m ?[34mcascade?[0m 
+
+?[36m[DEBUG]?[m 06-21 08:18:12 [Test worker] 
+ [] 
+    ?[34mcreate?[0m ?[34mtable?[0m ?[34muser?[0m (
+        created_time ?[34mtimestamp?[0m(6),
+        updated_time ?[34mtimestamp?[0m(6),
+        id ?[34mBINARY?[0m(16) ?[34mnot?[0m ?[34mnull?[0m,
+        ?[34mprimary?[0m ?[34mkey?[0m (id)
+    )
+
+?[32m[INFO ]?[m 06-21 08:18:12 [Test worker] 
+ [] Initialized JPA EntityManagerFactory for persistence unit 'default'
+
+?[33m[WARN ]?[m 06-21 08:18:12 [Test worker] 
+ [] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+
+?[32m[INFO ]?[m 06-21 08:18:13 [Test worker] 
+ [] H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:local'
+
+?[32m[INFO ]?[m 06-21 08:18:13 [Test worker] 
+ [] Initializing Spring TestDispatcherServlet ''
+
+?[32m[INFO ]?[m 06-21 08:18:13 [Test worker] 
+ [] Initializing Servlet ''
+
+?[32m[INFO ]?[m 06-21 08:18:13 [Test worker] 
+ [] Completed initialization in 2 ms
+
+?[32m[INFO ]?[m 06-21 08:18:13 [Test worker] 
+ [] Started UserControllerTest in 6.14 seconds (process running for 10.344)
+
+?[36m[DEBUG]?[m 06-21 08:18:14 [Test worker] 
+ [] 
+    /* ?[34minsert?[0m ?[34mfor?[0m
+        com.example.base.domain.?[34muser?[0m.domain.?[34mUser?[0m */?[34minsert?[0m 
+    ?[34minto?[0m
+        ?[34muser?[0m (created_time, updated_time, id) 
+    ?[34mvalues?[0m
+        (?, ?, ?)
+
+?[30m[TRACE]?[m 06-21 08:18:14 [Test worker] 
+ [] binding parameter (1:TIMESTAMP) &lt;- [2024-06-21T08:18:14.815981]
+
+?[30m[TRACE]?[m 06-21 08:18:14 [Test worker] 
+ [] binding parameter (2:TIMESTAMP) &lt;- [2024-06-21T08:18:14.816208]
+
+?[30m[TRACE]?[m 06-21 08:18:14 [Test worker] 
+ [] binding parameter (3:VARBINARY) &lt;- [[17, -17, 47, -90, -50, -120, -24, 38, -118, 104, 53, -56, 114, 52, -28, 90]]
+
+?[30m[TRACE]?[m 06-21 08:18:14 [Test worker] 
+ [786e8815] Add ipAddress :: 127.0.0.1 and hostName :: localhost to ThreadContext
+
+?[30m[TRACE]?[m 06-21 08:18:14 [Test worker] 
+ [786e8815] [UserController.findOneById(..)] &gt;&gt; Input :: [11ef2fa6ce88e8268a6835c87234e45a] :: class com.example.base.domain.user.controller.UserController
+
+?[30m[TRACE]?[m 06-21 08:18:14 [Test worker] 
+ [786e8815] [UserService.findOneById(..)] &gt;&gt; Input :: [11ef2fa6ce88e8268a6835c87234e45a] :: class com.example.base.domain.user.service.UserService
+
+?[30m[TRACE]?[m 06-21 08:18:14 [Test worker] 
+ [786e8815] [UserRepository.findOneById(..)] &gt;&gt; Input :: [[17, -17, 47, -90, -50, -120, -24, 38, -118, 104, 53, -56, 114, 52, -28, 90]] :: class com.example.base.domain.user.repository.UserRepository
+
+?[30m[TRACE]?[m 06-21 08:18:14 [Test worker] 
+ [786e8815] [UserRepository.findOneById(..)] &lt;&lt; Output :: com.example.base.domain.user.domain.User@79f3359e :: class com.example.base.domain.user.repository.UserRepository
+
+?[30m[TRACE]?[m 06-21 08:18:14 [Test worker] 
+ [786e8815] [UserService.findOneById(..)] &lt;&lt; Output :: com.example.base.domain.user.domain.User@79f3359e :: class com.example.base.domain.user.service.UserService
+
+?[30m[TRACE]?[m 06-21 08:18:14 [Test worker] 
+ [786e8815] [UserController.findOneById(..)] &lt;&lt; Output :: &lt;200 OK OK,{id=11ef2fa6ce88e8268a6835c87234e45a},[]&gt; :: class com.example.base.domain.user.controller.UserController
+
+?[32m[INFO ]?[m 06-21 08:18:15 [Test worker] 
+ [786e8815] Response GET /user application/json 200
+
+?[30m[TRACE]?[m 06-21 08:18:15 [Test worker] 
+ [786e8815] Clear ThreadContext
+
+?[30m[TRACE]?[m 06-21 08:18:15 [Test worker] 
+ [786e8815] Clear ThreadContext
+
+?[30m[TRACE]?[m 06-21 08:18:15 [Test worker] 
+ [fd437fa0] Add ipAddress :: 127.0.0.1 and hostName :: localhost to ThreadContext
+
+?[30m[TRACE]?[m 06-21 08:18:15 [Test worker] 
+ [fd437fa0] [UserController.createUser()] &gt;&gt; Input :: [] :: class com.example.base.domain.user.controller.UserController
+
+?[30m[TRACE]?[m 06-21 08:18:15 [Test worker] 
+ [fd437fa0] [UserService.createUser(..)] &gt;&gt; Input :: [com.example.base.domain.user.domain.User@356891fc] :: class com.example.base.domain.user.service.UserService
+
+?[30m[TRACE]?[m 06-21 08:18:15 [Test worker] 
+ [fd437fa0] [UserRepository.save(..)] &gt;&gt; Input :: [com.example.base.domain.user.domain.User@356891fc] :: class com.example.base.domain.user.repository.UserRepository
+
+?[30m[TRACE]?[m 06-21 08:18:15 [Test worker] 
+ [fd437fa0] [UserRepository.save(..)] &lt;&lt; Output :: com.example.base.domain.user.domain.User@356891fc :: class com.example.base.domain.user.repository.UserRepository
+
+?[30m[TRACE]?[m 06-21 08:18:15 [Test worker] 
+ [fd437fa0] [UserService.createUser(..)] &lt;&lt; Output :: 11ef2fa6ceb6aee78a6895dcc0f77fd6 :: class com.example.base.domain.user.service.UserService
+
+?[30m[TRACE]?[m 06-21 08:18:15 [Test worker] 
+ [fd437fa0] [UserController.createUser()] &lt;&lt; Output :: &lt;201 CREATED Created,{id=11ef2fa6ceb6aee78a6895dcc0f77fd6},[]&gt; :: class com.example.base.domain.user.controller.UserController
+
+?[32m[INFO ]?[m 06-21 08:18:15 [Test worker] 
+ [fd437fa0] Response POST /user application/json 201
+
+?[30m[TRACE]?[m 06-21 08:18:15 [Test worker] 
+ [fd437fa0] Clear ThreadContext
+
+?[30m[TRACE]?[m 06-21 08:18:15 [Test worker] 
+ [fd437fa0] Clear ThreadContext
+
+?[30m[TRACE]?[m 06-21 08:18:15 [Test worker] 
+ [5ab8eff2] Add ipAddress :: 127.0.0.1 and hostName :: localhost to ThreadContext
+
+?[30m[TRACE]?[m 06-21 08:18:15 [Test worker] 
+ [5ab8eff2] [UserController.findOneById(..)] &gt;&gt; Input :: [11ef2fa6ceb6aee78a6895dcc0f77fd6] :: class com.example.base.domain.user.controller.UserController
+
+?[30m[TRACE]?[m 06-21 08:18:15 [Test worker] 
+ [5ab8eff2] [UserService.findOneById(..)] &gt;&gt; Input :: [11ef2fa6ceb6aee78a6895dcc0f77fd6] :: class com.example.base.domain.user.service.UserService
+
+?[30m[TRACE]?[m 06-21 08:18:15 [Test worker] 
+ [5ab8eff2] [UserRepository.findOneById(..)] &gt;&gt; Input :: [[17, -17, 47, -90, -50, -74, -82, -25, -118, 104, -107, -36, -64, -9, 127, -42]] :: class com.example.base.domain.user.repository.UserRepository
+
+?[30m[TRACE]?[m 06-21 08:18:15 [Test worker] 
+ [5ab8eff2] [UserRepository.findOneById(..)] &lt;&lt; Output :: com.example.base.domain.user.domain.User@356891fc :: class com.example.base.domain.user.repository.UserRepository
+
+?[30m[TRACE]?[m 06-21 08:18:15 [Test worker] 
+ [5ab8eff2] [UserService.findOneById(..)] &lt;&lt; Output :: com.example.base.domain.user.domain.User@356891fc :: class com.example.base.domain.user.service.UserService
+
+?[30m[TRACE]?[m 06-21 08:18:15 [Test worker] 
+ [5ab8eff2] [UserController.findOneById(..)] &lt;&lt; Output :: &lt;200 OK OK,{id=11ef2fa6ceb6aee78a6895dcc0f77fd6},[]&gt; :: class com.example.base.domain.user.controller.UserController
+
+?[32m[INFO ]?[m 06-21 08:18:15 [Test worker] 
+ [5ab8eff2] Response GET /user application/json 200
+
+?[30m[TRACE]?[m 06-21 08:18:15 [Test worker] 
+ [5ab8eff2] Clear ThreadContext
+
+?[30m[TRACE]?[m 06-21 08:18:15 [Test worker] 
+ [5ab8eff2] Clear ThreadContext
+
+?[30m[TRACE]?[m 06-21 08:18:15 [Test worker] 
+ [65ba241a] Add ipAddress :: 127.0.0.1 and hostName :: localhost to ThreadContext
+
+?[30m[TRACE]?[m 06-21 08:18:15 [Test worker] 
+ [65ba241a] [UserController.createUser()] &gt;&gt; Input :: [] :: class com.example.base.domain.user.controller.UserController
+
+?[30m[TRACE]?[m 06-21 08:18:15 [Test worker] 
+ [65ba241a] [UserService.createUser(..)] &gt;&gt; Input :: [com.example.base.domain.user.domain.User@3d4d0260] :: class com.example.base.domain.user.service.UserService
+
+?[30m[TRACE]?[m 06-21 08:18:15 [Test worker] 
+ [65ba241a] [UserRepository.save(..)] &gt;&gt; Input :: [com.example.base.domain.user.domain.User@3d4d0260] :: class com.example.base.domain.user.repository.UserRepository
+
+?[30m[TRACE]?[m 06-21 08:18:15 [Test worker] 
+ [65ba241a] [UserRepository.save(..)] &lt;&lt; Output :: com.example.base.domain.user.domain.User@3d4d0260 :: class com.example.base.domain.user.repository.UserRepository
+
+?[30m[TRACE]?[m 06-21 08:18:15 [Test worker] 
+ [65ba241a] [UserService.createUser(..)] &lt;&lt; Output :: 11ef2fa6cebd8cb88a6815f5e8ddf372 :: class com.example.base.domain.user.service.UserService
+
+?[30m[TRACE]?[m 06-21 08:18:15 [Test worker] 
+ [65ba241a] [UserController.createUser()] &lt;&lt; Output :: &lt;201 CREATED Created,{id=11ef2fa6cebd8cb88a6815f5e8ddf372},[]&gt; :: class com.example.base.domain.user.controller.UserController
+
+?[32m[INFO ]?[m 06-21 08:18:15 [Test worker] 
+ [65ba241a] Response POST /user application/json 201
+
+?[30m[TRACE]?[m 06-21 08:18:15 [Test worker] 
+ [65ba241a] Clear ThreadContext
+
+?[30m[TRACE]?[m 06-21 08:18:15 [Test worker] 
+ [65ba241a] Clear ThreadContext
+
+</pre>
+</span>
+</div>
+<div id="tab2" class="tab">
+<h2>Standard error</h2>
+<span class="code">
+<pre>WARNING: A Java agent has been loaded dynamically (/home/runner/.gradle/caches/modules-2/files-2.1/net.bytebuddy/byte-buddy-agent/1.14.13/979ce25f7d3096a2e82214ba7dc972a05ce7a171/byte-buddy-agent-1.14.13.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 8.7</a> at Jun 21, 2024, 8:18:19 AM</p>
+</div>
+</div>
+</body>
+</html>

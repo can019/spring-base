@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LayeredArchitectureLogAspect.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">base</a> &gt; <a href="index.source.html" class="el_package">com.example.base.global.aop.logger</a> &gt; <span class="el_source">LayeredArchitectureLogAspect.java</span></div><h1>LayeredArchitectureLogAspect.java</h1><pre class="source lang-java linenums">package com.example.base.global.aop.logger;
+
+import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.*;
+import org.springframework.stereotype.Component;
+
+<span class="fc" id="L8">@Slf4j</span>
+<span class="nc" id="L9">public class LayeredArchitectureLogAspect {</span>
+
+<span class="fc" id="L11">    private static String DEFAULT_INPUT_MESSAGE_FORMAT = &quot;[{}] &gt;&gt; Input :: {} :: {}&quot;;</span>
+<span class="fc" id="L12">    private static String DEFAULT_OUTPUT_MESSAGE_FORMAT = &quot;[{}] &lt;&lt; Output :: {} :: {}&quot;;</span>
+<span class="fc" id="L13">    private static String DEFAULT_ERROR_MESSAGE_FORMAT = &quot;[{}] {} :: {} {}&quot;;</span>
+
+    public static void defaultTraceInputLog(JoinPoint joinPoint){
+<span class="fc" id="L16">        log.trace(DEFAULT_INPUT_MESSAGE_FORMAT, joinPoint.getSignature().toShortString(),</span>
+<span class="fc" id="L17">                joinPoint.getArgs(),</span>
+<span class="fc" id="L18">                joinPoint.getTarget().getClass());</span>
+<span class="fc" id="L19">    }</span>
+
+    public static void defaultTraceOutputLog(JoinPoint joinPoint, Object result){
+<span class="fc" id="L22">        log.trace(DEFAULT_OUTPUT_MESSAGE_FORMAT, joinPoint.getSignature().toShortString(),</span>
+                result,
+<span class="fc" id="L24">                joinPoint.getTarget().getClass());</span>
+<span class="fc" id="L25">    }</span>
+    public static void errorLog(JoinPoint joinPoint, Throwable e){
+<span class="nc" id="L27">        log.error(DEFAULT_ERROR_MESSAGE_FORMAT, joinPoint.getSignature().toShortString() ,</span>
+<span class="nc" id="L28">                e.getMessage(), e.getStackTrace()[0], e.getClass().getName());</span>
+<span class="nc" id="L29">    }</span>
+
+    @Aspect
+    @Component
+<span class="fc" id="L33">    public static class BaseLogAspect{</span>
+        @Before(&quot;com.example.base.global.aop.PointCut.allControllerServiceRepositoryUnderBasePackage()&quot;)
+        public static void doBefore(JoinPoint joinPoint){
+<span class="fc" id="L36">            defaultTraceInputLog(joinPoint);</span>
+<span class="fc" id="L37">        }</span>
+
+        @AfterReturning(pointcut = &quot;com.example.base.global.aop.PointCut.allControllerServiceRepositoryUnderBasePackage()&quot;, returning = &quot;result&quot;)
+        public void doAfterReturning(JoinPoint joinPoint, Object result){
+<span class="fc" id="L41">            defaultTraceOutputLog(joinPoint, result);</span>
+<span class="fc" id="L42">        }</span>
+
+        @AfterThrowing(pointcut = &quot;com.example.base.global.aop.PointCut.allControllerUnderBasePackage()&quot;, throwing=&quot;e&quot;)
+        public void doAfterThrowing(JoinPoint joinPoint, Throwable e){
+<span class="nc" id="L46">            errorLog(joinPoint, e);</span>
+<span class="nc" id="L47">        }</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
