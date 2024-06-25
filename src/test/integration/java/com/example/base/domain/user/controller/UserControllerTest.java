@@ -30,9 +30,9 @@ public class UserControllerTest extends WithContextControllerTestBase {
         JSONParser jsonParser = new JSONParser();
         JSONObject json = (JSONObject)jsonParser.parse(mvcResult.getResponse().getContentAsString());
 
-        byte[] id = hexStringToByte((String) json.get("id"));
+        String id = (String) json.get("id");
 
-        User user = em.find(User.class, id);
+        User user = em.find(User.class, hexStringToByte(id));
         assertThat(user.getId()).isEqualTo(id);
     }
 
@@ -44,9 +44,9 @@ public class UserControllerTest extends WithContextControllerTestBase {
         em.flush();
 
         mockMvc.perform(get("/user")
-                        .param("id", byteArrayToHexString(user.getId())))
+                        .param("id", user.getId()))
                         .andExpect(status().isOk())
-                        .andExpect(jsonPath("$.id").value(user.getIdAsString()));
+                        .andExpect(jsonPath("$.id").value(user.getId()));
     }
 
     @Test

@@ -60,7 +60,7 @@ public class UserControllerTest {
         byte[] id = hexStringToByte(strId);
         User user = mock(User.class);
 
-        when(user.getIdAsString()).thenReturn(strId);
+        when(user.getId()).thenReturn(strId);
         when(userService.findOneById(strId)).thenReturn(user);
 
         mockMvc.perform(get("/user").param("id", strId))

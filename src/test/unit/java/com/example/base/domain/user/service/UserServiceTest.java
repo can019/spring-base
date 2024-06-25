@@ -25,21 +25,16 @@ public class UserServiceTest {
     void findOneByIDSpyOn (){
         // given
         String strId = "testasdf";
-        byte[] id = strId.getBytes();
         User user = mock(User.class);
-        when(userRepository.findOneById(id)).thenReturn(user);
-        when(user.getId()).thenReturn(id);
 
-        try (MockedStatic typeConvertor = mockStatic(TypeConvertor.class)){
-            typeConvertor.when(()->TypeConvertor.hexStringToByte(Mockito.any())).thenReturn(id);
+        when(userRepository.findOneById(strId)).thenReturn(user);
+        when(user.getId()).thenReturn(strId);
 
             User readUser = userService.findOneById(strId);
 
             //then
             assertThat(readUser.getId()).isEqualTo(user.getId());
-            typeConvertor.verify(()-> TypeConvertor.hexStringToByte(strId), times(1));
-            verify(userRepository, times(1)).findOneById(id);
-        }
+            verify(userRepository, times(1)).findOneById(strId);
     }
 
 }

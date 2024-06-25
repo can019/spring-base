@@ -31,7 +31,7 @@ public class UserServiceTest {
     void createAndReadUser() {
         User user = new User();
         String savedId = userService.createUser(user);
-        userRepository.findOneById(savedId.getBytes());
-        assertEquals(savedId, TypeConvertor.byteArrayToHexString(user.getId()));
+        userRepository.findOneById(savedId);
+        assertEquals(savedId, user.getId());
     }
 }

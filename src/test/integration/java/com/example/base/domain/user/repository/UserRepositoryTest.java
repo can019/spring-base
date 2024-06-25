@@ -34,7 +34,7 @@ public class UserRepositoryTest {
         User savedUser = userRepository.save(user);
 
         List<User> userList= em.createQuery("select u from User as u where u.id = :userId", User.class)
-                .setParameter("userId", user.getId()).getResultList();
+                .setParameter("userId", user.getIdAsHexByte()).getResultList();
 
         assertThat(savedUser.getId()).isEqualTo(user.getId());
         assertThat(userList.size()).isEqualTo(1);

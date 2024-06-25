@@ -37,7 +37,7 @@ public class UserController {
     public ResponseEntity findOneById(@RequestParam String id){
         User user = this.userService.findOneById(id);
         Map<String, String> body = new HashMap<>();
-        body.put("id", user.getIdAsString());
+        body.put("id", user.getId());
 
         return new ResponseEntity(body, HttpStatus.OK);
     }

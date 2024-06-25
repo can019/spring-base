@@ -20,11 +20,12 @@ public class User extends BaseTimeEntity {
     )
     private byte[] id;
 
-    public byte[] getId() {
-        return this.id;
+
+    public String getId() {
+        return byteArrayToHexString(this.id);
     }
 
-    public String getIdAsString() {
-        return byteArrayToHexString(getId());
+    public byte[] getIdAsHexByte(){
+        return this.id;
     }
 }

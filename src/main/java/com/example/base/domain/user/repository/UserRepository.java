@@ -7,6 +7,8 @@ import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.example.base.global.util.convertor.TypeConvertor.hexStringToByte;
+
 @Repository
 public class UserRepository  {
 
@@ -20,8 +22,13 @@ public class UserRepository  {
     }
 
     @Transactional
-    public User findOneById(byte[] id){
+    public User findOneById(String strId){
+        byte[] id = this.stringIdToByte(strId);
         return em.find(User.class, id);
     }
 
+    public byte[] stringIdToByte(String strId) {
+        byte[] id = hexStringToByte(strId);
+        return id;
+    }
 }

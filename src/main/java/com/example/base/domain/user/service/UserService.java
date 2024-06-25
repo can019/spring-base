@@ -24,13 +24,12 @@ public class UserService {
     @Transactional
     public String createUser(User user){
         this.userRepository.save(user);
-        String id = user.getIdAsString();
+        String id = user.getId();
         return id;
     }
 
     @Transactional
-    public User findOneById(String strId) {
-        byte[] id = hexStringToByte(strId);
+    public User findOneById(String id) {
         return this.userRepository.findOneById(id);
     }
 }
