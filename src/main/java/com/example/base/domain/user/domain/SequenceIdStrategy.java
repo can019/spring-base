@@ -5,7 +5,7 @@ import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.Configurable;
 import org.hibernate.id.IdentifierGenerator;
 
-public class UUIDV1IdGenerator implements IdentifierGenerator, Configurable {
+public class SequenceIdStrategy implements IdentifierGenerator, Configurable {
     private String method;
     @Override
     public Object generate(SharedSessionContractImplementor session, Object object) {

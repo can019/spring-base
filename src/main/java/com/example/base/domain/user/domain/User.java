@@ -13,10 +13,10 @@ import static com.example.base.global.util.convertor.TypeConvertor.byteArrayToHe
 public class User extends BaseTimeEntity {
     @Id
     @Column(name="ID",columnDefinition = "BINARY(16)")
-    @GeneratedValue(generator = "UUID_V1_generator_without_hyphen")
+    @GeneratedValue(generator = "SequenceId")
     @GenericGenerator(
-            name="UUID_V1_generator_without_hyphen",
-            strategy = "com.example.base.domain.user.domain.UUIDV1IdGenerator"
+            name="SequenceId",
+            strategy = "com.example.base.domain.user.domain.SequenceIdStrategy"
     )
     private byte[] id;
 
