@@ -1,17 +1,19 @@
 package com.example.base.performance.database.pk;
 
 import com.example.base.performance.database.pk.resource.*;
-import com.example.base.test.util.TestTimeExecutionListener;
+import com.example.base.test.util.stopwatch.ParallelTestTimeExecutionListener;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.RepeatedTest;
-import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.util.StopWatch;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -29,52 +31,66 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 })
 @ActiveProfiles("test")
 @Testcontainers
-@TestExecutionListeners(value = {TestTimeExecutionListener.class}, mergeMode = TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS)
+@TestExecutionListeners(value = {ParallelTestTimeExecutionListener.class}, mergeMode = TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Commit
-@Tag("slow")
 public class PrimaryKeyPerformanceTest {
 
     @PersistenceContext
     private EntityManager em;
 
-    private final static int repeatTestTime = 1;
+    private final static int repeatTestTime = 100;
 
     @Container
-    static MySQLContainer<?> mysqlContainer= new MySQLContainer<>("mysql:8.0.32")
+    static MySQLContainer<?> mysqlContainer = new MySQLContainer<>("mysql:8.0.32")
             .withDatabaseName("test");
 
-    @RepeatedTest(value = repeatTestTime, name = RepeatedTest.LONG_DISPLAY_NAME)
+    @Test
     @DisplayName("JpaAutoIncrement")
+    @Execution(ExecutionMode.CONCURRENT)
     void jpaAutoIncrement() {
-        JpaAutoIncrement jpaAutoIncrement = new JpaAutoIncrement();
-        em.persist(jpaAutoIncrement);
+        insertTest(JpaAutoIncrement.class, "JpaAutoIncrement");
     }
 
-    @RepeatedTest(value = repeatTestTime, name = RepeatedTest.LONG_DISPLAY_NAME)
+    @Test
     @DisplayName("JpaSequence")
+    @Execution(ExecutionMode.CONCURRENT)
     void jpaSequence() {
-        JpaSequence jpaSequence = new JpaSequence();
-        em.persist(jpaSequence);
+        insertTest(JpaSequence.class, "JpaSequence");
     }
 
-    @RepeatedTest(value = repeatTestTime, name = RepeatedTest.LONG_DISPLAY_NAME)
+    @Test
     @DisplayName("UUIDv4")
+    @Execution(ExecutionMode.CONCURRENT)
     void uuidV4() {
-        UUIDv4 uuiDv4 = new UUIDv4();
-        em.persist(uuiDv4);
+        insertTest(UUIDv4.class, "UUIDv4");
     }
 
-    @RepeatedTest(value = repeatTestTime, name = RepeatedTest.LONG_DISPLAY_NAME)
+    @Test
     @DisplayName("UUIDv1")
+    @Execution(ExecutionMode.CONCURRENT)
     void uuidV1() {
-        UUIDv1 uuiDv1 = new UUIDv1();
-        em.persist(uuiDv1);
+        insertTest(UUIDv1.class, "UUIDv1");
     }
 
-    @RepeatedTest(value = repeatTestTime, name = RepeatedTest.LONG_DISPLAY_NAME)
+    @Test
+    @DisplayName("UUIDv1 Base Sequential No Hyphen")
+    @Execution(ExecutionMode.CONCURRENT)
     void uuidV1BaseSequentialNoHyphen() {
-        UUIDv1BaseSequentialNoHyphen uuiDv1BaseSequentialNoHyphen = new UUIDv1BaseSequentialNoHyphen();
-        em.persist(uuiDv1BaseSequentialNoHyphen);
+        insertTest(UUIDv1BaseSequentialNoHyphen.class, "UUIDv1 Base Sequential No Hyphen");
+    }
+
+    private <T extends PrimaryKeyPerformanceTestEntity> void insertTest(Class<T> clazz, String displayName) {
+        StopWatch stopWatch = ParallelTestTimeExecutionListener.threadLocalStopWatch.get();
+        for (int i = 0; i < repeatTestTime; i++) {
+            try {
+                stopWatch.start(displayName + " # " + i);
+                T entity = clazz.getDeclaredConstructor().newInstance();
+                em.persist(entity);
+                stopWatch.stop();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
