@@ -29,7 +29,12 @@ public class UUID {
         java.util.UUID newUuid = Generators.timeBasedGenerator().generate();
         String[] uuidArr = newUuid.toString().split("-");
         StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append(uuidArr[2]).append(uuidArr[1]).append(uuidArr[0]).append(uuidArr[3]).append(uuidArr[4]);
+        stringBuffer
+                .append(uuidArr[2])
+                .append(uuidArr[1])
+                .append(uuidArr[0])
+                .append(uuidArr[3])
+                .append(uuidArr[4]);
         return stringBuffer.toString();
     }
 
