@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Entity
 @Profile("test")
-public class UUIDv1BaseSequential {
+public class UUIDv1BaseSequential implements PrimaryKeyPerformanceTestEntity {
     @Id
     @Column(name="ID",columnDefinition = "BINARY(16)")
     @GeneratedValue(generator = "uuidV1_sequential")

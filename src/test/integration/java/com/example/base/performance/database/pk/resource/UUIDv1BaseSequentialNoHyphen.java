@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Profile;
 
 @Entity
 @Profile("test")
-public class UUIDv1BaseSequentialNoHyphen {
+public class UUIDv1BaseSequentialNoHyphen implements PrimaryKeyPerformanceTestEntity {
     @Id
     @Column(name="ID",columnDefinition = "BINARY(16)")
     @GeneratedValue(generator = "uuidV1")

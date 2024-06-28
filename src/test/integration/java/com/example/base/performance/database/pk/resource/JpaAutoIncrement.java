@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Profile;
 
 @Entity
 @Profile("test")
-public class JpaAutoIncrement {
+public class JpaAutoIncrement implements PrimaryKeyPerformanceTestEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;

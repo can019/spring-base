@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Entity
 @Profile("test")
-public class UUIDv1 {
+public class UUIDv1 implements PrimaryKeyPerformanceTestEntity {
     @Id
     @Column(name="ID",columnDefinition = "BINARY(16)")
     @GeneratedValue(generator = "uuidV1")
