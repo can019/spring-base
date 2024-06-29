@@ -53,3 +53,4 @@ wrapper/
 logs/
 
 .github/scripts/__pycache__/
+**/reports/**
