@@ -27,7 +27,6 @@ public class ParallelTestTimeExecutionListener extends AbstractTestExecutionList
     @Override
     public void afterTestMethod(TestContext testContext) throws Exception {
         StopWatch stopWatch = ParallelTestTimeExecutionListener.threadLocalStopWatch.get();
-        System.out.println(stopWatch.prettyPrint());
         StopWatchUtil.exportCsv(stopWatch, exportCsvPathResolver(testContext));
         threadLocalStopWatch.remove();
         super.afterTestMethod(testContext);
