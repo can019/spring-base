@@ -2,15 +2,13 @@ package com.example.base.performance.database.pk;
 
 import com.example.base.performance.database.pk.resource.*;
 import com.example.base.test.util.stopwatch.ParallelTestTimeExecutionListener;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.util.StopWatch;
@@ -33,11 +31,16 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @Testcontainers
 @TestExecutionListeners(value = {ParallelTestTimeExecutionListener.class}, mergeMode = TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Commit
 public class PrimaryKeyPerformanceTest {
 
-    @PersistenceContext
-    private EntityManager em;
+    @PersistenceUnit
+    private EntityManagerFactory emf;
+
+    private final static ThreadLocal<EntityManager> entityManagerThreadLocal;
+
+    static {
+        entityManagerThreadLocal = new ThreadLocal<EntityManager>();
+    }
 
     private final static int repeatTestTime = 100;
 
@@ -48,49 +51,65 @@ public class PrimaryKeyPerformanceTest {
     @Test
     @DisplayName("JpaAutoIncrement")
     @Execution(ExecutionMode.CONCURRENT)
-    void jpaAutoIncrement() {
+    public void jpaAutoIncrement() throws Exception{
         insertTest(JpaAutoIncrement.class, "JpaAutoIncrement");
     }
 
     @Test
     @DisplayName("JpaSequence")
     @Execution(ExecutionMode.CONCURRENT)
-    void jpaSequence() {
+    public void jpaSequence() throws Exception{
         insertTest(JpaSequence.class, "JpaSequence");
     }
 
     @Test
     @DisplayName("UUIDv4")
     @Execution(ExecutionMode.CONCURRENT)
-    void uuidV4() {
+    public void uuidV4() throws Exception{
         insertTest(UUIDv4.class, "UUIDv4");
     }
 
     @Test
     @DisplayName("UUIDv1")
     @Execution(ExecutionMode.CONCURRENT)
-    void uuidV1() {
+    public void uuidV1() throws Exception{
         insertTest(UUIDv1.class, "UUIDv1");
     }
 
     @Test
     @DisplayName("UUIDv1 Base Sequential No Hyphen")
     @Execution(ExecutionMode.CONCURRENT)
-    void uuidV1BaseSequentialNoHyphen() {
+    public void uuidV1BaseSequentialNoHyphen() throws Exception{
         insertTest(UUIDv1BaseSequentialNoHyphen.class, "UUIDv1 Base Sequential No Hyphen");
     }
 
-    private <T extends PrimaryKeyPerformanceTestEntity> void insertTest(Class<T> clazz, String displayName) {
+    private <T extends PrimaryKeyPerformanceTestEntity> void insertTest(Class<T> clazz, String displayName) throws Exception{
         StopWatch stopWatch = ParallelTestTimeExecutionListener.threadLocalStopWatch.get();
+        EntityManager em = getThreadSafeEntityManager();
+
         for (int i = 0; i < repeatTestTime; i++) {
-            try {
-                stopWatch.start(displayName + " # " + i);
-                T entity = clazz.getDeclaredConstructor().newInstance();
-                em.persist(entity);
-                stopWatch.stop();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            EntityTransaction transaction = em.getTransaction();
+            transaction.begin();
+
+            T entity = clazz.getDeclaredConstructor().newInstance();
+
+            stopWatch.start(displayName + " # " + i);
+
+            em.persist(entity);
+            transaction.commit();
+
+            stopWatch.stop();
+
+
         }
+    }
+
+    private EntityManager getThreadSafeEntityManager(){
+        EntityManager em = entityManagerThreadLocal.get();
+        if(em == null){
+            em = emf.createEntityManager();
+            entityManagerThreadLocal.set(em);
+        }
+        return em;
     }
 }
