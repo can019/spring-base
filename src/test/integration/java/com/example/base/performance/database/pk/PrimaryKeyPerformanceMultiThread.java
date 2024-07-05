@@ -7,8 +7,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -33,10 +35,12 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @Testcontainers
 @TestExecutionListeners(value = {ParallelTestTimeExecutionListener.class}, mergeMode = TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Import(PrimaryKeyPerformanceMultiThreadInternal.class)
 public class PrimaryKeyPerformanceMultiThread {
 
-    @PersistenceUnit
-    private EntityManagerFactory emf;
+    @Autowired
+    PrimaryKeyPerformanceMultiThreadInternal internal;
+
 
     private final static ThreadLocal<EntityManager> entityManagerThreadLocal;
 
@@ -93,29 +97,16 @@ public class PrimaryKeyPerformanceMultiThread {
 
     private <T extends PrimaryKeyPerformanceTestEntity> void insertTest(Class<T> clazz, String displayName) throws Exception{
         StopWatch stopWatch = ParallelTestTimeExecutionListener.threadLocalStopWatch.get();
-        EntityManager em = getThreadSafeEntityManager();
 
         for (int i = 0; i < repeatTestTime; i++) {
-            EntityTransaction transaction = em.getTransaction();
-            transaction.begin();
-
             T entity = clazz.getDeclaredConstructor().newInstance();
 
             stopWatch.start(displayName + " # " + i);
 
-            em.persist(entity);
-            transaction.commit();
+            internal.persistEntity(entity);
 
             stopWatch.stop();
         }
     }
 
-    private EntityManager getThreadSafeEntityManager(){
-        EntityManager em = entityManagerThreadLocal.get();
-        if(em == null){
-            em = emf.createEntityManager();
-            entityManagerThreadLocal.set(em);
-        }
-        return em;
-    }
 }
