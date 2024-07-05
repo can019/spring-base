@@ -15,18 +15,8 @@ import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-@DataJpaTest(properties = {"spring.profiles.active=test",
-        "logging.level.org.springframework=ERROR",
-        "logging.level.com.example.base=ERROR",
-        "spring.main.banner-mode=off",
-        "logging.level.root=ERROR",
-        "spring.jpa.properties.hibernate.show_sql=false",
-        "spring.jpa.properties.hibernate.use_sql_comments=false",
-        "spring.jpa.properties.hibernate.highlight_sql=false",
-        "logging.level.org.hibernate.SQL=OFF",
-        "logging.level.org.hibernate.orm.jdbc.bind=OFF",
-})
-@ActiveProfiles("test")
+@DataJpaTest
+@ActiveProfiles("silence")
 @Testcontainers
 @TestExecutionListeners(value = {TestTimeExecutionListener.class}, mergeMode = TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)

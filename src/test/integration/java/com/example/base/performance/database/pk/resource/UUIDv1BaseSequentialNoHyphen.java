@@ -8,7 +8,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.context.annotation.Profile;
 
 @Entity
-@Profile("test")
+@Profile({"test" , "silence"})
 public class UUIDv1BaseSequentialNoHyphen implements PrimaryKeyPerformanceTestEntity {
     @Id
     @Column(name="ID",columnDefinition = "BINARY(16)")

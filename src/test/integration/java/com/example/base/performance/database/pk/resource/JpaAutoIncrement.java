@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 import org.springframework.context.annotation.Profile;
 
 @Entity
-@Profile("test")
+@Profile({"test" , "silence"})
 public class JpaAutoIncrement implements PrimaryKeyPerformanceTestEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -20,18 +20,8 @@ import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-@DataJpaTest(properties = {"spring.profiles.active=test",
-        "logging.level.org.springframework=ERROR",
-        "logging.level.com.example.base=ERROR",
-        "spring.main.banner-mode=off",
-        "logging.level.root=ERROR",
-        "spring.jpa.properties.hibernate.show_sql=false",
-        "spring.jpa.properties.hibernate.use_sql_comments=false",
-        "spring.jpa.properties.hibernate.highlight_sql=false",
-        "logging.level.org.hibernate.SQL=OFF",
-        "logging.level.org.hibernate.orm.jdbc.bind=OFF",
-})
-@ActiveProfiles("test")
+@DataJpaTest
+@ActiveProfiles("silence")
 @Testcontainers
 @TestExecutionListeners(value = {ParallelTestTimeExecutionListener.class}, mergeMode = TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -48,12 +38,18 @@ public class PrimaryKeyPerformanceTestMultiThread {
         entityManagerThreadLocal = new ThreadLocal<EntityManager>();
     }
 
-    private final static int repeatTestTime = 5000  ;
+    private final static int repeatTestTime = 10;
 
     @DynamicPropertySource
     static void hikariPool(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.hikari.minimum-idle", ()-> 11);
         registry.add("spring.datasource.hikari.maximum-pool-size", ()-> 11);
+    }
+
+    @DynamicPropertySource
+    static void silenceLog4j2(DynamicPropertyRegistry registry) {
+        String yamlFilePath = "src/main/resources/log4j2-silence.yml";
+        registry.add("log4j2.configurationFile", ()->"file:" + yamlFilePath);
     }
 
     @Container

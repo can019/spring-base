@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-@Profile("test")
+@Profile({"test" , "silence"})
 public class PrimaryKeyPerformanceMultiThreadInternal {
     @PersistenceContext
     EntityManager em;

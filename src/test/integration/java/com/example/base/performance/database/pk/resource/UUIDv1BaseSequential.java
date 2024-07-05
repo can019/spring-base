@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Profile;
 import java.util.UUID;
 
 @Entity
-@Profile("test")
+@Profile({"test" , "silence"})
 public class UUIDv1BaseSequential implements PrimaryKeyPerformanceTestEntity {
     @Id
     @Column(name="ID",columnDefinition = "BINARY(16)")
