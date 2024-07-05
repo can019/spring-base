@@ -23,7 +23,7 @@ public class StopWatchUtil {
         // CSV 파일 쓰기
         try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
             // CSV 파일 헤더 작성
-            writer.println("Task Name,times,Total Time (nano second)");
+            writer.println("Task Name,Total Time (nano second)");
 
             for (StopWatch.TaskInfo taskInfo : taskInfoList) {
                 String taskName = taskInfo.getTaskName();
