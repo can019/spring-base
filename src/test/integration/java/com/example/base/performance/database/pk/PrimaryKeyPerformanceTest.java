@@ -1,7 +1,7 @@
 package com.example.base.performance.database.pk;
 
 import com.example.base.performance.database.pk.resource.*;
-import com.example.base.test.util.stopwatch.ParallelTestTimeExecutionListener;
+import com.example.base.test.util.ParallelTestTimeExecutionListener;
 import jakarta.persistence.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,7 +10,11 @@ import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StopWatch;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
@@ -42,7 +46,13 @@ public class PrimaryKeyPerformanceTest {
         entityManagerThreadLocal = new ThreadLocal<EntityManager>();
     }
 
-    private final static int repeatTestTime = 100;
+    private final static int repeatTestTime = 5000  ;
+
+    @DynamicPropertySource
+    static void hikariPool(DynamicPropertyRegistry registry) {
+        registry.add("spring.datasource.hikari.minimum-idle", ()-> 11);
+        registry.add("spring.datasource.hikari.maximum-pool-size", ()-> 11);
+    }
 
     @Container
     static MySQLContainer<?> mysqlContainer = new MySQLContainer<>("mysql:8.0.32")
@@ -99,8 +109,6 @@ public class PrimaryKeyPerformanceTest {
             transaction.commit();
 
             stopWatch.stop();
-
-
         }
     }
 
