@@ -2,12 +2,11 @@ package com.example.base.test.util;
 
 import com.example.base.test.util.stopwatch.StopWatchUtil;
 import org.springframework.test.context.TestContext;
-import org.springframework.test.context.support.AbstractTestExecutionListener;
 import org.springframework.util.StopWatch;
 
 import java.util.UUID;
 
-public class TestTimeExecutionListener extends AbstractTestExecutionListener {
+public class TestTimeExecutionListener extends AbstractTestTimeExecutionListener {
 
     private StopWatch stopWatch;
 
@@ -15,7 +14,6 @@ public class TestTimeExecutionListener extends AbstractTestExecutionListener {
     public void beforeTestClass(TestContext testContext) throws Exception {
         super.beforeTestClass(testContext);
         stopWatch = new StopWatch(testContext.getTestClass().getSimpleName());
-        System.out.println("Running test '" + testContext.getTestClass().getSimpleName() + "'...");
     }
 
     @Override
@@ -34,12 +32,8 @@ public class TestTimeExecutionListener extends AbstractTestExecutionListener {
 
     @Override
     public void afterTestClass(TestContext testContext) throws Exception {
-        System.out.println(stopWatch.prettyPrint());
-        System.out.println("Test '" + testContext.getTestClass().getSimpleName() + "' finished after " + stopWatch.getTotalTimeSeconds() + " seconds.");
-
-        StopWatchUtil.exportCsv(stopWatch, exportCsvPathResolver(testContext));
-
         super.afterTestClass(testContext);
+        System.out.println("Test '" + testContext.getTestClass().getSimpleName() + "' finished after " + stopWatch.getTotalTimeSeconds() + " seconds.");
     }
 
     private String exportCsvPathResolver(TestContext testContext){
