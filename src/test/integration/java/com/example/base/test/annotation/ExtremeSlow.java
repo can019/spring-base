@@ -2,12 +2,11 @@ package com.example.base.test.annotation;
 
 import org.junit.jupiter.api.Tag;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Inherited;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
-@Inherited
-@Target({ElementType.METHOD, ElementType.TYPE})
+@Target({ ElementType.TYPE, ElementType.METHOD })
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
 @Tag("Extreme-slow")
 public @interface ExtremeSlow {
 }
