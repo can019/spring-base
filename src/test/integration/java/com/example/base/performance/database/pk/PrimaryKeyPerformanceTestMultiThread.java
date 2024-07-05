@@ -1,6 +1,7 @@
 package com.example.base.performance.database.pk;
 
 import com.example.base.performance.database.pk.resource.*;
+import com.example.base.test.annotation.ExtremeSlow;
 import com.example.base.test.util.ParallelTestTimeExecutionListener;
 import jakarta.persistence.*;
 import org.junit.jupiter.api.DisplayName;
@@ -26,6 +27,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @TestExecutionListeners(value = {ParallelTestTimeExecutionListener.class}, mergeMode = TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import(PrimaryKeyPerformanceMultiThreadInternal.class)
+@ExtremeSlow
 public class PrimaryKeyPerformanceTestMultiThread {
 
     @Autowired

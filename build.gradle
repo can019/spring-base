@@ -94,13 +94,17 @@ tasks.withType(JacocoReport) {
 }
 
 tasks.withType(Test){
-	useJUnitPlatform()
 	maxParallelForks = Runtime.runtime.availableProcessors()
 }
 
 task integrationTest(type: Test) {
 	testClassesDirs = sourceSets.integrationTest.output.classesDirs
 	classpath = sourceSets.integrationTest.runtimeClasspath
+
+	useJUnitPlatform {
+		excludeTags('Extreme-slow')
+	}
+
 	jacoco {
 		destinationFile = layout.buildDirectory.file("jacoco/${name}.exec").get().asFile
 	}
@@ -109,6 +113,11 @@ task integrationTest(type: Test) {
 task unitTest(type: Test) {
 	testClassesDirs = sourceSets.unitTest.output.classesDirs
 	classpath = sourceSets.unitTest.runtimeClasspath
+
+	useJUnitPlatform {
+		excludeTags('Extreme-slow')
+	}
+
 	jacoco {
 		destinationFile = layout.buildDirectory.file("jacoco/${name}.exec").get().asFile
 	}

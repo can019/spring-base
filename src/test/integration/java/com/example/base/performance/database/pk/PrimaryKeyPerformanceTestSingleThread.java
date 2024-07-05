@@ -1,6 +1,7 @@
 package com.example.base.performance.database.pk;
 
 import com.example.base.performance.database.pk.resource.*;
+import com.example.base.test.annotation.ExtremeSlow;
 import com.example.base.test.util.TestTimeExecutionListener;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -21,6 +22,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @TestExecutionListeners(value = {TestTimeExecutionListener.class}, mergeMode = TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Commit
+@ExtremeSlow
 public class PrimaryKeyPerformanceTestSingleThread {
 
     @PersistenceContext
