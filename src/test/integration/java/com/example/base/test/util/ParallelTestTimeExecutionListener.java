@@ -11,12 +11,16 @@ public class ParallelTestTimeExecutionListener extends AbstractTestExecutionList
     public static final ThreadLocal<StopWatch> threadLocalStopWatch =
             ThreadLocal.withInitial(StopWatch::new);
 
+    private StopWatch stopWatch;
+
     public static final UUID randomUUID = UUID.randomUUID();
 
     @Override
     public void beforeTestClass(TestContext testContext) throws Exception {
         super.beforeTestClass(testContext);
         System.out.println("Running test '" + testContext.getTestClass().getSimpleName() + "'...");
+        stopWatch = new StopWatch();
+        stopWatch.start("Total");
     }
 
     @Override
@@ -35,7 +39,9 @@ public class ParallelTestTimeExecutionListener extends AbstractTestExecutionList
     @Override
     public void afterTestClass(TestContext testContext) throws Exception {
         super.afterTestClass(testContext);
+        stopWatch.stop();
         System.out.println("The test has been completed" + testContext.getTestClass().getSimpleName());
+        System.out.println(stopWatch.prettyPrint());
     }
 
     private String exportCsvPathResolver(TestContext testContext){
