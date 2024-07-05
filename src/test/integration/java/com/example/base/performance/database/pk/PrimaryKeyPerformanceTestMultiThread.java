@@ -36,7 +36,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @TestExecutionListeners(value = {ParallelTestTimeExecutionListener.class}, mergeMode = TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import(PrimaryKeyPerformanceMultiThreadInternal.class)
-public class PrimaryKeyPerformanceMultiThread {
+public class PrimaryKeyPerformanceTestMultiThread {
 
     @Autowired
     PrimaryKeyPerformanceMultiThreadInternal internal;
