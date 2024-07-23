@@ -1,7 +1,8 @@
 package com.example.base.domain.user.controller;
 
-import com.example.base.domain.user.domain.User;
-import com.example.base.domain.user.service.UserService;
+import com.github.can019.domain.user.controller.UserController;
+import com.github.can019.domain.user.domain.User;
+import com.github.can019.domain.user.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,8 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static com.example.base.global.util.convertor.TypeConvertor.hexStringToByte;
-import static com.example.base.global.util.generator.UUID.generateSequentialUUIDV1WithoutHyphen;
+import static com.github.can019.global.util.convertor.TypeConvertor.hexStringToByte;
+import static com.github.can019.global.util.generator.UUID.generateSequentialUUIDV1WithoutHyphen;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;

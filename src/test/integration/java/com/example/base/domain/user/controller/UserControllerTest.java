@@ -1,6 +1,6 @@
 package com.example.base.domain.user.controller;
 
-import com.example.base.domain.user.domain.User;
+import com.github.can019.domain.user.domain.User;
 import jakarta.persistence.EntityManager;
 import net.minidev.json.JSONObject;
 import net.minidev.json.parser.JSONParser;
@@ -10,8 +10,8 @@ import com.example.base.test.util.WithContextControllerTestBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MvcResult;
 
-import static com.example.base.global.util.convertor.TypeConvertor.byteArrayToHexString;
-import static com.example.base.global.util.convertor.TypeConvertor.hexStringToByte;
+import static com.github.can019.global.util.convertor.TypeConvertor.byteArrayToHexString;
+import static com.github.can019.global.util.convertor.TypeConvertor.hexStringToByte;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

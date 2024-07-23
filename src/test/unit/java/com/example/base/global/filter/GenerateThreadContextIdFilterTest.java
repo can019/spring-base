@@ -1,6 +1,6 @@
 package com.example.base.global.filter;
 
-import com.example.base.global.filter.GenerateThreadContextIdFilter;
+import com.github.can019.global.filter.GenerateThreadContextIdFilter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import org.apache.logging.log4j.ThreadContext;

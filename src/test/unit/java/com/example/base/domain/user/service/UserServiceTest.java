@@ -1,8 +1,9 @@
 package com.example.base.domain.user.service;
 
-import com.example.base.domain.user.domain.User;
-import com.example.base.domain.user.repository.UserRepository;
-import com.example.base.global.util.convertor.TypeConvertor;
+import com.github.can019.domain.user.domain.User;
+import com.github.can019.domain.user.repository.UserRepository;
+import com.github.can019.domain.user.service.UserService;
+import com.github.can019.global.util.convertor.TypeConvertor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

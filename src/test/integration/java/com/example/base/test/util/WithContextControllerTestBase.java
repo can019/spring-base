@@ -1,7 +1,7 @@
 package com.example.base.test.util;
 
 
-import com.example.base.BaseApplication;
+import com.github.can019.BaseApplication;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Disabled;
 import org.springframework.beans.factory.annotation.Autowired;

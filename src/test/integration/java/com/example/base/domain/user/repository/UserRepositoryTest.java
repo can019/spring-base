@@ -1,8 +1,9 @@
 package com.example.base.domain.user.repository;
 
-import com.example.base.BaseApplication;
-import com.example.base.domain.user.domain.User;
+import com.github.can019.BaseApplication;
+import com.github.can019.domain.user.domain.User;
 
+import com.github.can019.domain.user.repository.UserRepository;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

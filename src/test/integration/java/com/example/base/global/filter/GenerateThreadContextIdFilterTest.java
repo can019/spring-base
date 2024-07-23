@@ -1,5 +1,6 @@
 package com.example.base.global.filter;
 
+import com.github.can019.global.filter.GenerateThreadContextIdFilter;
 import org.apache.logging.log4j.ThreadContext;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Nested;

@@ -1,6 +1,6 @@
 package com.example.base.global.exception;
 
-import com.example.base.global.exception.UnknownException;
+import com.github.can019.global.exception.UnknownException;
 import org.junit.jupiter.api.*;
 import org.springframework.http.HttpStatus;
 

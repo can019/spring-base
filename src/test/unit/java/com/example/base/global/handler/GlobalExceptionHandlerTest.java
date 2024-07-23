@@ -1,8 +1,8 @@
 package com.example.base.global.handler;
 
-import com.example.base.global.exception.ApplicationException;
-import com.example.base.global.exception.UnknownException;
-import com.example.base.global.handler.GlobalExceptionHandler;
+import com.github.can019.global.exception.ApplicationException;
+import com.github.can019.global.exception.UnknownException;
+import com.github.can019.global.handler.GlobalExceptionHandler;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

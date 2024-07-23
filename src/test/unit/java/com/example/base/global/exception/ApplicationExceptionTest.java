@@ -1,6 +1,6 @@
 package com.example.base.global.exception;
 
-import com.example.base.global.exception.ApplicationException;
+import com.github.can019.global.exception.ApplicationException;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.*;

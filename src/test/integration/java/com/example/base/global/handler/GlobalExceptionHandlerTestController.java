@@ -1,6 +1,6 @@
 package com.example.base.global.handler;
 
-import com.example.base.global.exception.ApplicationException;
+import com.github.can019.global.exception.ApplicationException;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

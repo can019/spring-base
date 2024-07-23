@@ -12,7 +12,7 @@ public class UUIDTest {
     @Test
     @Disabled("외부 라이브러리로 test x")
     void uuidV1은_uuid_스펙과_같아야한다(){
-        java.util.UUID uuidv1 = UUID.generateSequentialUUIDV1();
+        java.util.UUID uuidv1 = com.github.can019.global.util.generator.UUID.generateSequentialUUIDV1();
     }
 
     @Test
@@ -21,7 +21,7 @@ public class UUIDTest {
         final int TEST_TIME = 1000000;
 
         for(int i = 0; i < TEST_TIME; i++){
-            originArrayList.add(UUID.generateSequentialUUIDV1WithoutHyphen());
+            originArrayList.add(com.github.can019.global.util.generator.UUID.generateSequentialUUIDV1WithoutHyphen());
         }
         List<String> sortedArrayList = new ArrayList(originArrayList);
         Collections.sort(sortedArrayList);
