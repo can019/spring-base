@@ -53,3 +53,6 @@ wrapper/
 logs/
 
 .github/scripts/__pycache__/
+
+
+worker/
