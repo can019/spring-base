@@ -113,6 +113,26 @@ spring:
 spring:
   config:
     activate:
+      on-profile: staging
+  docker:
+    compose:
+      enabled: false
+  jpa:
+    hibernate:
+      ddl-auto: none # validate 또는 none
+    hikari:
+      connection-timeout: 3000
+      validation-timeout: 3000
+      minimum-idle: 5
+      max-lifetime: 240000
+      maximum-pool-size: 20**
+    logging:
+      level:
+        com.zaxxer.hikari: INFO
+---
+spring:
+  config:
+    activate:
       on-profile: prod
   docker:
     compose:
