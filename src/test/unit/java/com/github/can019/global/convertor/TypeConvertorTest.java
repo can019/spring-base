@@ -1,4 +1,4 @@
-package com.example.base.global.convertor;
+package com.github.can019.global.convertor;
 
 import com.github.can019.global.util.convertor.TypeConvertor;
 import org.junit.jupiter.api.DisplayName;

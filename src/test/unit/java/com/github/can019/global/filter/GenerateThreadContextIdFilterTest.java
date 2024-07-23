@@ -1,4 +1,4 @@
-package com.example.base.global.filter;
+package com.github.can019.global.filter;
 
 import com.github.can019.global.filter.GenerateThreadContextIdFilter;
 import jakarta.servlet.FilterChain;

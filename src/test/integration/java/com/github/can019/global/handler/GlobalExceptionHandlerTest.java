@@ -1,4 +1,4 @@
-package com.example.base.global.handler;
+package com.github.can019.global.handler;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.example.base.global.handler.GlobalExceptionHandlerTestController.*;
+import static com.github.can019.global.handler.GlobalExceptionHandlerTestController.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 

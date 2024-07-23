@@ -1,4 +1,4 @@
-package com.example.base.global.util.generator;
+package com.github.can019.global.util.generator;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;

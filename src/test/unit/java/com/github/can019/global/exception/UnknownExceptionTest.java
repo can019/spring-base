@@ -1,4 +1,4 @@
-package com.example.base.global.exception;
+package com.github.can019.global.exception;
 
 import com.github.can019.global.exception.UnknownException;
 import org.junit.jupiter.api.*;

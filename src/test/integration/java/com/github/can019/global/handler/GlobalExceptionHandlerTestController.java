@@ -1,4 +1,4 @@
-package com.example.base.global.handler;
+package com.github.can019.global.handler;
 
 import com.github.can019.global.exception.ApplicationException;
 import org.springframework.context.annotation.Profile;

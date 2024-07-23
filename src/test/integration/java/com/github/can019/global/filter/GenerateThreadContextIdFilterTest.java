@@ -1,6 +1,5 @@
-package com.example.base.global.filter;
+package com.github.can019.global.filter;
 
-import com.github.can019.global.filter.GenerateThreadContextIdFilter;
 import org.apache.logging.log4j.ThreadContext;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Nested;
@@ -13,7 +12,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.UUID;
 
-import static com.example.base.global.filter.ThreadContextCheckFilter.EMPTY_THREAD_CONTEXT_MESSAGE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -94,7 +92,7 @@ public class GenerateThreadContextIdFilterTest {
             try {
                 mockMvc.perform(get("/foo"));
             } catch (RuntimeException e) {
-                assertThat(e.getMessage()).isEqualTo(EMPTY_THREAD_CONTEXT_MESSAGE);
+                assertThat(e.getMessage()).isEqualTo(ThreadContextCheckFilter.EMPTY_THREAD_CONTEXT_MESSAGE);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

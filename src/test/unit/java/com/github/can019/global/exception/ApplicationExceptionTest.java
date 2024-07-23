@@ -1,4 +1,4 @@
-package com.example.base.global.exception;
+package com.github.can019.global.exception;
 
 import com.github.can019.global.exception.ApplicationException;
 import static org.assertj.core.api.Assertions.assertThat;

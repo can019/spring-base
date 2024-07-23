@@ -1,4 +1,4 @@
-package com.example.base.test.util;
+package com.github.can019.test.util;
 
 
 import com.github.can019.BaseApplication;
