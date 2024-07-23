@@ -55,6 +55,14 @@ spring:
       on-profile: local
   logging:
     config: classpath:log4j2.yml
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
 ---
 spring:
   config:
