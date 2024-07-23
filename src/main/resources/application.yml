@@ -29,6 +29,25 @@ spring:
   output:
     ansi:
       enabled: ALWAYS
+management:
+  endpoints:
+    enabled-by-default: false # endpoint 모두 비활성화
+    web:
+      exposure:
+        include: "health, info"
+    jmx:
+      exposure:
+        include: "metrics"
+
+  endpoint:
+    health:
+      enabled: true
+      show-details: always # health 엔드포인트의 세부 정보를 항상 표시
+    metrics:
+      enabled: true # metrics 엔드포인트 활성화
+    info:
+      enabled: true # info 엔드포인트 활성화
+
 ---
 spring:
   config:
