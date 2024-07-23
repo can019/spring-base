@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - WithFilterByWebMvcTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>WithFilterByWebMvcTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.github.can019.global.filter.html">com.github.can019.global.filter</a> &gt; GenerateThreadContextIdFilterTest$WithFilterByWebMvcTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">3</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">1.250s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+<li>
+<a href="#tab2">Standard error</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">GenerateThreadContextIdFilter가_나중에_결합된_경우_Thread_context에_id가_존재하면_안된다()</td>
+<td class="success">1.138s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">GenerateThreadContextIdFilter가_먼저_결합된_경우_Thread_context에_id가_존재해야한다()</td>
+<td class="success">0.061s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">controller에서_thread_id는_같아야한다()</td>
+<td class="success">0.051s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>?[32m[INFO ]?[m 07-23 02:46:57 [Test worker] 
+ [] Could not detect default configuration classes for test class [com.github.can019.global.filter.GenerateThreadContextIdFilterTest$WithFilterByWebMvcTest]: WithFilterByWebMvcTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+
+?[32m[INFO ]?[m 07-23 02:46:57 [Test worker] 
+ [] Found @SpringBootConfiguration com.github.can019.BaseApplication for test class com.github.can019.global.filter.GenerateThreadContextIdFilterTest$WithFilterByWebMvcTest
+
+?[32m[INFO ]?[m 07-23 02:46:57 [Test worker] 
+ [] Restart disabled due to context in which it is running
+
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+?[32m :: Spring Boot :: ?[39m              ?[2m (v3.2.5)?[0;39m
+
+?[32m[INFO ]?[m 07-23 02:46:59 [Test worker] 
+ [] Initializing Spring TestDispatcherServlet ''
+
+?[32m[INFO ]?[m 07-23 02:46:59 [Test worker] 
+ [] Initializing Servlet ''
+
+?[32m[INFO ]?[m 07-23 02:46:59 [Test worker] 
+ [] Completed initialization in 2 ms
+
+?[32m[INFO ]?[m 07-23 02:47:00 [Test worker] 
+ [] Initializing Spring TestDispatcherServlet ''
+
+?[32m[INFO ]?[m 07-23 02:47:00 [Test worker] 
+ [] Initializing Servlet ''
+
+?[32m[INFO ]?[m 07-23 02:47:00 [Test worker] 
+ [] Completed initialization in 0 ms
+
+?[32m[INFO ]?[m 07-23 02:47:00 [Test worker] 
+ [] Initializing Spring TestDispatcherServlet ''
+
+?[32m[INFO ]?[m 07-23 02:47:00 [Test worker] 
+ [] Initializing Servlet ''
+
+?[32m[INFO ]?[m 07-23 02:47:00 [Test worker] 
+ [] Completed initialization in 0 ms
+
+?[32m[INFO ]?[m 07-23 02:47:00 [Test worker] 
+ [] Initializing Spring TestDispatcherServlet ''
+
+?[32m[INFO ]?[m 07-23 02:47:00 [Test worker] 
+ [] Initializing Servlet ''
+
+?[32m[INFO ]?[m 07-23 02:47:00 [Test worker] 
+ [] Completed initialization in 0 ms
+
+</pre>
+</span>
+</div>
+<div id="tab2" class="tab">
+<h2>Standard error</h2>
+<span class="code">
+<pre>WARNING: A Java agent has been loaded dynamically (/home/runner/.gradle/caches/modules-2/files-2.1/net.bytebuddy/byte-buddy-agent/1.14.13/979ce25f7d3096a2e82214ba7dc972a05ce7a171/byte-buddy-agent-1.14.13.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 8.7</a> at Jul 23, 2024, 2:47:02 AM</p>
+</div>
+</div>
+</body>
+</html>
