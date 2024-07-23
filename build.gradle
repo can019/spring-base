@@ -67,15 +67,15 @@ configurations {
 
 sourceSets {
 	integrationTest {
-		java.srcDir "$projectDir/src/test/integration/java"
-		resources.srcDir "$projectDir/src/test/integration/resources"
+		java.srcDir "$projectDir/src/integration/java"
+		resources.srcDir "$projectDir/src/integration/resources"
 		compileClasspath += main.output + test.output
 		runtimeClasspath += main.output + test.output
 	}
 
 	unitTest {
-		java.srcDir "$projectDir/src/test/unit/java"
-		resources.srcDir "$projectDir/src/test/unit/resources"
+		java.srcDir "$projectDir/src/unit/java"
+		resources.srcDir "$projectDir/src/unit/resources"
 		compileClasspath += main.output + test.output
 		runtimeClasspath += main.output + test.output
 	}
