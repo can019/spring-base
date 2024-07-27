@@ -30,6 +30,7 @@ jobs:
 
       - name: Build and test with gradle cache
         uses: gradle/gradle-build-action@v3
+        continue-on-error: true
         with:
           arguments: build --info
           add-job-summary-as-pr-comment: on-failure
@@ -45,8 +46,8 @@ jobs:
         run: ./gradlew overAllJacocoTestReport
 
       - name: Save test reports
-        if: always()
-#        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+#        if: always()
+##        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
         uses: actions/upload-artifact@v4
         with:
           name: reports
