@@ -3,10 +3,11 @@
 Commit id로 정렬
 
 ### Latest
-- [593b69b83c2e179d8f81250a7818e90ec61e2ae6](docs/develop/593b69b83c2e179d8f81250a7818e90ec61e2ae6/index.md)
+- [be9db55ca20514f37952c165c5a1613620e2db74](docs/develop/be9db55ca20514f37952c165c5a1613620e2db74/index.md)
 <!-- Latest -->
 
 ### Other
+- [593b69b83c2e179d8f81250a7818e90ec61e2ae6](docs/develop/593b69b83c2e179d8f81250a7818e90ec61e2ae6/index.md)
 - [e7522208dede542a1bbb1e53227cc93821ed1a71](docs/develop/e7522208dede542a1bbb1e53227cc93821ed1a71/index.md)
 - [d17c485354741a557d9dee21b86c4462a8d9a850](docs/develop/d17c485354741a557d9dee21b86c4462a8d9a850/index.md)
 - [eab837de1295ef8161a16c81d97aaa8eee0e2dca](docs/develop/eab837de1295ef8161a16c81d97aaa8eee0e2dca/index.md)
