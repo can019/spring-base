@@ -45,12 +45,68 @@ jobs:
         run: ./gradlew overAllJacocoTestReport
 
       - name: Save test reports
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+#        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
         uses: actions/upload-artifact@v3
         with:
           name: reports
           path: |
             build/reports
+            build/test-results
+
+#      - name: publish unit test results
+#        uses: EnricoMi/publish-unit-test-result-action@v2
+#        if: always()
+#        with:
+#          files: 'build/test-results/unitTest/TEST-*.xml'
+#          check_name: 'Unit test'
+#
+#      - name: publish integration test results
+#        uses: EnricoMi/publish-unit-test-result-action@v2
+#        if: always()
+#        with:
+#          files: 'build/test-results/integrationTest/TEST-*.xml'
+#          check_name: 'Integration test'
+#
+#      - name: Add total coverage to PR
+#        id: jacocoAll
+#        uses: madrapps/jacoco-report@v1.6.1
+#        if: always()
+#        with:
+#          paths: |
+#            ${{ github.workspace }}/**/build/reports/jacoco/total/index.xml
+#          title: Total coverage
+#          token: ${{ secrets.GITHUB_TOKEN }}
+#
+#      - name: Add unit coverage to PR
+#        id: jacocoUnit
+#        uses: madrapps/jacoco-report@v1.6.1
+#        if: always()
+#        with:
+#          paths: |
+#            ${{ github.workspace }}/**/build/reports/jacoco/unitTest/index.xml
+#          title: Unit test coverage
+#          token: ${{ secrets.GITHUB_TOKEN }}
+#
+#      - name: Add integration coverage to PR
+#        id: jacocoIntegration
+#        uses: madrapps/jacoco-report@v1.6.1
+#        if: always()
+#        with:
+#          paths: |
+#            ${{ github.workspace }}/**/build/reports/jacoco/integrationTest/index.xml
+#          title: Integration test coverage
+#          token: ${{ secrets.GITHUB_TOKEN }}
+
+  publish-junit-result-pr-comment:
+    needs: [build]
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - name: Download test reports
+        uses: actions/download-artifact@v3
+        with:
+          name: reports
+          path: build/test-results
 
       - name: publish unit test results
         uses: EnricoMi/publish-unit-test-result-action@v2
@@ -66,95 +122,65 @@ jobs:
           files: 'build/test-results/integrationTest/TEST-*.xml'
           check_name: 'Integration test'
 
-      - name: Add total coverage to PR
-        id: jacocoAll
-        uses: madrapps/jacoco-report@v1.6.1
-        if: always()
-        with:
-          paths: |
-            ${{ github.workspace }}/**/build/reports/jacoco/total/index.xml
-          title: Total coverage
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Add unit coverage to PR
-        id: jacocoUnit
-        uses: madrapps/jacoco-report@v1.6.1
-        if: always()
-        with:
-          paths: |
-            ${{ github.workspace }}/**/build/reports/jacoco/unitTest/index.xml
-          title: Unit test coverage
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Add integration coverage to PR
-        id: jacocoIntegration
-        uses: madrapps/jacoco-report@v1.6.1
-        if: always()
-        with:
-          paths: |
-            ${{ github.workspace }}/**/build/reports/jacoco/integrationTest/index.xml
-          title: Integration test coverage
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-  Commit_reports:
-    if: github.ref == 'refs/heads/develop'
-    runs-on: ubuntu-latest
-    permissions: write-all
-    needs: [build]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Get commit ID
-        id: get_commit_id
-        run: echo "::set-output name=commit_id::$(git rev-parse HEAD)"
-
-      - name: Set environment variable
-        run: echo "COMMIT_ID=${{ steps.get_commit_id.outputs.commit_id }}" >> $GITHUB_ENV
-
-      - name: Checkout gh-pages branch
-        uses: actions/checkout@v4
-        with:
-          ref: 'gh-pages'
-          fetch-depth: '0'
-
-      - name: Configure Git # commit을 위한 git config 설정
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-
-      - name: Download test reports
-        uses: actions/download-artifact@v3
-        with:
-          name: reports
-          path: build/reports
-
-      - name: ls
-        run: ls -R
-
-      - name: Commit reports to gh-pages branch (merged into develop)
-        run: |
-          
-          mkdir -p docs/develop/$COMMIT_ID
-          
-          cp -R build/reports/tests docs/develop/$COMMIT_ID
-          cp -R build/reports/jacoco docs/develop/$COMMIT_ID
-          
-          echo "## Test reports" > docs/develop/$COMMIT_ID/tests/index.md
-          echo "[Unit](/unit/index.html) | [Integration](integrationTest/index.html)" >> docs/develop/$COMMIT_ID/tests/index.md
-          
-          echo "## Coverage reports" > docs/develop/$COMMIT_ID/jacoco/index.md
-          echo "[Total](total/html/index.html)  | [Unit](unitTest/html/index.html) | [Integration](integrationTest/html/index.html)" >> docs/develop/$COMMIT_ID/jacoco/index.md
-
-          ls build/reports/tests
-          rm -rf build/reports
-          
-          git add docs -f
-          git status
-          git commit -m "docs: Test reports $COMMIT_ID"
-
-      - name: Push changes to gh-pages branch
-        uses: ad-m/github-push-action@master
-        with:
-          branch: gh-pages
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+#  Commit_reports:
+#    if: github.ref == 'refs/heads/develop'
+#    runs-on: ubuntu-latest
+#    permissions: write-all
+#    needs: [build]
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v4
+#
+#      - name: Get commit ID
+#        id: get_commit_id
+#        run: echo "::set-output name=commit_id::$(git rev-parse HEAD)"
+#
+#      - name: Set environment variable
+#        run: echo "COMMIT_ID=${{ steps.get_commit_id.outputs.commit_id }}" >> $GITHUB_ENV
+#
+#      - name: Checkout gh-pages branch
+#        uses: actions/checkout@v4
+#        with:
+#          ref: 'gh-pages'
+#          fetch-depth: '0'
+#
+#      - name: Configure Git # commit을 위한 git config 설정
+#        run: |
+#          git config --local user.email "action@github.com"
+#          git config --local user.name "GitHub Action"
+#
+#      - name: Download test reports
+#        uses: actions/download-artifact@v3
+#        with:
+#          name: reports
+#          path: build/reports
+#
+#      - name: ls
+#        run: ls -R
+#
+#      - name: Commit reports to gh-pages branch (merged into develop)
+#        run: |
+#
+#          mkdir -p docs/develop/$COMMIT_ID
+#
+#          cp -R build/reports/tests docs/develop/$COMMIT_ID
+#          cp -R build/reports/jacoco docs/develop/$COMMIT_ID
+#
+#          echo "## Test reports" > docs/develop/$COMMIT_ID/tests/index.md
+#          echo "[Unit](/unit/index.html) | [Integration](integrationTest/index.html)" >> docs/develop/$COMMIT_ID/tests/index.md
+#
+#          echo "## Coverage reports" > docs/develop/$COMMIT_ID/jacoco/index.md
+#          echo "[Total](total/html/index.html)  | [Unit](unitTest/html/index.html) | [Integration](integrationTest/html/index.html)" >> docs/develop/$COMMIT_ID/jacoco/index.md
+#
+#          ls build/reports/tests
+#          rm -rf build/reports
+#
+#          git add docs -f
+#          git status
+#          git commit -m "docs: Test reports $COMMIT_ID"
+#
+#      - name: Push changes to gh-pages branch
+#        uses: ad-m/github-push-action@master
+#        with:
+#          branch: gh-pages
+#          github_token: ${{ secrets.GITHUB_TOKEN }}
