@@ -108,6 +108,9 @@ jobs:
           name: reports
           path: build/test-results
 
+      - name: Check all dir
+        run: ls -R
+
       - name: publish unit test results
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
