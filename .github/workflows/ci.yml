@@ -53,50 +53,6 @@ jobs:
             build/reports
             build/test-results
 
-#      - name: publish unit test results
-#        uses: EnricoMi/publish-unit-test-result-action@v2
-#        if: always()
-#        with:
-#          files: 'build/test-results/unitTest/TEST-*.xml'
-#          check_name: 'Unit test'
-#
-#      - name: publish integration test results
-#        uses: EnricoMi/publish-unit-test-result-action@v2
-#        if: always()
-#        with:
-#          files: 'build/test-results/integrationTest/TEST-*.xml'
-#          check_name: 'Integration test'
-#
-#      - name: Add total coverage to PR
-#        id: jacocoAll
-#        uses: madrapps/jacoco-report@v1.6.1
-#        if: always()
-#        with:
-#          paths: |
-#            ${{ github.workspace }}/**/build/reports/jacoco/total/index.xml
-#          title: Total coverage
-#          token: ${{ secrets.GITHUB_TOKEN }}
-#
-#      - name: Add unit coverage to PR
-#        id: jacocoUnit
-#        uses: madrapps/jacoco-report@v1.6.1
-#        if: always()
-#        with:
-#          paths: |
-#            ${{ github.workspace }}/**/build/reports/jacoco/unitTest/index.xml
-#          title: Unit test coverage
-#          token: ${{ secrets.GITHUB_TOKEN }}
-#
-#      - name: Add integration coverage to PR
-#        id: jacocoIntegration
-#        uses: madrapps/jacoco-report@v1.6.1
-#        if: always()
-#        with:
-#          paths: |
-#            ${{ github.workspace }}/**/build/reports/jacoco/integrationTest/index.xml
-#          title: Integration test coverage
-#          token: ${{ secrets.GITHUB_TOKEN }}
-
   publish-junit-result-pr-comment:
     needs: [build]
     runs-on: ubuntu-latest
@@ -122,7 +78,7 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
-          files: './build/test-results/test-results/integrationTest/TEST-*.xml'
+          files: './build/test-results/integrationTest/TEST-*.xml'
           check_name: 'Integration test'
 
 #  Commit_reports:
