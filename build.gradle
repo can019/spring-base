@@ -25,8 +25,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-devtools'
 	implementation 'com.fasterxml.uuid:java-uuid-generator:5.0.0'
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	runtimeOnly 'com.h2database:h2'
@@ -38,7 +37,9 @@ dependencies {
 	// docker compose
 	testAndDevelopmentOnly("org.springframework.boot:spring-boot-docker-compose")
 
-	// 테스트에서 lombok 사용
+	// lombok
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
 	testCompileOnly 'org.projectlombok:lombok'
 	testAnnotationProcessor 'org.projectlombok:lombok'
 
@@ -58,6 +59,7 @@ dependencies {
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
+		extendsFrom testAnnotationProcessor
 	}
 	integrationTestImplementation.extendsFrom implementation
 	integrationTestImplementation.extendsFrom testImplementation
@@ -66,6 +68,12 @@ configurations {
 	unitTestImplementation.extendsFrom implementation
 	unitTestImplementation.extendsFrom testImplementation
 	unitTestRuntimeOnly.extendsFrom testRuntimeOnly
+
+	unitTestCompileOnly.extendsFrom testCompileOnly
+	unitTestAnnotationProcessor.extendsFrom testAnnotationProcessor
+	integrationTestCompileOnly.extendsFrom testCompileOnly
+	integrationTestAnnotationProcessor.extendsFrom testAnnotationProcessor
+
 }
 
 sourceSets {
@@ -96,6 +104,9 @@ tasks.withType(Test){
 }
 
 task integrationTest(type: Test) {
+    description = 'Integration test' // 태스크 설명
+	group = 'test'
+
 	testClassesDirs = sourceSets.integrationTest.output.classesDirs
 	classpath = sourceSets.integrationTest.runtimeClasspath
 	jacoco {
@@ -104,6 +115,9 @@ task integrationTest(type: Test) {
 }
 
 task unitTest(type: Test) {
+	description = 'Unit test' // 태스크 설명
+	group = 'test'
+
 	testClassesDirs = sourceSets.unitTest.output.classesDirs
 	classpath = sourceSets.unitTest.runtimeClasspath
 	jacoco {
