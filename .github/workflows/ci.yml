@@ -115,14 +115,14 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
-          files: 'build/test-results/unitTest/TEST-*.xml'
+          files: './build/test-results/unitTest/TEST-*.xml'
           check_name: 'Unit test'
 
       - name: publish integration test results
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
-          files: 'build/test-results/integrationTest/TEST-*.xml'
+          files: './build/test-results/integrationTest/TEST-*.xml'
           check_name: 'Integration test'
 
 #  Commit_reports:
