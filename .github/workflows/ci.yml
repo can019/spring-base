@@ -45,6 +45,7 @@ jobs:
         run: ./gradlew overAllJacocoTestReport
 
       - name: Save test reports
+        if: always()
 #        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
         uses: actions/upload-artifact@v4
         with:
@@ -69,14 +70,12 @@ jobs:
 
       - name: publish unit test results
         uses: EnricoMi/publish-unit-test-result-action@v2
-        if: always()
         with:
           files: './build/test-results/unitTest/TEST-*.xml'
           check_name: 'Unit test'
 
       - name: publish integration test results
         uses: EnricoMi/publish-unit-test-result-action@v2
-        if: always()
         with:
           files: './build/test-results/integrationTest/TEST-*.xml'
           check_name: 'Integration test'
