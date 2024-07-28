@@ -81,7 +81,7 @@ jobs:
           check_name: 'Integration test'
 
   set-github-pages-resource:
-    if: github.event.action == 'published'
+#    if: github.event.action == 'published'
     runs-on: ubuntu-latest
     permissions: write-all
     needs: [build]
@@ -109,7 +109,6 @@ jobs:
         with:
           name: docs
           path: |
-            .github/config/gh-pages.yml
             .github/scripts/
 
       - name: Checkout gh-pages branch
@@ -127,8 +126,8 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install python3 dependencies
-        run: pip3 install pyyaml
+#      - name: Install python3 dependencies
+#        run: pip3 install pyyaml
 
       - name: Download scripts
         uses: actions/download-artifact@v4
@@ -138,64 +137,65 @@ jobs:
 
       - name: ls
         run: ls -R
-
-      - name: Download test reports
-        uses: actions/download-artifact@v4
-        with:
-          name: reports
-          path: build
-
-      - name: ls
-        run: ls -R
-
-      - name: Create commit id directory
-        run: mkdir -p docs/release/$RELEASE_VERSION
-
-      - name: Create release version index.md
-        run: |
-          echo "# List" > docs/release/$RELEASE_VERSION/index.md
-          
-          git add docs/release/$RELEASE_VERSION/index.md -f
-          git commit -m "docs: Init $RELEASE_VERSION ($COMMIT_ID) index.md"
-
-      - name: Commit junit5 reports
-        run: |
-          cp -R build/reports/tests docs/release/$RELEASE_VERSION
-          
-          echo "## Test reports" > docs/release/$RELEASE_VERSION/tests/index.md
-          echo "[Unit](/unitTest/index.html) | [Integration](integrationTest/index.html)" >> docs/release/$RELEASE_VERSION/tests/index.md
-          
-          echo "- [Junit5](tests/index.md)" >> docs/release/$RELEASE_VERSION/index.md
-          
-          git add docs/release/$RELEASE_VERSION/tests -f
-          git add docs/release/$RELEASE_VERSION/index.md -f
-          
-          git status
-          
-          git commit -m "docs: Junit5 reports release $RELEASE_VERSION ($COMMIT_ID)"
-
-      - name: Commit jacoco reports
-        run: |
-          cp -R build/reports/jacoco docs/release/$RELEASE_VERSION
-          
-          echo "## Coverage reports" > docs/release/$RELEASE_VERSION/jacoco/index.md
-          echo "[Total](total/html/index.html)  | [Unit](unitTest/html/index.html) | [Integration](integrationTest/html/index.html)" >> docs/release/$RELEASE_VERSION/jacoco/index.md
-
-          echo "- [Jacoco](jacoco/index.md)" >> docs/release/$RELEASE_VERSION/index.md
-          
-          git add docs/release/$RELEASE_VERSION/jacoco -f
-          git add docs/release/$RELEASE_VERSION/index.md -f
-          
-          git status
-          
-          git commit -m "docs: Jacoco reports release $RELEASE_VERSION ($COMMIT_ID)"
+#
+#      - name: Download test reports
+#        uses: actions/download-artifact@v4
+#        with:
+#          name: reports
+#          path: build
+#
+#      - name: ls
+#        run: ls -R
+#
+#      - name: Create commit id directory
+#        run: mkdir -p docs/release/$RELEASE_VERSION
+#
+#      - name: Create release version index.md
+#        run: |
+#          echo "# List" > docs/release/$RELEASE_VERSION/index.md
+#
+#          git add docs/release/$RELEASE_VERSION/index.md -f
+#          git commit -m "docs: Init $RELEASE_VERSION ($COMMIT_ID) index.md"
+#
+#      - name: Commit junit5 reports
+#        run: |
+#          cp -R build/reports/tests docs/release/$RELEASE_VERSION
+#
+#          echo "## Test reports" > docs/release/$RELEASE_VERSION/tests/index.md
+#          echo "[Unit](/unitTest/index.html) | [Integration](integrationTest/index.html)" >> docs/release/$RELEASE_VERSION/tests/index.md
+#
+#          echo "- [Junit5](tests/index.md)" >> docs/release/$RELEASE_VERSION/index.md
+#
+#          git add docs/release/$RELEASE_VERSION/tests -f
+#          git add docs/release/$RELEASE_VERSION/index.md -f
+#
+#          git status
+#
+#          git commit -m "docs: Junit5 reports release $RELEASE_VERSION ($COMMIT_ID)"
+#
+#      - name: Commit jacoco reports
+#        run: |
+#          cp -R build/reports/jacoco docs/release/$RELEASE_VERSION
+#
+#          echo "## Coverage reports" > docs/release/$RELEASE_VERSION/jacoco/index.md
+#          echo "[Total](total/html/index.html)  | [Unit](unitTest/html/index.html) | [Integration](integrationTest/html/index.html)" >> docs/release/$RELEASE_VERSION/jacoco/index.md
+#
+#          echo "- [Jacoco](jacoco/index.md)" >> docs/release/$RELEASE_VERSION/index.md
+#
+#          git add docs/release/$RELEASE_VERSION/jacoco -f
+#          git add docs/release/$RELEASE_VERSION/index.md -f
+#
+#          git status
+#
+#          git commit -m "docs: Jacoco reports release $RELEASE_VERSION ($COMMIT_ID)"
 
       - name: Link docs
         run: |
-          python3 .github/scripts/link_docs.py -f docs/release/index.md -c "- [$RELEASE_VERSION]($RELEASE_VERSION/index.md)"
+          ls -R
+#          python3 .github/scripts/link_docs.py -f docs/release/index.md -c "- [$RELEASE_VERSION]($RELEASE_VERSION/index.md)"
           
-          git add docs/release/index.md -f
-          git commit -m "docs: Link $RELEASE_VERSION ($COMMIT_ID)"
+#          git add docs/release/index.md -f
+#          git commit -m "docs: Link $RELEASE_VERSION ($COMMIT_ID)"
 
 
       - name: Push changes to gh-pages branch
