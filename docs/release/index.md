@@ -7,4 +7,4 @@ Commit id로 정렬
 <!-- Latest -->
 
 ### Other
-<!-- Latest -->
+<!-- Other -->
