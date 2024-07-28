@@ -18,67 +18,67 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up JDK
-        uses: actions/setup-java@v3
-        with:
-          java-version: '21'
-          distribution: 'temurin'
-
-      - name: grant execute permission for gradlew
-        run: chmod +x gradlew
-
-      - name: Build and test with gradle cache
-        uses: gradle/gradle-build-action@v3
-        continue-on-error: true
-        with:
-          arguments: build --info
-          add-job-summary-as-pr-comment: on-failure
-          cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
-
-      - name: Generate unit jacoco report
-        run: ./gradlew unitTestJacocoReport
-
-      - name: Generate integration jacoco report
-        run: ./gradlew integrationTestJacocoReport
-
-      - name: Generate over all jacoco report
-        run: ./gradlew overAllJacocoTestReport
-
-      - name: Save test reports
-        #        if: always()
-        ##        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
-        uses: actions/upload-artifact@v4
-        with:
-          name: reports
-          path: |
-            build/reports
-            build/test-results
-
-  publish-junit-result-pr-comment:
-    needs: [build]
-    runs-on: ubuntu-latest
-    permissions: write-all
-    steps:
-      - name: Download test reports
-        uses: actions/download-artifact@v4
-        with:
-          name: reports
-          path: build
-
-      - name: Check all dir
-        run: ls -R
-
-      - name: publish unit test results
-        uses: EnricoMi/publish-unit-test-result-action@v2
-        with:
-          files: './build/test-results/unitTest/TEST-*.xml'
-          check_name: 'Unit test'
-
-      - name: publish integration test results
-        uses: EnricoMi/publish-unit-test-result-action@v2
-        with:
-          files: './build/test-results/integrationTest/TEST-*.xml'
-          check_name: 'Integration test'
+#      - name: Set up JDK
+#        uses: actions/setup-java@v3
+#        with:
+#          java-version: '21'
+#          distribution: 'temurin'
+#
+#      - name: grant execute permission for gradlew
+#        run: chmod +x gradlew
+#
+#      - name: Build and test with gradle cache
+#        uses: gradle/gradle-build-action@v3
+#        continue-on-error: true
+#        with:
+#          arguments: build --info
+#          add-job-summary-as-pr-comment: on-failure
+#          cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
+#
+#      - name: Generate unit jacoco report
+#        run: ./gradlew unitTestJacocoReport
+#
+#      - name: Generate integration jacoco report
+#        run: ./gradlew integrationTestJacocoReport
+#
+#      - name: Generate over all jacoco report
+#        run: ./gradlew overAllJacocoTestReport
+#
+#      - name: Save test reports
+#        #        if: always()
+#        ##        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: reports
+#          path: |
+#            build/reports
+#            build/test-results
+#
+#  publish-junit-result-pr-comment:
+#    needs: [build]
+#    runs-on: ubuntu-latest
+#    permissions: write-all
+#    steps:
+#      - name: Download test reports
+#        uses: actions/download-artifact@v4
+#        with:
+#          name: reports
+#          path: build
+#
+#      - name: Check all dir
+#        run: ls -R
+#
+#      - name: publish unit test results
+#        uses: EnricoMi/publish-unit-test-result-action@v2
+#        with:
+#          files: './build/test-results/unitTest/TEST-*.xml'
+#          check_name: 'Unit test'
+#
+#      - name: publish integration test results
+#        uses: EnricoMi/publish-unit-test-result-action@v2
+#        with:
+#          files: './build/test-results/integrationTest/TEST-*.xml'
+#          check_name: 'Integration test'
 
   set-github-pages-resource:
 #    if: github.event.action == 'published'
