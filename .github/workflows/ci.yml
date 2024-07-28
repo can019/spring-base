@@ -184,7 +184,7 @@ jobs:
       - name: Link docs
         run: |
           cat docs/release/index.md
-          python3 .link_docs.py -f docs/release/index.md -c "- [$RELEASE_VERSION]($RELEASE_VERSION/index.md)"
+          python3 link_docs.py -f docs/release/index.md -c "- [$RELEASE_VERSION]($RELEASE_VERSION/index.md)"
           cat docs/release/index.md
           
           git add docs/release/index.md -f
