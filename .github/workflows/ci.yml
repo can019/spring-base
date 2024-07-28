@@ -1,9 +1,5 @@
 name: "CI"
 on:
-  push:
-    branches:
-      - 'main'
-      - 'develop'
   pull_request:
     branches:
       - '**'
@@ -11,6 +7,9 @@ on:
       # - '*/*'       # matches every branch containing a single '/'
       # - '**'        # matches every branch
       # - '!main'   # excludes main
+  release:
+    types: [published]
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -46,8 +45,8 @@ jobs:
         run: ./gradlew overAllJacocoTestReport
 
       - name: Save test reports
-#        if: always()
-##        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+        #        if: always()
+        ##        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
         uses: actions/upload-artifact@v4
         with:
           name: reports
@@ -81,65 +80,126 @@ jobs:
           files: './build/test-results/integrationTest/TEST-*.xml'
           check_name: 'Integration test'
 
-#  Commit_reports:
-#    if: github.ref == 'refs/heads/develop'
-#    runs-on: ubuntu-latest
-#    permissions: write-all
-#    needs: [build]
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v4
-#
-#      - name: Get commit ID
-#        id: get_commit_id
-#        run: echo "::set-output name=commit_id::$(git rev-parse HEAD)"
-#
-#      - name: Set environment variable
-#        run: echo "COMMIT_ID=${{ steps.get_commit_id.outputs.commit_id }}" >> $GITHUB_ENV
-#
-#      - name: Checkout gh-pages branch
-#        uses: actions/checkout@v4
-#        with:
-#          ref: 'gh-pages'
-#          fetch-depth: '0'
-#
-#      - name: Configure Git # commit을 위한 git config 설정
-#        run: |
-#          git config --local user.email "action@github.com"
-#          git config --local user.name "GitHub Action"
-#
-#      - name: Download test reports
-#        uses: actions/download-artifact@v3
-#        with:
-#          name: reports
-#          path: build/reports
-#
-#      - name: ls
-#        run: ls -R
-#
-#      - name: Commit reports to gh-pages branch (merged into develop)
-#        run: |
-#
-#          mkdir -p docs/develop/$COMMIT_ID
-#
-#          cp -R build/reports/tests docs/develop/$COMMIT_ID
-#          cp -R build/reports/jacoco docs/develop/$COMMIT_ID
-#
-#          echo "## Test reports" > docs/develop/$COMMIT_ID/tests/index.md
-#          echo "[Unit](/unit/index.html) | [Integration](integrationTest/index.html)" >> docs/develop/$COMMIT_ID/tests/index.md
-#
-#          echo "## Coverage reports" > docs/develop/$COMMIT_ID/jacoco/index.md
-#          echo "[Total](total/html/index.html)  | [Unit](unitTest/html/index.html) | [Integration](integrationTest/html/index.html)" >> docs/develop/$COMMIT_ID/jacoco/index.md
-#
-#          ls build/reports/tests
-#          rm -rf build/reports
-#
-#          git add docs -f
-#          git status
-#          git commit -m "docs: Test reports $COMMIT_ID"
-#
-#      - name: Push changes to gh-pages branch
-#        uses: ad-m/github-push-action@master
-#        with:
-#          branch: gh-pages
-#          github_token: ${{ secrets.GITHUB_TOKEN }}
+  set-github-pages-resource:
+    if: github.event.action == 'published'
+    runs-on: ubuntu-latest
+    permissions: write-all
+    needs: [build]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: 'main'
+
+      - name: Get commit ID
+        id: get_commit_id
+        run: echo "::set-output name=commit_id::$(git rev-parse HEAD)"
+
+      - name: Get release version
+        id: get_release_version
+        run: echo "::set-output name=release_version::${{ github.event.release.tag_name }}"
+
+      - name: Set environment variable
+        run: |
+          echo "COMMIT_ID=${{ steps.get_commit_id.outputs.commit_id }}" >> $GITHUB_ENV
+          echo "RELEASE_VERSION=${{ steps.get_release_version.outputs.release_version }}" >> $GITHUB_ENV
+
+      - name: Save scripts, config
+        uses: actions/upload-artifact@v4
+        with:
+          name: docs
+          path: |
+            .github/config/gh-pages.yml
+            .github/scripts/
+
+      - name: Checkout gh-pages branch
+        uses: actions/checkout@v4
+        with:
+          ref: 'gh-pages'
+
+      - name: Configure Git # commit을 위한 git config 설정
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+      - name: Set python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install python3 dependencies
+        run: pip3 install pyyaml
+
+      - name: Download scripts
+        uses: actions/download-artifact@v4
+        with:
+          name: docs
+          path: .github
+
+      - name: ls
+        run: ls -R
+
+      - name: Download test reports
+        uses: actions/download-artifact@v4
+        with:
+          name: reports
+          path: build
+
+      - name: ls
+        run: ls -R
+
+      - name: Create commit id directory
+        run: mkdir -p docs/release/$RELEASE_VERSION
+
+      - name: Create release version index.md
+        run: |
+          echo "# List" > docs/release/$RELEASE_VERSION/index.md
+          
+          git add docs/release/$RELEASE_VERSION/index.md -f
+          git commit -m "docs: Init $RELEASE_VERSION ($COMMIT_ID) index.md"
+
+      - name: Commit junit5 reports
+        run: |
+          cp -R build/reports/tests docs/release/$RELEASE_VERSION
+          
+          echo "## Test reports" > docs/release/$RELEASE_VERSION/tests/index.md
+          echo "[Unit](/unitTest/index.html) | [Integration](integrationTest/index.html)" >> docs/release/$RELEASE_VERSION/tests/index.md
+          
+          echo "- [Junit5](tests/index.md)" >> docs/release/$RELEASE_VERSION/index.md
+          
+          git add docs/release/$RELEASE_VERSION/tests -f
+          git add docs/release/$RELEASE_VERSION/index.md -f
+          
+          git status
+          
+          git commit -m "docs: Junit5 reports release $RELEASE_VERSION ($COMMIT_ID)"
+
+      - name: Commit jacoco reports
+        run: |
+          cp -R build/reports/jacoco docs/release/$RELEASE_VERSION
+          
+          echo "## Coverage reports" > docs/release/$RELEASE_VERSION/jacoco/index.md
+          echo "[Total](total/html/index.html)  | [Unit](unitTest/html/index.html) | [Integration](integrationTest/html/index.html)" >> docs/release/$RELEASE_VERSION/jacoco/index.md
+
+          echo "- [Jacoco](jacoco/index.md)" >> docs/release/$RELEASE_VERSION/index.md
+          
+          git add docs/release/$RELEASE_VERSION/jacoco -f
+          git add docs/release/$RELEASE_VERSION/index.md -f
+          
+          git status
+          
+          git commit -m "docs: Jacoco reports release $RELEASE_VERSION ($COMMIT_ID)"
+
+      - name: Link docs
+        run: |
+          python3 .github/scripts/link_docs.py -f docs/release/index.md -c "- [$RELEASE_VERSION]($RELEASE_VERSION/index.md)"
+          
+          git add docs/release/index.md -f
+          git commit -m "docs: Link $RELEASE_VERSION ($COMMIT_ID)"
+
+
+      - name: Push changes to gh-pages branch
+        uses: ad-m/github-push-action@master
+        with:
+          branch: gh-pages
+          github_token: ${{ secrets.GITHUB_TOKEN }}
