@@ -133,7 +133,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: docs
-          path: scripts/link_docs.py
+          path: .
 
       - name: ls
         run: ls -R
