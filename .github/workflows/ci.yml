@@ -18,70 +18,68 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-#      - name: Set up JDK
-#        uses: actions/setup-java@v3
-#        with:
-#          java-version: '21'
-#          distribution: 'temurin'
-#
-#      - name: grant execute permission for gradlew
-#        run: chmod +x gradlew
-#
-#      - name: Build and test with gradle cache
-#        uses: gradle/gradle-build-action@v3
-#        continue-on-error: true
-#        with:
-#          arguments: build --info
-#          add-job-summary-as-pr-comment: on-failure
-#          cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
-#
-#      - name: Generate unit jacoco report
-#        run: ./gradlew unitTestJacocoReport
-#
-#      - name: Generate integration jacoco report
-#        run: ./gradlew integrationTestJacocoReport
-#
-#      - name: Generate over all jacoco report
-#        run: ./gradlew overAllJacocoTestReport
-#
-#      - name: Save test reports
-#        #        if: always()
-#        ##        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
-#        uses: actions/upload-artifact@v4
-#        with:
-#          name: reports
-#          path: |
-#            build/reports
-#            build/test-results
-#
-#  publish-junit-result-pr-comment:
-#    needs: [build]
-#    runs-on: ubuntu-latest
-#    permissions: write-all
-#    steps:
-#      - name: Download test reports
-#        uses: actions/download-artifact@v4
-#        with:
-#          name: reports
-#          path: build
-#
-#      - name: Check all dir
-#        run: ls -R
-#
-#      - name: publish unit test results
-#        uses: EnricoMi/publish-unit-test-result-action@v2
-#        with:
-#          files: './build/test-results/unitTest/TEST-*.xml'
-#          check_name: 'Unit test'
-#
-#      - name: publish integration test results
-#        uses: EnricoMi/publish-unit-test-result-action@v2
-#        with:
-#          files: './build/test-results/integrationTest/TEST-*.xml'
-#          check_name: 'Integration test'
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build and test with gradle cache
+        uses: gradle/gradle-build-action@v3
+        continue-on-error: true
+        with:
+          arguments: build --info
+          add-job-summary-as-pr-comment: on-failure
+          cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
+
+      - name: Generate unit jacoco report
+        run: ./gradlew unitTestJacocoReport
+
+      - name: Generate integration jacoco report
+        run: ./gradlew integrationTestJacocoReport
+
+      - name: Generate over all jacoco report
+        run: ./gradlew overAllJacocoTestReport
+
+      - name: Save test reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports
+          path: |
+            build/reports
+            build/test-results
+
+  publish-junit-result-pr-comment:
+    needs: [build]
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - name: Download test reports
+        uses: actions/download-artifact@v4
+        with:
+          name: reports
+          path: build
+
+      - name: Check all dir
+        run: ls -R
+
+      - name: publish unit test results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        with:
+          files: './build/test-results/unitTest/TEST-*.xml'
+          check_name: 'Unit test'
+
+      - name: publish integration test results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        with:
+          files: './build/test-results/integrationTest/TEST-*.xml'
+          check_name: 'Integration test'
 
   set-github-pages-resource:
-#    if: github.event.action == 'published'
+    if: github.event.action == 'published'
     runs-on: ubuntu-latest
     permissions: write-all
     needs: [build]
@@ -126,78 +124,71 @@ jobs:
         with:
           python-version: '3.10'
 
-#      - name: Install python3 dependencies
-#        run: pip3 install pyyaml
-
       - name: Download scripts
         uses: actions/download-artifact@v4
         with:
           name: docs
           path: .
 
+      - name: Download test reports
+        uses: actions/download-artifact@v4
+        with:
+          name: reports
+          path: build
+
       - name: ls
         run: ls -R
-#
-#      - name: Download test reports
-#        uses: actions/download-artifact@v4
-#        with:
-#          name: reports
-#          path: build
-#
-#      - name: ls
-#        run: ls -R
-#
-#      - name: Create commit id directory
-#        run: mkdir -p docs/release/$RELEASE_VERSION
-#
-#      - name: Create release version index.md
-#        run: |
-#          echo "# List" > docs/release/$RELEASE_VERSION/index.md
-#
-#          git add docs/release/$RELEASE_VERSION/index.md -f
-#          git commit -m "docs: Init $RELEASE_VERSION ($COMMIT_ID) index.md"
-#
-#      - name: Commit junit5 reports
-#        run: |
-#          cp -R build/reports/tests docs/release/$RELEASE_VERSION
-#
-#          echo "## Test reports" > docs/release/$RELEASE_VERSION/tests/index.md
-#          echo "[Unit](/unitTest/index.html) | [Integration](integrationTest/index.html)" >> docs/release/$RELEASE_VERSION/tests/index.md
-#
-#          echo "- [Junit5](tests/index.md)" >> docs/release/$RELEASE_VERSION/index.md
-#
-#          git add docs/release/$RELEASE_VERSION/tests -f
-#          git add docs/release/$RELEASE_VERSION/index.md -f
-#
-#          git status
-#
-#          git commit -m "docs: Junit5 reports release $RELEASE_VERSION ($COMMIT_ID)"
-#
-#      - name: Commit jacoco reports
-#        run: |
-#          cp -R build/reports/jacoco docs/release/$RELEASE_VERSION
-#
-#          echo "## Coverage reports" > docs/release/$RELEASE_VERSION/jacoco/index.md
-#          echo "[Total](total/html/index.html)  | [Unit](unitTest/html/index.html) | [Integration](integrationTest/html/index.html)" >> docs/release/$RELEASE_VERSION/jacoco/index.md
-#
-#          echo "- [Jacoco](jacoco/index.md)" >> docs/release/$RELEASE_VERSION/index.md
-#
-#          git add docs/release/$RELEASE_VERSION/jacoco -f
-#          git add docs/release/$RELEASE_VERSION/index.md -f
-#
-#          git status
-#
-#          git commit -m "docs: Jacoco reports release $RELEASE_VERSION ($COMMIT_ID)"
+
+      - name: Create commit id directory
+        run: mkdir -p docs/release/$RELEASE_VERSION
+
+      - name: Create release version index.md
+        run: |
+          echo "# List" > docs/release/$RELEASE_VERSION/index.md
+
+          git add docs/release/$RELEASE_VERSION/index.md -f
+          git commit -m "docs: Init $RELEASE_VERSION ($COMMIT_ID) index.md"
+
+      - name: Commit junit5 reports
+        run: |
+          cp -R build/reports/tests docs/release/$RELEASE_VERSION
+
+          echo "## Test reports" > docs/release/$RELEASE_VERSION/tests/index.md
+          echo "[Unit](/unitTest/index.html) | [Integration](integrationTest/index.html)" >> docs/release/$RELEASE_VERSION/tests/index.md
+
+          echo "- [Junit5](tests/index.md)" >> docs/release/$RELEASE_VERSION/index.md
+
+          git add docs/release/$RELEASE_VERSION/tests -f
+          git add docs/release/$RELEASE_VERSION/index.md -f
+
+          git status
+
+          git commit -m "docs: Junit5 reports release $RELEASE_VERSION ($COMMIT_ID)"
+
+      - name: Commit jacoco reports
+        run: |
+          cp -R build/reports/jacoco docs/release/$RELEASE_VERSION
+
+          echo "## Coverage reports" > docs/release/$RELEASE_VERSION/jacoco/index.md
+          echo "[Total](total/html/index.html)  | [Unit](unitTest/html/index.html) | [Integration](integrationTest/html/index.html)" >> docs/release/$RELEASE_VERSION/jacoco/index.md
+
+          echo "- [Jacoco](jacoco/index.md)" >> docs/release/$RELEASE_VERSION/index.md
+
+          git add docs/release/$RELEASE_VERSION/jacoco -f
+          git add docs/release/$RELEASE_VERSION/index.md -f
+
+          git status
+
+          git commit -m "docs: Jacoco reports release $RELEASE_VERSION ($COMMIT_ID)"
 
       - name: Link docs
         run: |
-          python3 link_docs.py -f docs/release/index.md -c "- [!](!/index.md)"
           cat docs/release/index.md
-
-#          python3 .github/scripts/link_docs.py -f docs/release/index.md -c "- [$RELEASE_VERSION]($RELEASE_VERSION/index.md)"
+          python3 .link_docs.py -f docs/release/index.md -c "- [$RELEASE_VERSION]($RELEASE_VERSION/index.md)"
+          cat docs/release/index.md
           
-#          git add docs/release/index.md -f
-#          git commit -m "docs: Link $RELEASE_VERSION ($COMMIT_ID)"
+          git add docs/release/index.md -f
+          git commit -m "docs: Link $RELEASE_VERSION ($COMMIT_ID)"
 
 
       - name: Push changes to gh-pages branch
