@@ -191,7 +191,7 @@ jobs:
 
       - name: Link docs
         run: |
-          python3 .github/scripts/link_docs.py -f docs/release/index.md -c "- [!](!/index.md)"
+          python3 link_docs.py -f docs/release/index.md -c "- [!](!/index.md)"
           cat docs/release/index.md
 
 #          python3 .github/scripts/link_docs.py -f docs/release/index.md -c "- [$RELEASE_VERSION]($RELEASE_VERSION/index.md)"
