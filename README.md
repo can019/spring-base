@@ -1,23 +1,20 @@
 # Spring-base
-## description
 - 개인 프로젝트에 사용 될 Spring-boot boiler plate입니다.
-- 현재 template-repostiroy로는 설정하지 않았습니다.
+- Template repository로 설정되어있습니다.
 
-## Docs
-[Github page](https://can019.github.io/spring-base)
+## 특징
+### Github pages
+Test 정보는 release가 publish되면 [Github page](https://can019.github.io/spring-base)에 자동으로 upload됩니다.
 
-## Docker 설치
-- mac x86에서만 확인되었습니다.
+### Release note 자동화
 
-`./init.sh` 실행
+Release가 되면 자동으로 workflow가 draft를 작성해줍니다.
 
-``` shell
-./init.sh
-```
-## 환경
+## 프로젝트 환경
 - Java version: 21
   - distribution: 'temuri
 - Gradle version: 8.7
+
 ## 환경변수
 ### 유효 프로퍼티
 - local_docker
@@ -26,6 +23,43 @@
 - prod
 - test
 
-### 세팅
+### 환경변수 세팅
 #### Intellij community
 > ![intellij-community-env](./docs/resource/intellij_comunity_env_set.png)
+
+## 초기 설정
+### Github pages
+main branch에서 아래 명령어를 입력 해 gh-pages branch로 checkout 합니다.
+```shell
+git checkout --orphan gh-pages
+```
+아래 명령어를 통해 git에 캐시된 정보를 모두 삭제합니다.
+```shell
+git rm --cached -r .
+```
+아래 명령어를 통해 Github pages 구성에 필요한 정보를 gh-pages에 push 합니다.
+```shell
+rm -rf docs
+mkdir docs
+cp -R gh-pages/docs ./
+
+git add docs
+git commit -m "init"
+git push origin gh-pages
+```
+
+이 다음 repository setting에 들어가서 github pages를 설정합니다.
+
+> ![github-repo-setting](./docs/resource/gh-pages-repo-setting.png)
+
+> ![github-gh-pages-deploy-setting](./docs/resource/gh-pages-deploy-setting.png)
+
+
+### Docker (설치)
+- mac x86에서만 확인되었습니다.
+
+`./init.sh` 실행
+
+``` shell
+./init.sh
+```
