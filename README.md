@@ -10,6 +10,11 @@ Test 정보는 release가 publish되면 [Github page](https://can019.github.io/s
 
 Release가 되면 자동으로 workflow가 draft를 작성해줍니다.
 
+### Sonar cloud를 통한 정적 분석
+
+CI에서 Sonar cloud를 이용해 정적 분석
+  - 해당 PR에서 추가된 source code에 대해 평가
+
 ## 프로젝트 환경
 - Java version: 21
   - distribution: 'temuri
@@ -63,3 +68,6 @@ git push origin gh-pages
 ``` shell
 ./init.sh
 ```
+
+### Sonar cloud
+[Sonar cloud repository 설정](https://chaerim1001.tistory.com/94)
