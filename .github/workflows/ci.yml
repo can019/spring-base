@@ -94,9 +94,8 @@ jobs:
       - name: grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Build and test with gradle cache
+      - name: Sonar analysis with gradle cache
         uses: gradle/gradle-build-action@v3
-        continue-on-error: true
         with:
           arguments: sonar --info
           add-job-summary-as-pr-comment: on-failure
