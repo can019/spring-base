@@ -3,6 +3,7 @@ plugins {
 	id 'org.springframework.boot' version '3.2.5'
 	id 'io.spring.dependency-management' version '1.1.4'
 	id 'jacoco'
+	id 'org.sonarqube' version '4.2.1.3168'
 }
 
 group = 'com.github.can019'
@@ -151,6 +152,16 @@ task overAllJacocoTestReport(type: JacocoReport) {
 		html.destination file("$buildDir/reports/jacoco/total/html")
 	}
 }
+
+sonar {
+	properties {
+		property 'sonar.host.url', 'https://sonarcloud.io'
+		property 'sonar.organization', 'can019'
+		property 'sonar.projectKey', 'can019_spring-base'
+		property 'sonar.coverage.jacoco.xmlReportPaths', 'build/reports/jacoco/total/index.xml'
+	}
+}
+
 
 check.dependsOn integrationTest
 check.dependsOn unitTest
