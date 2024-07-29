@@ -1,4 +1,11 @@
 # Spring-base
+![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=alert_status)
+![Coverage](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=coverage)
+![Bugs](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=bugs)
+
+프로젝트 설명...
+
+
 - 개인 프로젝트에 사용 될 Spring-boot boiler plate입니다.
 - Template repository로 설정되어있습니다.
 
