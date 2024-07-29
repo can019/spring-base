@@ -52,9 +52,13 @@ dependencies {
 			replacedBy("org.springframework.boot:spring-boot-starter-log4j2")
 		}
 	}
-
 	// actuator
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+	// rest assured
+	testImplementation 'io.rest-assured:rest-assured' // add rest-assured dependency
+	testImplementation 'org.springframework.restdocs:spring-restdocs-restassured'
+
 }
 
 configurations {
@@ -74,7 +78,6 @@ configurations {
 	unitTestAnnotationProcessor.extendsFrom testAnnotationProcessor
 	integrationTestCompileOnly.extendsFrom testCompileOnly
 	integrationTestAnnotationProcessor.extendsFrom testAnnotationProcessor
-
 }
 
 sourceSets {
