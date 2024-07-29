@@ -1,6 +1,6 @@
 package com.github.can019.domain;
 
-import io.restassured.RestAssured;
+import com.epages.restdocs.apispec.RestAssuredRestDocumentationWrapper;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +17,7 @@ import static io.restassured.RestAssured.given;
 import static org.springframework.restdocs.restassured.RestAssuredRestDocumentation.document;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ExtendWith({RestDocumentationExtension.class})
+@ExtendWith(RestDocumentationExtension.class)
 public class HelloControllerE2ETest {
 
     @LocalServerPort
@@ -26,10 +26,10 @@ public class HelloControllerE2ETest {
     private RequestSpecification spec;
 
     @BeforeEach
-    void setUp(RestDocumentationContextProvider restDocumentation) {
-        RestAssured.port = port;
+    void setUp(RestDocumentationContextProvider provider) {
+//        RestAssured.port = port;
         this.spec = new RequestSpecBuilder()
-                .addFilter(RestAssuredRestDocumentation.documentationConfiguration(restDocumentation))
+                .addFilter(RestAssuredRestDocumentation.documentationConfiguration(provider))
                 .setPort(port)
                 .build();
     }
@@ -38,7 +38,7 @@ public class HelloControllerE2ETest {
     @DisplayName("Hello get mapping")
     void hello() throws Exception {
         given(this.spec)
-                .filter(document("hello"))
+                .filter(RestAssuredRestDocumentationWrapper.document("hello","[Get] hello"))
                 .when()
                 .get("/api/v0/hello")
                 .then()

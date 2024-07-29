@@ -4,6 +4,8 @@ plugins {
 	id 'io.spring.dependency-management' version '1.1.4'
 	id 'jacoco'
 	id 'org.sonarqube' version '4.2.1.3168'
+	id "org.asciidoctor.jvm.convert" version "3.3.2"
+	id 'com.epages.restdocs-api-spec' version '0.19.2' // 1
 }
 
 group = 'com.github.can019'
@@ -59,6 +61,9 @@ dependencies {
 	testImplementation 'io.rest-assured:rest-assured' // add rest-assured dependency
 	testImplementation 'org.springframework.restdocs:spring-restdocs-restassured'
 
+	testImplementation 'com.epages:restdocs-api-spec-restassured:0.19.2' // 3
+	testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.19.2'
+
 }
 
 configurations {
@@ -95,6 +100,11 @@ sourceSets {
 		runtimeClasspath += main.output + test.output
 	}
 }
+
+ext {
+	snippetsDir = file("build/generated-snippets")
+}
+
 tasks.withType(JacocoReport) {
 	reports {
 		html.required = true
@@ -166,6 +176,20 @@ sonar {
 	}
 }
 
+asciidoctor {
+	doFirst {
+		delete file("src/main/resources/static/docs")
+	}
+	sourceDir snippetsDir
+}
+
+openapi3 {
+	server = 'http://localhost:8080'
+	title = 'SPRING-BASE'
+	description = 'Spring base'
+	version = '0.1.0'
+	format = 'yaml'
+}
 
 check.dependsOn integrationTest
 check.dependsOn unitTest
