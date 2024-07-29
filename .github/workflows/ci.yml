@@ -52,6 +52,64 @@ jobs:
             build/reports
             build/test-results
 
+      - name: Save build
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          path: |
+            build/classes
+            build/generated
+            build/libs
+            build/resources
+
+  sonar-cloud:
+    needs: [ build ]
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download test reports
+        uses: actions/download-artifact@v4
+        with:
+          name: build
+          path: build
+
+      - name: Download test reports
+        uses: actions/download-artifact@v4
+        with:
+          name: reports
+          path: build
+
+      - name: Check all dir
+        run: ls -R build
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Sonar analysis with gradle cache
+        uses: gradle/gradle-build-action@v3
+        with:
+          arguments: sonar --info
+          add-job-summary-as-pr-comment: on-failure
+          cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#
+#      - name: Analyze by Sonar-Cloud
+#        run: ./gradlew sonar --info
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
   publish-junit-result-pr-comment:
     needs: [build]
     runs-on: ubuntu-latest
