@@ -1,4 +1,18 @@
-# Spring-base
+# Spring-base 
+![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=alert_status)
+![Coverage](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=coverage)
+![Bugs](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=bugs)
+![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=vulnerabilities)
+![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=code_smells)
+![Duplicated Lines](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=duplicated_lines_density)
+![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=reliability_rating)
+![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=security_rating)
+![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=sqale_rating)
+
+
+프로젝트 설명...
+
+
 - 개인 프로젝트에 사용 될 Spring-boot boiler plate입니다.
 - Template repository로 설정되어있습니다.
 
@@ -9,6 +23,11 @@ Test 정보는 release가 publish되면 [Github page](https://can019.github.io/s
 ### Release note 자동화
 
 Release가 되면 자동으로 workflow가 draft를 작성해줍니다.
+
+### Sonar cloud를 통한 정적 분석
+
+CI에서 Sonar cloud를 이용해 정적 분석
+  - 해당 PR에서 추가된 source code에 대해 평가
 
 ## 프로젝트 환경
 - Java version: 21
@@ -63,3 +82,6 @@ git push origin gh-pages
 ``` shell
 ./init.sh
 ```
+
+### Sonar cloud
+[Sonar cloud repository 설정](https://chaerim1001.tistory.com/94)
