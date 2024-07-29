@@ -76,6 +76,15 @@ jobs:
           name: build
           path: build
 
+      - name: Download test reports
+        uses: actions/download-artifact@v4
+        with:
+          name: reports
+          path: build
+
+      - name: Check all dir
+        run: ls -R build
+
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
@@ -84,14 +93,6 @@ jobs:
 
       - name: grant execute permission for gradlew
         run: chmod +x gradlew
-
-      - name: Cache Sonar-Cloud packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
-
 
       - name: Build and test with gradle cache
         uses: gradle/gradle-build-action@v3
