@@ -64,6 +64,12 @@ dependencies {
 	testImplementation 'com.epages:restdocs-api-spec-restassured:0.19.2' // 3
 	testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.19.2'
 
+	// test container
+	testImplementation 'org.testcontainers:junit-jupiter'
+	testImplementation "org.testcontainers:mysql:1.19.8"
+	runtimeOnly 'com.mysql:mysql-connector-j'
+	testImplementation "org.testcontainers:mysql"
+
 }
 
 configurations {
