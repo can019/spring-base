@@ -9,3 +9,4 @@ validatorUrl: null
 docExpansion: none
 apisSorter: alpha
 operationsSorter: alpha
+queryConfigEnabled: true
