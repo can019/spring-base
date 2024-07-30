@@ -66,9 +66,8 @@ dependencies {
 
 	// test container
 	testImplementation 'org.testcontainers:junit-jupiter'
-	testImplementation "org.testcontainers:mysql:1.19.8"
 	runtimeOnly 'com.mysql:mysql-connector-j'
-	testImplementation "org.testcontainers:mysql"
+	testImplementation 'org.testcontainers:mysql'
 
 }
 
