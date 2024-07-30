@@ -1,13 +1,7 @@
-# Spring-base 
-![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=alert_status)
-![Coverage](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=coverage)
-![Bugs](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=bugs)
-![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=vulnerabilities)
-![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=code_smells)
-![Duplicated Lines](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=duplicated_lines_density)
-![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=reliability_rating)
-![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=security_rating)
-![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=sqale_rating)
+# Spring-base ![Coverage](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=coverage) ![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=reliability_rating) ![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=security_rating) ![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=sqale_rating) ![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=vulnerabilities) ![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=code_smells)
+
+
+
 
 
 프로젝트 설명...
