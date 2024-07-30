@@ -44,6 +44,10 @@ jobs:
       - name: Generate over all jacoco report
         run: ./gradlew overAllJacocoTestReport
 
+
+      - name: Generate OpenApi3 yml
+        run: ./gradlew openapi3 -x check
+
       - name: Save test reports
         uses: actions/upload-artifact@v4
         with:
@@ -51,6 +55,7 @@ jobs:
           path: |
             build/reports
             build/test-results
+            build/api-spec
 
       - name: Save build
         uses: actions/upload-artifact@v4
@@ -103,12 +108,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-#
-#      - name: Analyze by Sonar-Cloud
-#        run: ./gradlew sonar --info
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   publish-junit-result-pr-comment:
     needs: [build]
@@ -238,6 +237,17 @@ jobs:
           git status
 
           git commit -m "docs: Jacoco reports release $RELEASE_VERSION ($COMMIT_ID)"
+
+      - name: Commit Openapi3 yaml
+        run: |
+          cp -R build/api-spec/openapi3.yaml docs/release/$RELEASE_VERSION
+          ls docs/release/$RELEASE_VERSION
+          
+          git add docs/release/$RELEASE_VERSION/openapi3.yaml -f
+          
+          git status
+          
+          git commit -m "chore: Add openapi3 resource release $RELEASE_VERSION ($COMMIT_ID)"
 
       - name: Link docs
         run: |
