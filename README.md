@@ -1,13 +1,7 @@
-# Spring-base 
-![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=alert_status)
-![Coverage](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=coverage)
-![Bugs](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=bugs)
-![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=vulnerabilities)
-![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=code_smells)
-![Duplicated Lines](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=duplicated_lines_density)
-![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=reliability_rating)
-![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=security_rating)
-![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=sqale_rating)
+# Spring-base ![Coverage](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=coverage) ![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=reliability_rating) ![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=security_rating) ![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=sqale_rating) ![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=vulnerabilities) ![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=code_smells)
+
+
+
 
 
 프로젝트 설명...
@@ -17,17 +11,26 @@
 - Template repository로 설정되어있습니다.
 
 ## 특징
-### Github pages
-Test 정보는 release가 publish되면 [Github page](https://can019.github.io/spring-base)에 자동으로 upload됩니다.
+### 🌐 전역적, 유지보수가 쉬운 에러 핸들링
+- 모든 에러에 대한 [RFC 7807](https://datatracker.ietf.org/doc/html/rfc7807) spec response
+  - Spring core의 ProblemDeatil를 사용한 CustomException을 extends 또는 사용할 수 있습니다.
+  - Spring의 core의 `ResponseEntityExceptionHandler`을 override하여 ProblemDetail를 참조하여 일관된 에러 핸들링을 합니다.
 
-### Release note 자동화
+### 🚪 Test Container
+- Test Container를 통해 격리된 한경에서 test 수행이 가능합니다.
 
-Release가 되면 자동으로 workflow가 draft를 작성해줍니다.
+### 📝 Github pages
+- Test 정보, api명세서등 document는 release가 publish되면 [Github page](https://can019.github.io/spring-base)에 자동으로 upload됩니다.
 
-### Sonar cloud를 통한 정적 분석
+### ⚙️ Release note 자동화
 
-CI에서 Sonar cloud를 이용해 정적 분석
-  - 해당 PR에서 추가된 source code에 대해 평가
+- Release가 되면 자동으로 workflow가 draft를 작성해줍니다.
+
+### ⚙️ Sonar cloud를 통한 정적 분석
+
+- CI에서 Sonar cloud를 이용해 정적 분석을 진행합니다.
+  - 해당 PR에서 추가된 source code에 대해 평가합니다.
+
 
 ## 프로젝트 환경
 - Java version: 21
