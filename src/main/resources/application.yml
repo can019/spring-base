@@ -52,6 +52,9 @@ spring:
   config:
     activate:
       on-profile: silence
+  datasource:
+    url: jdbc:tc:mysql:8.0.32:///test
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
   main:
     banner-mode: OFF
   jpa:
@@ -65,6 +68,22 @@ spring:
 
 log4j:
   configurationFile: classpath:log4j2-silence.yml
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:tc:mysql:8.0.32:///test
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: false
+        use_sql_comments: false
+        highlight_sql: false
 ---
 spring:
   config:
