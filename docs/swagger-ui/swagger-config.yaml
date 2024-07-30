@@ -1,5 +1,8 @@
-validatorUrl: null
-docExpansion: none
 apisSorter: alpha
+docExpansion: none
 operationsSorter: alpha
 queryConfigEnabled: true
+urls:
+- name: v0.1.5
+  url: https://can019.github.io/spring-base/release/v0.1.5/openapi3.yaml
+validatorUrl: null
