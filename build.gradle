@@ -9,7 +9,7 @@ plugins {
 }
 
 group = 'com.github.can019'
-version = '0.0.1-SNAPSHOT'
+version = '0.2.0-SNAPSHOT'
 
 java {
 	sourceCompatibility = '21'
@@ -187,7 +187,7 @@ openapi3 {
 	server = 'http://localhost:8080'
 	title = 'SPRING-BASE'
 	description = 'Spring base'
-	version = '0.1.0'
+	version = '0.2.0'
 	format = 'yaml'
 }
 
