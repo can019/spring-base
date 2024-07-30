@@ -44,6 +44,10 @@ jobs:
       - name: Generate over all jacoco report
         run: ./gradlew overAllJacocoTestReport
 
+
+      - name: Generate OpenApi3 yml
+        run: ./gradlew openapi3 -x check
+
       - name: Save test reports
         uses: actions/upload-artifact@v4
         with:
@@ -51,6 +55,7 @@ jobs:
           path: |
             build/reports
             build/test-results
+            build/api-spec
 
       - name: Save build
         uses: actions/upload-artifact@v4
@@ -103,12 +108,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-#
-#      - name: Analyze by Sonar-Cloud
-#        run: ./gradlew sonar --info
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   publish-junit-result-pr-comment:
     needs: [build]
@@ -166,6 +165,7 @@ jobs:
           name: docs
           path: |
             .github/scripts/link_docs.py
+            .github/scripts/add_swagger_url.py
 
       - name: Checkout gh-pages branch
         uses: actions/checkout@v4
@@ -238,6 +238,32 @@ jobs:
           git status
 
           git commit -m "docs: Jacoco reports release $RELEASE_VERSION ($COMMIT_ID)"
+
+      - name: Install python3 dependencies for add openapi3 url to swagger config script
+        run: pip3 install pyyaml
+
+      - name: Add url to swagger config
+        run: |
+          cat docs/swagger-ui/swagger-config.yaml
+          python3 add_swagger_url.py -u https://can019.github.io/spring-base/release/$RELEASE_VERSION/openapi3.yaml -n $RELEASE_VERSION -f docs/swagger-ui/swagger-config.yaml
+          cat docs/swagger-ui/swagger-config.yaml
+          
+          echo "- [Swagger](https://can019.github.io/spring-base/swagger-ui/index.html?urls.primaryName=$RELEASE_VERSION)" >> docs/release/$RELEASE_VERSION/index.md
+          
+          git add docs/swagger-ui/swagger-config.yaml -f
+          git add docs/release/$RELEASE_VERSION/index.md -f
+          git commit -m "chore: Add $RELEASE_VERSION ($COMMIT_ID) openapi3.yaml"
+
+      - name: Commit Openapi3 yaml
+        run: |
+          cp -R build/api-spec/openapi3.yaml docs/release/$RELEASE_VERSION
+          ls docs/release/$RELEASE_VERSION
+          
+          git add docs/release/$RELEASE_VERSION/openapi3.yaml -f
+          
+          git status
+          
+          git commit -m "chore: Add openapi3 resource release $RELEASE_VERSION ($COMMIT_ID)"
 
       - name: Link docs
         run: |
