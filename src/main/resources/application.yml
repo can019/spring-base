@@ -47,7 +47,24 @@ management:
       enabled: true # metrics 엔드포인트 활성화
     info:
       enabled: true # info 엔드포인트 활성화
+---
+spring:
+  config:
+    activate:
+      on-profile: silence
+  main:
+    banner-mode: OFF
+  jpa:
+    properties:
+      hibernate:
+        show_sql: false
+        use_sql_comments: false
+        highlight_sql: false
+    hibernate:
+      ddl-auto: create
 
+log4j:
+  configurationFile: classpath:log4j2-silence.yml
 ---
 spring:
   config:
