@@ -1,7 +1,7 @@
 urls:
   - url: https://can019.github.io/spring-base/release/openapi3.yaml
     name: "API 1"
-  - url: https://can019.github.io/spring-base/release/openapi3.yaml
+  - url: https://can019.github.io/spring-base/release/openapi3_2.yaml
     name: "API 2"
   - url: https://can019.github.io/spring-base/release/openapi3.yaml
     name: "API 3"
