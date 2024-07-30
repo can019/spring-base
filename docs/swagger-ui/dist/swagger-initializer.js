@@ -3,7 +3,7 @@ window.onload = function() {
 
   // the following lines will be replaced by docker/configurator, when it runs in a docker-container
   window.ui = SwaggerUIBundle({
-    configUrl:"https://can019.github.io/spring-base/release/openapi3.yaml",
+    configUrl:"https://can019.github.io/spring-base/swagger-config.yaml",
     dom_id: '#swagger-ui',
     deepLinking: true,
     presets: [
