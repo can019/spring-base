@@ -1,9 +1,5 @@
 # Spring-base ![Coverage](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=coverage) ![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=reliability_rating) ![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=security_rating) ![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=sqale_rating) ![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=vulnerabilities) ![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=can019_spring-base&metric=code_smells)
 
-
-
-
-
 프로젝트 설명...
 
 
@@ -30,6 +26,10 @@
 
 - CI에서 Sonar cloud를 이용해 정적 분석을 진행합니다.
   - 해당 PR에서 추가된 source code에 대해 평가합니다.
+
+
+### Test 수행 시간 측정 및 export report
+- [총 수행 시간, method별 수행 시간 측정 후 csv로 export 하는 TestExecutionListener](https://github.com/can019/spring-base/pull/58)
 
 
 ## 프로젝트 환경
