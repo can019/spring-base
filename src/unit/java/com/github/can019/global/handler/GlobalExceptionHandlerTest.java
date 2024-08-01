@@ -14,50 +14,47 @@ import org.springframework.web.context.request.WebRequest;
 import static org.assertj.core.api.Assertions.*;
 
 public class GlobalExceptionHandlerTest {
-    @Nested
-    class SingleThread{
-        @Mock
-        HttpHeaders httpHeaders;
+    @Mock
+    HttpHeaders httpHeaders;
 
-        @Mock
-        WebRequest webRequest;
+    @Mock
+    WebRequest webRequest;
 
-        @Mock
-        HttpStatus givenHttpStatus;
+    @Mock
+    HttpStatus givenHttpStatus;
 
-        @Test
-        public void RuntimeException이_주어진_경우_직접적으로_핸들링이_가능해야한다() {
-            // given
-            GlobalExceptionHandler globalExceptionHandler = new GlobalExceptionHandler();
-            final String exceptionMessage = "Exception occurred";
-            RuntimeException e = new RuntimeException(exceptionMessage);
+    @Test
+    public void RuntimeException이_주어진_경우_직접적으로_핸들링이_가능해야한다() {
+        // given
+        GlobalExceptionHandler globalExceptionHandler = new GlobalExceptionHandler();
+        final String exceptionMessage = "Exception occurred";
+        RuntimeException e = new RuntimeException(exceptionMessage);
 
-            // when
-            ResponseEntity responseEntity = globalExceptionHandler.handleRuntimeException(e, webRequest);
+        // when
+        ResponseEntity responseEntity = globalExceptionHandler.handleRuntimeException(e, webRequest);
 
-            // then
-            assertThat(responseEntity.getBody()).isNotNull();
-        }
+        // then
+        assertThat(responseEntity.getBody()).isNotNull();
+    }
 
-        @Test
-        void ApplicationException이_주어진_경우_직접적으로_핸들링이_가능해야한다() throws Exception{
-            GlobalExceptionHandler globalExceptionHandler = new GlobalExceptionHandler();
-            ApplicationException e = new ApplicationException("");
+    @Test
+    void ApplicationException이_주어진_경우_직접적으로_핸들링이_가능해야한다() throws Exception{
+        GlobalExceptionHandler globalExceptionHandler = new GlobalExceptionHandler();
+        ApplicationException e = new ApplicationException("");
 
-            ResponseEntity responseEntity = globalExceptionHandler.handleRuntimeException(e, webRequest);
+        ResponseEntity responseEntity = globalExceptionHandler.handleRuntimeException(e, webRequest);
 
-            assertThat(responseEntity.getBody()).isNotNull();
-        }
+        assertThat(responseEntity.getBody()).isNotNull();
+    }
 
-        @Test
-        void UnknownException이_주어진_경우_직접적으로_핸들링이_가능해야한다() throws Exception{
-            GlobalExceptionHandler globalExceptionHandler = new GlobalExceptionHandler();
-            UnknownException e = new UnknownException("");
+    @Test
+    void UnknownException이_주어진_경우_직접적으로_핸들링이_가능해야한다() throws Exception{
+        GlobalExceptionHandler globalExceptionHandler = new GlobalExceptionHandler();
+        UnknownException e = new UnknownException("");
 
 
-            ResponseEntity responseEntity = globalExceptionHandler.handleRuntimeException(e, webRequest);
+        ResponseEntity responseEntity = globalExceptionHandler.handleRuntimeException(e, webRequest);
 
-            assertThat(responseEntity.getBody()).isNotNull();
-        }
+        assertThat(responseEntity.getBody()).isNotNull();
     }
 }
