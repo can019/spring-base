@@ -17,6 +17,11 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 
+/**
+ * Application에서 발생하는 모든 exception을 처리하는 handler.
+ *
+ * @since 0.0.3
+ */
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
@@ -27,6 +32,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, null, headers, HttpStatus.INTERNAL_SERVER_ERROR, webRequest);
     }
 
+    /**
+     * 응답 body 구성에 필요한 데이터 전처리를 진행.
+     *
+     * <p>응답 body가 null이라면 ErrorResponse 객체를 가져와 body를 구성</p>
+     *
+     * @param ex cause
+     * @param body body controller에서 작성한 body
+     * @param headers
+     * @param statusCode controller에서 처리한 statusCode
+     * @param request
+     * @return
+     *
+     * @see org.springframework.web.ErrorResponse
+     */
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(
             Exception ex, @Nullable Object body, HttpHeaders headers, HttpStatusCode statusCode, WebRequest request) {

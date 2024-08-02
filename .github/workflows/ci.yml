@@ -48,6 +48,9 @@ jobs:
       - name: Generate OpenApi3 yml
         run: ./gradlew openapi3 -x check
 
+      - name: Generate javadoc
+        run: ./gradlew javadoc -x check
+
       - name: Save test reports
         uses: actions/upload-artifact@v4
         with:
@@ -56,6 +59,7 @@ jobs:
             build/reports
             build/test-results
             build/api-spec
+            build/docs
 
       - name: Save build
         uses: actions/upload-artifact@v4
@@ -238,6 +242,19 @@ jobs:
           git status
 
           git commit -m "docs: Jacoco reports release $RELEASE_VERSION ($COMMIT_ID)"
+
+      - name: Commit javadoc
+        run: |
+          cp -R build/docs/javadoc docs/release/$RELEASE_VERSION
+          
+          echo "- [Javadoc](javadoc/index.html)" >> docs/release/$RELEASE_VERSION/index.md
+          
+          git add docs/release/$RELEASE_VERSION/javadoc -f
+          git add docs/release/$RELEASE_VERSION/index.md -f
+          
+          git status
+
+          git commit -m "docs: Javadoc release $RELEASE_VERSION ($COMMIT_ID)"
 
       - name: Install python3 dependencies for add openapi3 url to swagger config script
         run: pip3 install pyyaml

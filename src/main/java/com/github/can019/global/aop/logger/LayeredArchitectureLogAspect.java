@@ -5,6 +5,14 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
+/**
+ * AOP logger
+ *
+ * <p>com.github.can019 package 내 Controller, Service, Repository 로깅</p>
+ *
+ * @since 0.0.1
+ * @see com.github.can019.global.aop.PointCut
+ */
 @Slf4j
 public class LayeredArchitectureLogAspect {
 
