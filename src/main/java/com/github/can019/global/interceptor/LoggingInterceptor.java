@@ -8,8 +8,21 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import java.util.UUID;
 
+/**
+ * Logging interceptor
+ *
+ * @since 0.0.3
+ */
 @Slf4j
 public class LoggingInterceptor implements HandlerInterceptor {
+    /**
+     * Ip address, host name을 로깅
+     * @param request
+     * @param response
+     * @param handler
+     * @return
+     * @throws Exception
+     */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
@@ -21,6 +34,7 @@ public class LoggingInterceptor implements HandlerInterceptor {
 
         return true;
     }
+
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
                                 Object handler, Exception ex) throws Exception {
