@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ApplicationException.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">base</a> &gt; <a href="index.source.html" class="el_package">com.github.can019.global.exception</a> &gt; <span class="el_source">ApplicationException.java</span></div><h1>ApplicationException.java</h1><pre class="source lang-java linenums">package com.github.can019.global.exception;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ProblemDetail;
+import org.springframework.web.ErrorResponse;
+
+/**
+ * &lt;a href=https://datatracker.ietf.org/doc/html/rfc7807&gt;RFC 7870&lt;/a&gt;에 맞는 error response를 제공할 수 있는 exception
+ *
+ * &lt;p&gt;생성 시 ProblemDetail을 초기화. GlobalExceptionHandler에서 ProblemDatail을 사용하여 body 구성.
+ * 프로젝트 내에서 새로운 exception을 정의하고자 할 때 해당 exception을 extedns하여 작성하면 됨.
+ *
+ * jakarta.servlet.http.HttpServletResponse을 참조하여 작성함.&lt;/p&gt;
+ *
+ * @see &lt;a href=https://datatracker.ietf.org/doc/html/rfc7807&gt;RFC 7870 document&lt;/a&gt;
+ * @see com.github.can019.global.handler.GlobalExceptionHandler
+ * @see org.springframework.http.ProblemDetail
+ * @see jakarta.servlet.http.HttpServletResponse
+ * @since 0.0.3
+ */
+public class ApplicationException extends RuntimeException implements ErrorResponse {
+    private HttpStatus httpStatus;
+    private final ProblemDetail body ;
+    private final static String DEFAULT_DETAIL = &quot;Application exception occurred&quot;;
+    private final static String TILE = &quot;Application exception&quot;;
+    private final Throwable originCause;
+
+    public ApplicationException(String message){
+<span class="fc" id="L30">        this(message, null);</span>
+<span class="fc" id="L31">    }</span>
+
+    public ApplicationException(Throwable cause){
+<span class="nc" id="L34">        this(DEFAULT_DETAIL, cause);</span>
+<span class="nc" id="L35">    }</span>
+
+    /**
+     * ApplicationException의 생성자
+     *
+     * &lt;p&gt;다른 생성자들은 해당 생성자를 호출.
+     * HttpStatus는 500으로 생성&lt;/p&gt;
+     *
+     * @param message Exception message
+     * @param cause 상위 cause
+     */
+    public ApplicationException(String message, Throwable cause){
+<span class="fc" id="L47">        super(message, cause);</span>
+<span class="fc" id="L48">        this.httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;</span>
+<span class="fc" id="L49">        this.body = ProblemDetail.forStatusAndDetail(getStatusCode(), message);</span>
+<span class="fc" id="L50">        this.body.setTitle(DEFAULT_DETAIL);</span>
+<span class="fc" id="L51">        this.originCause = cause;</span>
+<span class="fc" id="L52">    }</span>
+
+    @Override
+    public HttpStatusCode getStatusCode() {
+<span class="fc" id="L56">        return this.httpStatus;</span>
+    }
+
+    @Override
+    public ProblemDetail getBody() {
+<span class="fc" id="L61">        return this.body;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
