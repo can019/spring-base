@@ -7,6 +7,14 @@ import org.apache.logging.log4j.ThreadContext;
 import java.io.IOException;
 import java.util.UUID;
 
+/**
+ * Thread id를 부여하는 filter.
+ *
+ * <p>Logging시 필요한 thread-id를 생성. Log4j2의 ThreadContext class에 id를 저장.</p>
+ *
+ * @See <a href="https://logging.apache.org/log4j/2.x/manual/thread-context.html">Thread context</a>
+ * @Since 0.0.1
+ */
 @Slf4j
 @WebFilter(urlPatterns = "/*")
 public class GenerateThreadContextIdFilter implements Filter {
