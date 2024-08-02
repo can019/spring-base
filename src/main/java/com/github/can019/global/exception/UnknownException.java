@@ -11,8 +11,8 @@ import org.springframework.web.ErrorResponse;
  * <p>예측하지 못한 Exception. 발생시점은 알지만 이유는 명확히 모르는 경우등 보통의 경우라면
  * ApplicationException을 쓰는 것을 권고.</p>
  *
- * @See ApplicationException
- * @Since 0.0.3
+ * @see ApplicationException
+ * @since 0.0.3
  */
 public class UnknownException extends RuntimeException implements ErrorResponse {
     private HttpStatus httpStatus;

@@ -11,7 +11,7 @@ import java.util.UUID;
 /**
  * Logging interceptor
  *
- * @Since 0.0.3
+ * @since 0.0.3
  */
 @Slf4j
 public class LoggingInterceptor implements HandlerInterceptor {

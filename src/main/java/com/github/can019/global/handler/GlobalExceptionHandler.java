@@ -20,7 +20,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 /**
  * Application에서 발생하는 모든 exception을 처리하는 handler.
  *
- * @Since 0.0.3
+ * @since 0.0.3
  */
 @RestControllerAdvice
 @Slf4j
@@ -44,7 +44,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
      * @param request
      * @return
      *
-     * @See org.springframework.web.ErrorResponse
+     * @see org.springframework.web.ErrorResponse
      */
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(

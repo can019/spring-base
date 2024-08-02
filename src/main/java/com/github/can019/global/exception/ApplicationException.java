@@ -13,11 +13,11 @@ import org.springframework.web.ErrorResponse;
  *
  * jakarta.servlet.http.HttpServletResponse을 참조하여 작성함.</p>
  *
- * @See <a href=https://datatracker.ietf.org/doc/html/rfc7807>RFC 7870 document</a>
- * @See com.github.can019.global.handler.GlobalExceptionHandler
- * @See org.springframework.http.ProblemDetail
- * @See jakarta.servlet.http.HttpServletResponse
- * @Since 0.0.3
+ * @see <a href=https://datatracker.ietf.org/doc/html/rfc7807>RFC 7870 document</a>
+ * @see com.github.can019.global.handler.GlobalExceptionHandler
+ * @see org.springframework.http.ProblemDetail
+ * @see jakarta.servlet.http.HttpServletResponse
+ * @since 0.0.3
  */
 public class ApplicationException extends RuntimeException implements ErrorResponse {
     private HttpStatus httpStatus;

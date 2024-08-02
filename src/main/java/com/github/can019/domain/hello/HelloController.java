@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Simple hello controller
  *
- * @Since 0.1.5
+ * @since 0.1.5
  */
 @RestController
 public class HelloController {
