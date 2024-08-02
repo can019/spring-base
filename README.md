@@ -59,17 +59,29 @@ git checkout --orphan gh-pages
 ```shell
 git rm --cached -r .
 ```
-아래 명령어를 통해 Github pages 구성에 필요한 정보를 gh-pages에 push 합니다.
+아래 명령어를 통해 Github pages 구성에 필요한 artifacts를 docs로 이동 합니다.
 ```shell
 rm -rf docs
 mkdir docs
 cp -R gh-pages/docs ./
+```
+swagger-ui/dist/swagger-initializer.js를 열어 아래와 같이 수정합니다.
+```javascript
+window.onload = function() {
+  window.ui = SwaggerUIBundle({
+    ...
+    configUrl:"https://github-id.github.io/repository-name/swagger-ui/swagger-config.yaml",
+    ...
+  });
+};
+```
 
+gh-pages에 push
+```shell
 git add docs
 git commit -m "init"
 git push origin gh-pages
 ```
-
 이 다음 repository setting에 들어가서 github pages를 설정합니다.
 
 > ![github-repo-setting](./docs/resource/gh-pages-repo-setting.png)
