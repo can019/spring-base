@@ -36,6 +36,8 @@ jobs:
           gradle-version: 8.8
           cache-read-only: false
 #          cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
+      - name: Temp
+        run: echo "!"
 
       - name: Generate unit jacoco report
         run: ./gradlew unitTestJacocoReport
