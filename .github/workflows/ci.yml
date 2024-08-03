@@ -28,7 +28,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build and test with gradle cache
-        uses: gradle/gradle-build-action@v3
+        uses: gradle/actions/setup-gradle@v3
         continue-on-error: true
         with:
           arguments: build --info
@@ -104,7 +104,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Sonar analysis with gradle cache
-        uses: gradle/gradle-build-action@v3
+        uses: gradle/actions/setup-gradle@v3
         with:
           arguments: sonar --info
           add-job-summary-as-pr-comment: on-failure
