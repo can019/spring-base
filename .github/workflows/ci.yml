@@ -27,17 +27,17 @@ jobs:
       - name: grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Build and test with gradle cache
+      - name: Set up gradle with gradle cache
         uses: gradle/actions/setup-gradle@v3
         continue-on-error: true
         with:
-          arguments: build --info
           add-job-summary-as-pr-comment: on-failure
           gradle-version: 8.8
           cache-read-only: false
+
 #          cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
-      - name: Temp
-        run: echo "!"
+      - name: Build
+        run: gradle build --configuration-cache --info
 
       - name: Generate unit jacoco report
         run: ./gradlew unitTestJacocoReport
@@ -110,7 +110,7 @@ jobs:
       - name: Sonar analysis with gradle cache
         uses: gradle/actions/setup-gradle@v3
         with:
-          arguments: sonar --info
+          arguments: sonar --configuration-cache --info
           add-job-summary-as-pr-comment: on-failure
           gradle-version: 8.8
 #          cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
