@@ -27,9 +27,6 @@ jobs:
       - name: grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Enable Gradle Build Cache
-        run: echo "org.gradle.caching=true" > ./gradle.properties
-
       - name: Build and test with gradle cache
         uses: gradle/actions/setup-gradle@v3
         continue-on-error: true
@@ -37,6 +34,7 @@ jobs:
           arguments: build --info
           add-job-summary-as-pr-comment: on-failure
           gradle-version: 8.8
+          cache-read-only: false
 #          cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
 
       - name: Generate unit jacoco report
