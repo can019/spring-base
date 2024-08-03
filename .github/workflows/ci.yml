@@ -28,7 +28,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Enable Gradle Build Cache
-        run: echo "org.gradle.caching=true" >> ~/.gradle/gradle.properties
+        run: echo "org.gradle.caching=true" > ./gradle.properties
 
       - name: Build and test with gradle cache
         uses: gradle/actions/setup-gradle@v3
