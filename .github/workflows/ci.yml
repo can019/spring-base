@@ -33,7 +33,7 @@ jobs:
         with:
           arguments: build --info
           add-job-summary-as-pr-comment: on-failure
-          cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
+#          cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
 
       - name: Generate unit jacoco report
         run: ./gradlew unitTestJacocoReport
@@ -108,7 +108,7 @@ jobs:
         with:
           arguments: sonar --info
           add-job-summary-as-pr-comment: on-failure
-          cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
+#          cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
