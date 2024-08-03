@@ -34,19 +34,20 @@ jobs:
           add-job-summary-as-pr-comment: on-failure
           gradle-version: 8.8
           cache-read-only: false
+          cache-encryption-key: ${{ secrets.GradleEncryptionKey }}
 
 #          cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
       - name: Build
         run: gradle build --configuration-cache --info
 
       - name: Generate unit jacoco report
-        run: ./gradlew unitTestJacocoReport
+        run: ./gradlew unitTestJacocoReport --configuration-cache
 
       - name: Generate integration jacoco report
-        run: ./gradlew integrationTestJacocoReport
+        run: ./gradlew integrationTestJacocoReport --configuration-cache
 
       - name: Generate over all jacoco report
-        run: ./gradlew overAllJacocoTestReport
+        run: ./gradlew overAllJacocoTestReport --configuration-cache
 
 
       - name: Generate OpenApi3 yml
