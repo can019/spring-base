@@ -33,7 +33,7 @@ jobs:
         with:
           arguments: build --info
           add-job-summary-as-pr-comment: on-failure
-          gradle-version: 8.7
+          gradle-version: 8.8
 #          cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
 
       - name: Generate unit jacoco report
@@ -109,7 +109,7 @@ jobs:
         with:
           arguments: sonar --info
           add-job-summary-as-pr-comment: on-failure
-          gradle-version: 8.7
+          gradle-version: 8.8
 #          cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
