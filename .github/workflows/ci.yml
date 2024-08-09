@@ -79,6 +79,7 @@ jobs:
             build/resources
 
   publish-junit-result-pr-comment:
+    if: github.event_name == 'pull_request'
     needs: [build]
     runs-on: ubuntu-latest
     permissions: write-all
