@@ -71,7 +71,7 @@ dependencies {
 
 	// spring security
 	implementation 'org.springframework.boot:spring-boot-starter-security:3.2.5'
-	testImplementation 'org.springframework.security:spring-security-test:3.2.5'
+	testImplementation 'org.springframework.security:spring-security-test:6.2.4'
 
 }
 
