@@ -27,7 +27,6 @@
 - CI에서 Sonar cloud를 이용해 정적 분석을 진행합니다.
   - 해당 PR에서 추가된 source code에 대해 평가합니다.
 
-
 ### Test 수행 시간 측정 및 export report
 - [총 수행 시간, method별 수행 시간 측정 후 csv로 export 하는 TestExecutionListener](https://github.com/can019/spring-base/pull/58)
 
@@ -87,6 +86,28 @@ git push origin gh-pages
 > ![github-repo-setting](./docs/resource/gh-pages-repo-setting.png)
 
 > ![github-gh-pages-deploy-setting](./docs/resource/gh-pages-deploy-setting.png)
+
+### Gradle configuration cache 활성화
+Configuration cache를 활성화 하는 경우 `gradle-transforms`을 캐싱할 수 있습니다.
+
+Github action secret에 GradleEncryptionKey이란 이름으로 secret key를 등록해야 활성화 됩니다.
+  - Secret key가 없어도 정상 작동 합니다. 다만 configure cache는 무시됩니다.
+
+`ci.yml`에서 아래 부분이 관련 코드입니다.
+```yaml
+      - name: Set up gradle with gradle cache
+        uses: gradle/actions/setup-gradle@v3
+        continue-on-error: true
+        with:
+          # ...
+          cache-encryption-key: ${{ secrets.GradleEncryptionKey }} # << github action secret 등록해야 활성화
+
+      - name: Build
+        run: gradle build --configuration-cache --info
+```
+
+> [!IMPORTANT]
+> configuration cache를 암호화 시 AES-128  AES-192, AES-256을 기반으로 하기 때문에 16byte, 24byte, 32byte 중 하나로 secret을 설정해야 합니다.
 
 
 ### Docker (설치)
