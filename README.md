@@ -11,7 +11,7 @@
 - 모든 에러에 대한 [RFC 7807](https://datatracker.ietf.org/doc/html/rfc7807) spec response
   - Spring core의 ProblemDeatil를 사용한 CustomException을 extends 또는 사용할 수 있습니다.
   - Spring의 core의 `ResponseEntityExceptionHandler`을 override하여 ProblemDetail를 참조하여 일관된 에러 핸들링을 합니다.
-
+ 
 ### 🚪 Test Container
 - Test Container를 통해 격리된 한경에서 test 수행이 가능합니다.
 
@@ -51,9 +51,13 @@
 ## 초기 설정
 ### Github pages
 main branch에서 아래 명령어를 입력 해 gh-pages branch로 checkout 합니다.
+
 ```shell
 git checkout --orphan gh-pages
 ```
+> [!IMPORTANT]
+> gh-pages branch는 orphan branch입니다.
+
 아래 명령어를 통해 git에 캐시된 정보를 모두 삭제합니다.
 ```shell
 git rm --cached -r .
@@ -90,8 +94,9 @@ git push origin gh-pages
 ### Gradle configuration cache 활성화
 Configuration cache를 활성화 하는 경우 `gradle-transforms`을 캐싱할 수 있습니다.
 
-Github action secret에 GradleEncryptionKey이란 이름으로 secret key를 등록해야 활성화 됩니다.
-  - Secret key가 없어도 정상 작동 합니다. 다만 configure cache는 무시됩니다.
+> [!IMPORTANT]
+> Github action secret에 GradleEncryptionKey이란 이름으로 secret key를 등록해야 활성화 됩니다.
+>  - Secret key가 없어도 정상 작동 합니다. 다만 configure cache는 무시됩니다.
 
 `ci.yml`에서 아래 부분이 관련 코드입니다.
 ```yaml
