@@ -69,6 +69,10 @@ dependencies {
 	runtimeOnly 'com.mysql:mysql-connector-j:8.3.0'
 	testImplementation 'org.testcontainers:mysql:1.19.7'
 
+	// spring security
+	implementation 'org.springframework.boot:spring-boot-starter-security:3.2.5'
+	testImplementation 'org.springframework.security:spring-security-test:3.2.5'
+
 }
 
 configurations {
