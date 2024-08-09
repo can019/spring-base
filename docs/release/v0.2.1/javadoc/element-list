@@ -1,0 +1,12 @@
+com.github.can019
+com.github.can019.config
+com.github.can019.domain.hello
+com.github.can019.global.aop
+com.github.can019.global.aop.logger
+com.github.can019.global.entity
+com.github.can019.global.exception
+com.github.can019.global.filter
+com.github.can019.global.handler
+com.github.can019.global.interceptor
+com.github.can019.global.util.convertor
+com.github.can019.global.util.generator
