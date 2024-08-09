@@ -36,7 +36,6 @@ jobs:
           cache-read-only: false
           cache-encryption-key: ${{ secrets.GradleEncryptionKey }}
 
-#          cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
       - name: Build
         run: gradle build --configuration-cache --info
 
@@ -114,7 +113,7 @@ jobs:
           arguments: sonar --configuration-cache --info
           add-job-summary-as-pr-comment: on-failure
           gradle-version: 8.8
-#          cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
+          cache-read-only: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
