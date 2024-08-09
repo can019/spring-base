@@ -24,50 +24,50 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-devtools'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.2.5'
+	implementation 'org.springframework.boot:spring-boot-starter-web:3.2.5'
+	implementation 'org.springframework.boot:spring-boot-devtools:3.2.5'
 	implementation 'com.fasterxml.uuid:java-uuid-generator:5.0.0'
 
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-	runtimeOnly 'com.h2database:h2'
-	runtimeOnly 'com.mysql:mysql-connector-j'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test:3.2.5'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.2'
+	runtimeOnly 'com.h2database:h2:2.2.224'
+	runtimeOnly 'com.mysql:mysql-connector-j:8.3.0'
 
 	// aop
-	implementation 'org.springframework.boot:spring-boot-starter-aop'
+	implementation 'org.springframework.boot:spring-boot-starter-aop:3.2.5'
 
 	// docker compose
-	testAndDevelopmentOnly("org.springframework.boot:spring-boot-docker-compose")
+	testAndDevelopmentOnly 'org.springframework.boot:spring-boot-docker-compose:3.2.5'
 
 	// lombok
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-	testCompileOnly 'org.projectlombok:lombok'
-	testAnnotationProcessor 'org.projectlombok:lombok'
+	compileOnly 'org.projectlombok:lombok:1.18.32'
+	annotationProcessor 'org.projectlombok:lombok:1.18.32'
+	testCompileOnly 'org.projectlombok:lombok:1.18.32'
+	testAnnotationProcessor 'org.projectlombok:lombok:1.18.32'
 
 	// Logback을 log4j2로 대체
-	implementation("org.springframework.boot:spring-boot-starter-log4j2")
-	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml'
+	implementation 'org.springframework.boot:spring-boot-starter-log4j2:3.2.5'
+	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.4'
 	modules {
 		module("org.springframework.boot:spring-boot-starter-logging") {
 			replacedBy("org.springframework.boot:spring-boot-starter-log4j2")
 		}
 	}
 	// actuator
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator:3.2.5'
 
 	// rest assured
-	testImplementation 'io.rest-assured:rest-assured' // add rest-assured dependency
-	testImplementation 'org.springframework.restdocs:spring-restdocs-restassured'
+	testImplementation 'io.rest-assured:rest-assured:5.3.2' // add rest-assured dependency
+	testImplementation 'org.springframework.restdocs:spring-restdocs-restassured:3.0.1'
 
 	testImplementation 'com.epages:restdocs-api-spec-restassured:0.19.2' // 3
 	testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.19.2'
 
 	// test container
-	testImplementation 'org.testcontainers:junit-jupiter'
-	runtimeOnly 'com.mysql:mysql-connector-j'
-	testImplementation 'org.testcontainers:mysql'
+	testImplementation 'org.testcontainers:junit-jupiter:1.19.7'
+	runtimeOnly 'com.mysql:mysql-connector-j:8.3.0'
+	testImplementation 'org.testcontainers:mysql:1.19.7'
 
 }
 
@@ -123,7 +123,7 @@ tasks.withType(Test){
 }
 
 task integrationTest(type: Test) {
-    description = 'Integration test' // 태스크 설명
+	description = 'Integration test' // 태스크 설명
 	group = 'test'
 
 	testClassesDirs = sourceSets.integrationTest.output.classesDirs
