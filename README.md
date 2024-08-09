@@ -107,7 +107,9 @@ Github action secret에 GradleEncryptionKey이란 이름으로 secret key를 등
 ```
 
 > [!IMPORTANT]
-> AES-256을 기반으로 configuration cache를 암호화 하기 때문에 16, 32byte ...로 secret을 설정해야 합니다.
+> configuration cache를 암호화 시 AES-128  AES-192, AES-256을 기반으로 하기 때문에 16byte, 24byte, 32byte 중 하나로 secret을 설정해야 합니다.
+
+
 ### Docker (설치)
 - mac x86에서만 확인되었습니다.
 
