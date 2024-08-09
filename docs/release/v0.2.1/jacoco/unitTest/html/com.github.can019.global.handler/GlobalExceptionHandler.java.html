@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GlobalExceptionHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">base</a> &gt; <a href="index.source.html" class="el_package">com.github.can019.global.handler</a> &gt; <span class="el_source">GlobalExceptionHandler.java</span></div><h1>GlobalExceptionHandler.java</h1><pre class="source lang-java linenums">package com.github.can019.global.handler;
+
+import com.github.can019.global.exception.ApplicationException;
+import com.github.can019.global.exception.UnknownException;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.ThreadContext;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.*;
+import org.springframework.lang.Nullable;
+import org.springframework.web.ErrorResponse;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.ServletWebRequest;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+
+/**
+ * Application에서 발생하는 모든 exception을 처리하는 handler.
+ *
+ * @since 0.0.3
+ */
+@RestControllerAdvice
+<span class="fc" id="L26">@Slf4j</span>
+<span class="fc" id="L27">public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {</span>
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity handleRuntimeException(RuntimeException ex, WebRequest webRequest) {
+<span class="fc" id="L31">        HttpHeaders headers = new HttpHeaders();</span>
+<span class="fc" id="L32">        return handleExceptionInternal(ex, null, headers, HttpStatus.INTERNAL_SERVER_ERROR, webRequest);</span>
+    }
+
+    /**
+     * 응답 body 구성에 필요한 데이터 전처리를 진행.
+     *
+     * &lt;p&gt;응답 body가 null이라면 ErrorResponse 객체를 가져와 body를 구성&lt;/p&gt;
+     *
+     * @param ex cause
+     * @param body body controller에서 작성한 body
+     * @param headers
+     * @param statusCode controller에서 처리한 statusCode
+     * @param request
+     * @return
+     *
+     * @see org.springframework.web.ErrorResponse
+     */
+    @Override
+    protected ResponseEntity&lt;Object&gt; handleExceptionInternal(
+            Exception ex, @Nullable Object body, HttpHeaders headers, HttpStatusCode statusCode, WebRequest request) {
+
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">        if (request instanceof ServletWebRequest servletWebRequest) {</span>
+<span class="nc" id="L54">            HttpServletResponse response = servletWebRequest.getResponse();</span>
+<span class="nc bnc" id="L55" title="All 4 branches missed.">            if (response != null &amp;&amp; response.isCommitted()) {</span>
+<span class="nc" id="L56">                log.warn(&quot;Response already committed. Ignoring: {}&quot;, ex);</span>
+<span class="nc" id="L57">                return null;</span>
+            }
+        }
+
+<span class="pc bpc" id="L61" title="2 of 6 branches missed.">        if (statusCode.equals(HttpStatus.INTERNAL_SERVER_ERROR) &amp;&amp; body == null &amp;&amp; !(ex instanceof ErrorResponse)) {</span>
+            // 때에 따라 github or slack에 publish?
+            // log.error(&quot;Fatal error occurred {}&quot;, ex.getCause());
+<span class="fc" id="L64">            ex = new UnknownException(ex);</span>
+        }
+
+<span class="pc bpc" id="L67" title="2 of 4 branches missed.">        if (body == null &amp;&amp; ex instanceof ErrorResponse errorResponse) {</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">            if(ex instanceof ServletException){</span>
+<span class="nc" id="L69">                errorResponse.getBody().setProperty(&quot;code&quot;, ExceptionCode.SERVLET_WEB_REQUEST_ERROR_CODE.getExceptionCode());</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">            } else if(ex instanceof ApplicationException){</span>
+<span class="fc" id="L71">                errorResponse.getBody().setProperty(&quot;code&quot;, ExceptionCode.APPLICATION_ERROR_CODE.getExceptionCode());</span>
+            } else{
+<span class="fc" id="L73">                log.error(&quot;[FATAL] {} {}&quot;, ex.getMessage(), ex.getStackTrace()[0]);</span>
+<span class="fc" id="L74">                errorResponse.getBody().setProperty(&quot;code&quot;, ExceptionCode.FATAL_ERROR_CODE.getExceptionCode());</span>
+            }
+<span class="fc" id="L76">            errorResponse.getBody().setProperty(&quot;uuid&quot;, ThreadContext.get(&quot;id&quot;));</span>
+<span class="fc" id="L77">            body = errorResponse.updateAndGetBody(getMessageSource(), LocaleContextHolder.getLocale());</span>
+        }
+
+<span class="fc" id="L80">        return createResponseEntity(body, headers, statusCode, request);</span>
+    }
+
+<span class="fc" id="L83">    private enum ExceptionCode {</span>
+<span class="fc" id="L84">        SERVLET_WEB_REQUEST_ERROR_CODE(&quot;EX1&quot;),</span>
+<span class="fc" id="L85">        APPLICATION_ERROR_CODE(&quot;EX2&quot;),</span>
+<span class="fc" id="L86">        FATAL_ERROR_CODE(&quot;EX3&quot;);</span>
+
+        private String exceptionCode;
+
+<span class="fc" id="L90">        ExceptionCode(String exceptionCode){</span>
+<span class="fc" id="L91">            this.exceptionCode = exceptionCode;</span>
+<span class="fc" id="L92">        }</span>
+
+        public String getExceptionCode(){
+<span class="fc" id="L95">            return exceptionCode;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
