@@ -46,10 +46,10 @@ jobs:
         run: gradle overAllJacocoTestReport --configuration-cache
 
       - name: Generate OpenApi3 yml
-        run: gradle openapi3 -x check
+        run: gradle openapi3 -x check --configuration-cache
 
       - name: Generate javadoc
-        run: gradle javadoc -x check
+        run: gradle javadoc -x check --configuration-cache
 
       - name: Sonar cloud analysis
         run: gradle sonar --configuration-cache --info
