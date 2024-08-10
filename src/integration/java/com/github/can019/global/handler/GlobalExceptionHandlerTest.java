@@ -1,11 +1,13 @@
 package com.github.can019.global.handler;
 
+import com.github.can019.config.SecurityConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -15,12 +17,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class GlobalExceptionHandlerTest {
     @Nested
-    @DisplayName("ServletException (Only test HttpRequestMethodNotSupportedException )")
+    @DisplayName("ServletException (Only test HttpRequestMethodNotSupportedException)")
     class ServletExceptionTest {
         @Nested
         @DisplayName("HttpRequestMethodNotSupportedException")
         @WebMvcTest(controllers = GlobalExceptionHandlerTestController.class,
-                properties = {"spring.profiles.active=test"})
+                properties = {"spring.profiles.active=test"},
+                excludeAutoConfiguration = SecurityAutoConfiguration.class)
         @ExtendWith(MockitoExtension.class)
         class HttpRequestMethodNotSupportedExceptionTest{
             @Autowired
@@ -53,11 +56,11 @@ public class GlobalExceptionHandlerTest {
     @Nested
     @DisplayName("CustomException")
     class CustomExceptionTest {
-
         @Nested
         @DisplayName("ApplicationException")
         @WebMvcTest(controllers = GlobalExceptionHandlerTestController.class,
-                properties = {"spring.profiles.active=test"})
+                properties = {"spring.profiles.active=test"},
+                excludeAutoConfiguration = SecurityAutoConfiguration.class)
         @ExtendWith(MockitoExtension.class)
         class ApplicationExceptionTest {
             @Autowired
@@ -84,7 +87,8 @@ public class GlobalExceptionHandlerTest {
     @Nested
     @DisplayName("RuntimeException")
     @WebMvcTest(controllers = GlobalExceptionHandlerTestController.class,
-            properties = {"spring.profiles.active=test"})
+            properties = {"spring.profiles.active=test"},
+            excludeAutoConfiguration = SecurityAutoConfiguration.class)
     @ExtendWith(MockitoExtension.class)
     class RuntimeExceptionTest {
         @Autowired

@@ -2,9 +2,9 @@ package com.github.can019.global.filter;
 
 import org.apache.logging.log4j.ThreadContext;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -17,7 +17,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(controllers = {GenerateThreadContextIdTestController.class},
-        properties = {"spring.profiles.active=GENERATE_THREAD_CONTEXT_ID_TEST"})
+        properties = {"spring.profiles.active=GENERATE_THREAD_CONTEXT_ID_TEST"},
+        excludeAutoConfiguration = SecurityAutoConfiguration.class)
 public class GenerateThreadContextIdFilterTest {
     private MockMvc mockMvc; // 특정 filter만을 target으로 하기 위해 Autowired를 사용하지 않음.
 
