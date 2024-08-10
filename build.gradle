@@ -73,6 +73,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security:3.2.5'
 	testImplementation 'org.springframework.security:spring-security-test:6.2.4'
 
+	// Faker (DataFaker)
+	implementation 'net.datafaker:datafaker:2.3.1'
+
 }
 
 configurations {
