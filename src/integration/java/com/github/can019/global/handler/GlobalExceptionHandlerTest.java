@@ -1,6 +1,5 @@
 package com.github.can019.global.handler;
 
-import com.github.can019.config.SecurityConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
