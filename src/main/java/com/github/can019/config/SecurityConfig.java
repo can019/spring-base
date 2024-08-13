@@ -20,9 +20,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf
                         .ignoringRequestMatchers(
                                 new AntPathRequestMatcher("/api/v0/auth/login"),
-                                new AntPathRequestMatcher("/api/v0/auth/registry"),
-                                new AntPathRequestMatcher("/actuator/**"),
-                                new AntPathRequestMatcher("/api/v0/hello")
+                                new AntPathRequestMatcher("/api/v0/auth/registry")
                         )
                 )
                 .sessionManagement(session -> session
