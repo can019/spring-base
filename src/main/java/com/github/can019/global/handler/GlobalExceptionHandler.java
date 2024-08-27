@@ -1,18 +1,9 @@
 package com.github.can019.global.handler;
 
-import com.github.can019.global.exception.ApplicationException;
-import com.github.can019.global.exception.UnknownException;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.ThreadContext;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.*;
-import org.springframework.lang.Nullable;
-import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
