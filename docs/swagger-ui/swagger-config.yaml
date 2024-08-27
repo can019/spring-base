@@ -3,6 +3,8 @@ docExpansion: none
 operationsSorter: alpha
 queryConfigEnabled: true
 urls:
+- name: v0.2.2
+  url: https://can019.github.io/spring-base/release/v0.2.2/openapi3.yaml
 - name: v0.2.1
   url: https://can019.github.io/spring-base/release/v0.2.1/openapi3.yaml
 - name: v0.2.0
