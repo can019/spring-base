@@ -3,10 +3,11 @@
 Commit id로 정렬
 
 ### Latest
-- [v0.2.1](v0.2.1/index.md)
+- [v0.2.2](v0.2.2/index.md)
 <!-- Latest -->
 
 ### Other
+- [v0.2.1](v0.2.1/index.md)
 - [v0.2.0](v0.2.0/index.md)
 - [v0.1.5](v0.1.5/index.md)
 - [v0.1.4](v0.1.4/index.md)
