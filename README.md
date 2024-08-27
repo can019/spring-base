@@ -9,8 +9,6 @@
 ## 특징
 ### 🌐 전역적, 유지보수가 쉬운 에러 핸들링
 - 모든 에러에 대한 [RFC 7807](https://datatracker.ietf.org/doc/html/rfc7807) spec response
-  - Spring core의 ProblemDeatil를 사용한 CustomException을 extends 또는 사용할 수 있습니다.
-  - Spring의 core의 `ResponseEntityExceptionHandler`을 override하여 ProblemDetail를 참조하여 일관된 에러 핸들링을 합니다.
  
 ### 🚪 Test Container
 - Test Container를 통해 격리된 한경에서 test 수행이 가능합니다.
