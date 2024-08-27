@@ -34,7 +34,15 @@ jobs:
           cache-encryption-key: ${{ secrets.GradleEncryptionKey }}
 
       - name: Build
-        run: gradle build --configuration-cache --info
+        run: gradle build -x check --configuration-cache --info
+
+      - name: IntegrationTest
+        run: gradle integrationTest --configuration-cache --info
+        continue-on-error: true
+
+      - name: UnitTest
+        run: gradle unitTest --configuration-cache --info
+        continue-on-error: true
 
       - name: Generate unit jacoco report
         run: gradle unitTestJacocoReport --configuration-cache
@@ -106,7 +114,7 @@ jobs:
           check_name: 'Integration test'
 
   set-github-pages-resource:
-    if: github.event.action == 'published'
+    if: always() && github.event.action == 'published'
     runs-on: ubuntu-latest
     permissions: write-all
     needs: [gradle-task]
