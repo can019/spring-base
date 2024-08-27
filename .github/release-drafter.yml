@@ -14,6 +14,8 @@ categories:
     labels:
       - '♻️ Refactor'
       - '⚡ Performance'
+  - title: '🗑️ Deprecated'
+    label: '🗑️ Deprecate'
   - title: '🛠️ Development set up'
     labels:
       - '🛠️ Develop setting'
