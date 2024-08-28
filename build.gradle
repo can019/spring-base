@@ -8,115 +8,130 @@ plugins {
 	id 'com.epages.restdocs-api-spec' version '0.19.2' // 1
 }
 
-group = 'com.github.can019'
-version = '0.2.2'
+allprojects {
+	group = 'com.github.can019.base'
+	version = '0.2.2'
 
-java {
-	sourceCompatibility = '21'
+	repositories {
+		mavenCentral()
+	}
 }
 
-jacoco {
-	toolVersion = "0.8.11"
-}
+subprojects {
+	java{
+		sourceCompatibility = '21'
+	}
 
-repositories {
-	mavenCentral()
-}
+	apply plugin: 'java'
+	apply plugin: 'org.springframework.boot'
+	apply plugin: 'io.spring.dependency-management'
+	apply plugin: 'com.epages.restdocs-api-spec'
 
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.2.5'
-	implementation 'org.springframework.boot:spring-boot-starter-web:3.2.5'
-	implementation 'org.springframework.boot:spring-boot-devtools:3.2.5'
-	implementation 'com.fasterxml.uuid:java-uuid-generator:5.0.0'
+	dependencies {
+		implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.2.5'
+		implementation 'org.springframework.boot:spring-boot-starter-web:3.2.5'
+		implementation 'org.springframework.boot:spring-boot-devtools:3.2.5'
+		implementation 'com.fasterxml.uuid:java-uuid-generator:5.0.0'
 
-	testImplementation 'org.springframework.boot:spring-boot-starter-test:3.2.5'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.2'
-	runtimeOnly 'com.h2database:h2:2.2.224'
-	runtimeOnly 'com.mysql:mysql-connector-j:8.3.0'
+		testImplementation 'org.springframework.boot:spring-boot-starter-test:3.2.5'
+		testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.2'
+		runtimeOnly 'com.h2database:h2:2.2.224'
+		runtimeOnly 'com.mysql:mysql-connector-j:8.3.0'
 
-	// aop
-	implementation 'org.springframework.boot:spring-boot-starter-aop:3.2.5'
+		// aop
+		implementation 'org.springframework.boot:spring-boot-starter-aop:3.2.5'
 
-	// docker compose
-	testAndDevelopmentOnly 'org.springframework.boot:spring-boot-docker-compose:3.2.5'
+		// docker compose
+		testAndDevelopmentOnly 'org.springframework.boot:spring-boot-docker-compose:3.2.5'
 
-	// lombok
-	compileOnly 'org.projectlombok:lombok:1.18.32'
-	annotationProcessor 'org.projectlombok:lombok:1.18.32'
-	testCompileOnly 'org.projectlombok:lombok:1.18.32'
-	testAnnotationProcessor 'org.projectlombok:lombok:1.18.32'
+		// lombok
+		compileOnly 'org.projectlombok:lombok:1.18.32'
+		annotationProcessor 'org.projectlombok:lombok:1.18.32'
+		testCompileOnly 'org.projectlombok:lombok:1.18.32'
+		testAnnotationProcessor 'org.projectlombok:lombok:1.18.32'
 
-	// Logback을 log4j2로 대체
-	implementation 'org.springframework.boot:spring-boot-starter-log4j2:3.2.5'
-	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.4'
-	modules {
-		module("org.springframework.boot:spring-boot-starter-logging") {
-			replacedBy("org.springframework.boot:spring-boot-starter-log4j2")
+		// Logback을 log4j2로 대체
+		implementation 'org.springframework.boot:spring-boot-starter-log4j2:3.2.5'
+		implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.4'
+		modules {
+			module("org.springframework.boot:spring-boot-starter-logging") {
+				replacedBy("org.springframework.boot:spring-boot-starter-log4j2")
+			}
+		}
+		// actuator
+		implementation 'org.springframework.boot:spring-boot-starter-actuator:3.2.5'
+
+		// rest assured
+		testImplementation 'io.rest-assured:rest-assured:5.3.2' // add rest-assured dependency
+		testImplementation 'org.springframework.restdocs:spring-restdocs-restassured:3.0.1'
+
+		testImplementation 'com.epages:restdocs-api-spec-restassured:0.19.2' // 3
+		testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.19.2'
+
+		// test container
+		testImplementation 'org.testcontainers:junit-jupiter:1.19.7'
+		runtimeOnly 'com.mysql:mysql-connector-j:8.3.0'
+		testImplementation 'org.testcontainers:mysql:1.19.7'
+	}
+
+	jacoco {
+		toolVersion = "0.8.11"
+	}
+
+	configurations {
+		compileOnly {
+			extendsFrom annotationProcessor
+			extendsFrom testAnnotationProcessor
 		}
 	}
-	// actuator
-	implementation 'org.springframework.boot:spring-boot-starter-actuator:3.2.5'
 
-	// rest assured
-	testImplementation 'io.rest-assured:rest-assured:5.3.2' // add rest-assured dependency
-	testImplementation 'org.springframework.restdocs:spring-restdocs-restassured:3.0.1'
+	ext {
+		snippetsDir = file("build/generated-snippets")
+	}
 
-	testImplementation 'com.epages:restdocs-api-spec-restassured:0.19.2' // 3
-	testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.19.2'
+	tasks.withType(JacocoReport) {
+		reports {
+			html.required = true
+			xml.required = true
+			csv.required = false
+		}
+	}
 
-	// test container
-	testImplementation 'org.testcontainers:junit-jupiter:1.19.7'
-	runtimeOnly 'com.mysql:mysql-connector-j:8.3.0'
-	testImplementation 'org.testcontainers:mysql:1.19.7'
+	tasks.withType(Test){
+		useJUnitPlatform()
+	}
 
-}
+	task unitTest(type: Test) {
+		group = 'verification'
+		description = 'Runs unit tests.'
+		testClassesDirs = sourceSets.test.output.classesDirs
+		classpath = sourceSets.test.runtimeClasspath
 
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-		extendsFrom testAnnotationProcessor
+		filter {
+			includeTestsMatching "*UnitTest"
+		}
+	}
+
+	task integrationTest(type: Test) {
+		group = 'verification'
+		description = 'Runs integration tests.'
+		testClassesDirs = sourceSets.test.output.classesDirs
+		classpath = sourceSets.test.runtimeClasspath
+
+		filter {
+			includeTestsMatching "*IntegrationTest"
+			includeTestsMatching "*SliceTest"
+			includeTestsMatching "*E2ETest"
+		}
 	}
 }
 
-ext {
-	snippetsDir = file("build/generated-snippets")
-}
+bootJar.enabled = false
 
-tasks.withType(JacocoReport) {
-	reports {
-		html.required = true
-		xml.required = true
-		csv.required = false
-	}
-}
+//java {
+//	sourceCompatibility = '21'
+//}
 
-tasks.withType(Test){
-	useJUnitPlatform()
-}
-
-task unitTest(type: Test) {
-	group = 'verification'
-	description = 'Runs unit tests.'
-	testClassesDirs = sourceSets.test.output.classesDirs
-	classpath = sourceSets.test.runtimeClasspath
-
-	filter {
-		includeTestsMatching "*UnitTest"
-	}
-}
-
-task integrationTest(type: Test) {
-	group = 'verification'
-	description = 'Runs integration tests.'
-	testClassesDirs = sourceSets.test.output.classesDirs
-	classpath = sourceSets.test.runtimeClasspath
-
-	filter {
-		includeTestsMatching "*IntegrationTest"
-		includeTestsMatching "*SliceTest"
-		includeTestsMatching "*E2ETest"
-	}
-}
 
 //task integrationTest(type: Test) {
 //	description = 'Integration test' // 태스크 설명

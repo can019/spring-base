@@ -1,0 +1,21 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.github.can019'
+version = '0.2.2'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(':core')  // 다른 모듈에 대한 의존성
+
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
