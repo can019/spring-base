@@ -1,6 +1,6 @@
-package com.github.can019.base.global.api.health;
+package com.github.can019.base.api.health;
 
-import com.github.can019.base.global.test.util.url.BaseUrl;
+import com.github.can019.base.test.util.url.BaseUrl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +15,10 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ActiveProfiles("local")
+@ActiveProfiles("staging")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Import(ActuatorTestUtil.class)
-public class ActuatorLocalTest {
+public class ActuatorStageTest {
     @Autowired
     ActuatorTestUtil actuatorTestUtil;
 
@@ -46,13 +46,11 @@ public class ActuatorLocalTest {
         assertThat(response.getStatusCode().is2xxSuccessful()).isTrue();
     }
 
-
     @Test
-    @DisplayName("Local 환경에서 액추에이터의 http end point는 info, health, metric만 노출되어야 한다.")
+    @DisplayName("Staging 환경에서 액추에이터의 http end point는 info, health, health/{*path}만 노출되어야 한다.")
     void actuatorWebExposureTest(){
         List<String> actuatorWebEndpointListUrlList = actuatorTestUtil.getActuatorWebEndpointList();
 
-        assertThat(actuatorWebEndpointListUrlList).containsExactlyInAnyOrder("health/{*path}", "health",
-                "info", "metrics", "metrics/{requiredMetricName}");
+        assertThat(actuatorWebEndpointListUrlList).containsExactlyInAnyOrder("health","health/{*path}", "info");
     }
 }

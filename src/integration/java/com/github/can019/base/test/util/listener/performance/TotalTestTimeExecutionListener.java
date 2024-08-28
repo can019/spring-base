@@ -1,12 +1,12 @@
-package com.github.can019.base.global.test.util.listener.performance;
+package com.github.can019.base.test.util.listener.performance;
 
-import com.github.can019.base.global.test.util.report.StopWatchReporter;
+import com.github.can019.base.test.util.report.StopWatchReporter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.test.context.TestContext;
 import org.springframework.test.context.support.AbstractTestExecutionListener;
 import org.springframework.util.StopWatch;
 
-import static com.github.can019.base.global.test.util.report.StopWatchReporter.exportReport;
+import static com.github.can019.base.test.util.report.StopWatchReporter.exportReport;
 
 @Slf4j
 public class TotalTestTimeExecutionListener extends AbstractTestExecutionListener {

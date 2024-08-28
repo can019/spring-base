@@ -1,4 +1,4 @@
-package com.github.can019.base.global.test.util;
+package com.github.can019.base.test.util;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;

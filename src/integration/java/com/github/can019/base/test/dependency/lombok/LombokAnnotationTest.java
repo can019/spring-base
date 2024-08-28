@@ -1,4 +1,4 @@
-package com.github.can019.base.global.test.dependency.lombok;
+package com.github.can019.base.test.dependency.lombok;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;

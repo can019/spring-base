@@ -1,4 +1,4 @@
-package com.github.can019.base.global.domain;
+package com.github.can019.base.domain;
 
 import com.epages.restdocs.apispec.RestAssuredRestDocumentationWrapper;
 import io.restassured.builder.RequestSpecBuilder;

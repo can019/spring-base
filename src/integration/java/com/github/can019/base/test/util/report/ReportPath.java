@@ -1,4 +1,4 @@
-package com.github.can019.base.global.test.util.report;
+package com.github.can019.base.test.util.report;
 
 public enum ReportPath {
     ROOT_PATH("build/test-reports");

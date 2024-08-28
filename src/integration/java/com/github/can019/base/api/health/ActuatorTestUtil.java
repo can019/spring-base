@@ -1,4 +1,4 @@
-package com.github.can019.base.global.api.health;
+package com.github.can019.base.api.health;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.endpoint.web.WebEndpointsSupplier;
