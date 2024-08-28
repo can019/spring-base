@@ -1,6 +1,6 @@
-package com.github.can019.config;
+package com.github.can019.base.config;
 
-import com.github.can019.global.interceptor.LoggingInterceptor;
+import com.github.can019.base.core.interceptor.LoggingInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
