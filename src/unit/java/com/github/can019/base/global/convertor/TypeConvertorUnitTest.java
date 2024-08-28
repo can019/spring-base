@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TypeConvertorTest {
+public class TypeConvertorUnitTest {
 
     @Test
     @DisplayName("hexStringToByte()의 input으로 들어온 str의 길이가 16 미만이면 StringIndexOutOfBoundsException가 발생한다")

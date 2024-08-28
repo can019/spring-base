@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
-public class LombokAnnotationTest {
+public class LombokAnnotationDependencyTest {
 
     @Test
     @DisplayName("Integration test의 test code에서 `@Slf4j`를 사용할 수 있어야 한다")

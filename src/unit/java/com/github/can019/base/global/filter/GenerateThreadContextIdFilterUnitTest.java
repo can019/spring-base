@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.UUID;
 
-public class GenerateThreadContextIdFilterTest {
+public class GenerateThreadContextIdFilterUnitTest {
 
     @Test
     void filter는_전역적으로_적용되어야_한다() throws ServletException, IOException {
