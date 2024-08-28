@@ -112,15 +112,5 @@ Configuration cache를 활성화 하는 경우 `gradle-transforms`을 캐싱할 
 > [!IMPORTANT]
 > configuration cache를 암호화 시 AES-128  AES-192, AES-256을 기반으로 하기 때문에 16byte, 24byte, 32byte 중 하나로 secret을 설정해야 합니다.
 
-
-### Docker (설치)
-- mac x86에서만 확인되었습니다.
-
-`./init.sh` 실행
-
-``` shell
-./init.sh
-```
-
 ### Sonar cloud
 [Sonar cloud repository 설정](https://chaerim1001.tistory.com/94)
