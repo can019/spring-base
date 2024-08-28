@@ -1,10 +1,10 @@
-package com.github.can019.global.aop;
+package com.github.can019.base.api.global.aop;
 
 import org.aspectj.lang.annotation.Pointcut;
 
 public class PointCut {
 
-    @Pointcut("execution(* com.github.can019..*.*(..))")
+    @Pointcut("execution(* com.github.can019.base.api.*.*(..))")
     public void basePackage() {}
 
     @Pointcut("execution(* *..*Controller.*(..))")

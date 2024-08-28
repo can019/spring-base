@@ -1,4 +1,4 @@
-package com.github.can019.base.test.util.url;
+package com.github.can019.base.api.test.util.url;
 
 public enum BaseUrl {
     LOCALHOST_URL("http://localhost");

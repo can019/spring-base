@@ -1,4 +1,4 @@
-package com.github.can019.base.domain.hello;
+package com.github.can019.base.api.domain.hello;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

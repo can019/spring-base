@@ -1,5 +1,6 @@
-package com.github.can019.global.aop.logger;
+package com.github.can019.base.api.global.aop.logger;
 
+import com.github.can019.base.api.global.aop.PointCut;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
  * <p>com.github.can019 package 내 Controller, Service, Repository 로깅</p>
  *
  * @since 0.0.1
- * @see com.github.can019.global.aop.PointCut
+ * @see PointCut
  */
 @Slf4j
 public class LayeredArchitectureLogAspect {
@@ -39,17 +40,17 @@ public class LayeredArchitectureLogAspect {
     @Aspect
     @Component
     public static class BaseLogAspect{
-        @Before("com.github.can019.global.aop.PointCut.allControllerServiceRepositoryUnderBasePackage()")
+        @Before("com.github.can019.base.api.global.aop.PointCut.allControllerServiceRepositoryUnderBasePackage()")
         public static void doBefore(JoinPoint joinPoint){
             defaultTraceInputLog(joinPoint);
         }
 
-        @AfterReturning(pointcut = "com.github.can019.global.aop.PointCut.allControllerServiceRepositoryUnderBasePackage()", returning = "result")
+        @AfterReturning(pointcut = "com.github.can019.base.api.global.aop.PointCut.allControllerServiceRepositoryUnderBasePackage()", returning = "result")
         public void doAfterReturning(JoinPoint joinPoint, Object result){
             defaultTraceOutputLog(joinPoint, result);
         }
 
-        @AfterThrowing(pointcut = "com.github.can019.global.aop.PointCut.allControllerUnderBasePackage()", throwing="e")
+        @AfterThrowing(pointcut = "com.github.can019.base.api.global.aop.PointCut.allControllerUnderBasePackage()", throwing="e")
         public void doAfterThrowing(JoinPoint joinPoint, Throwable e){
             errorLog(joinPoint, e);
         }

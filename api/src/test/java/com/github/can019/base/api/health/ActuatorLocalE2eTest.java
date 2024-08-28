@@ -1,6 +1,6 @@
 package com.github.can019.base.api.health;
 
-import com.github.can019.base.test.util.url.BaseUrl;
+import com.github.can019.base.api.test.util.url.BaseUrl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

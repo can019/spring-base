@@ -1,12 +1,10 @@
-package com.github.can019.base.test.util.performance;
+package com.github.can019.base.api.test.util.performance;
 
-import com.github.can019.base.test.util.report.StopWatchReporter;
+import com.github.can019.base.api.test.util.report.StopWatchReporter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.test.context.TestContext;
 import org.springframework.test.context.support.AbstractTestExecutionListener;
 import org.springframework.util.StopWatch;
-
-import static com.github.can019.base.test.util.report.StopWatchReporter.exportReport;
 
 @Slf4j
 public class TotalTestTimeExecutionListener extends AbstractTestExecutionListener {
@@ -28,6 +26,6 @@ public class TotalTestTimeExecutionListener extends AbstractTestExecutionListene
         log.info("The test in '{}' has been completed",testContext.getTestClass().getSimpleName());
         log.info(totalTaskStopWatch.prettyPrint());
 
-        exportReport(totalTaskStopWatch, "total", testContext.getTestClass(),  StopWatchReporter.ReportType.CSV);
+        StopWatchReporter.exportReport(totalTaskStopWatch, "total", testContext.getTestClass(),  StopWatchReporter.ReportType.CSV);
     }
 }

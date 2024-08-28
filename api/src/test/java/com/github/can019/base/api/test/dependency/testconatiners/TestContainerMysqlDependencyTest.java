@@ -1,4 +1,4 @@
-package com.github.can019.base.test.dependency.testconatiners;
+package com.github.can019.base.api.test.dependency.testconatiners;
 
 
 import jakarta.persistence.EntityManager;

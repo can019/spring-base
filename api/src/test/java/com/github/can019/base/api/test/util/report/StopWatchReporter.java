@@ -1,4 +1,4 @@
-package com.github.can019.base.test.util.report;
+package com.github.can019.base.api.test.util.report;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StopWatch;

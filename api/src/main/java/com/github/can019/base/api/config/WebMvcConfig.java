@@ -1,4 +1,4 @@
-package com.github.can019.base.config;
+package com.github.can019.base.api.config;
 
 import com.github.can019.base.core.interceptor.LoggingInterceptor;
 import org.springframework.context.annotation.Configuration;

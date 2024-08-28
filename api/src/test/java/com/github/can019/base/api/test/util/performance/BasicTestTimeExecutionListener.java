@@ -1,11 +1,9 @@
-package com.github.can019.base.test.util.performance;
+package com.github.can019.base.api.test.util.performance;
 
-import com.github.can019.base.test.util.report.StopWatchReporter;
+import com.github.can019.base.api.test.util.report.StopWatchReporter;
 import org.springframework.test.context.TestContext;
 import org.springframework.test.context.support.AbstractTestExecutionListener;
 import org.springframework.util.StopWatch;
-
-import static com.github.can019.base.test.util.report.StopWatchReporter.exportReport;
 
 /**
  * Non thread safe
@@ -34,6 +32,6 @@ public class BasicTestTimeExecutionListener extends AbstractTestExecutionListene
         }
         super.afterTestMethod(testContext);
 
-        exportReport(stopWatch, "total", testContext.getTestClass(),  StopWatchReporter.ReportType.CSV);
+        StopWatchReporter.exportReport(stopWatch, "total", testContext.getTestClass(),  StopWatchReporter.ReportType.CSV);
     }
 }
