@@ -94,8 +94,28 @@ tasks.withType(Test){
 	useJUnitPlatform()
 }
 
-test{
+task unitTest(type: Test) {
+	group = 'verification'
+	description = 'Runs unit tests.'
+	testClassesDirs = sourceSets.test.output.classesDirs
+	classpath = sourceSets.test.runtimeClasspath
 
+	filter {
+		includeTestsMatching "*UnitTest"
+	}
+}
+
+task integrationTest(type: Test) {
+	group = 'verification'
+	description = 'Runs integration tests.'
+	testClassesDirs = sourceSets.test.output.classesDirs
+	classpath = sourceSets.test.runtimeClasspath
+
+	filter {
+		includeTestsMatching "*IntegrationTest"
+		includeTestsMatching "*SliceTest"
+		includeTestsMatching "*E2ETest"
+	}
 }
 
 //task integrationTest(type: Test) {
@@ -117,24 +137,6 @@ test{
 //	classpath = sourceSets.unitTest.runtimeClasspath
 //	jacoco {
 //		destinationFile = layout.buildDirectory.file("jacoco/${name}.exec").get().asFile
-//	}
-//}
-
-//task unitTestJacocoReport(type: JacocoReport) {
-//	executionData fileTree(dir: "$buildDir/jacoco/", include: "**/unitTest.exec")
-//	sourceSets sourceSets.main
-//	reports {
-//		xml.destination file("$buildDir/reports/jacoco/unitTest/index.xml")
-//		html.destination file("$buildDir/reports/jacoco/unitTest/html")
-//	}
-//}
-
-//task integrationTestJacocoReport(type: JacocoReport) {
-//	executionData fileTree(dir: "$buildDir/jacoco/", include: "**/integrationTest.exec")
-//	sourceSets sourceSets.main
-//	reports {
-//		xml.destination file("$buildDir/reports/jacoco/integrationTest/index.xml")
-//		html.destination file("$buildDir/reports/jacoco/integrationTest/html")
 //	}
 //}
 
