@@ -1,4 +1,6 @@
 rootProject.name = 'base'
 include 'api'
 include 'core'
+include 'admin'
+include 'admin'
 
