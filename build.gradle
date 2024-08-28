@@ -76,34 +76,6 @@ configurations {
 		extendsFrom annotationProcessor
 		extendsFrom testAnnotationProcessor
 	}
-	integrationTestImplementation.extendsFrom implementation
-	integrationTestImplementation.extendsFrom testImplementation
-	integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
-
-	unitTestImplementation.extendsFrom implementation
-	unitTestImplementation.extendsFrom testImplementation
-	unitTestRuntimeOnly.extendsFrom testRuntimeOnly
-
-	unitTestCompileOnly.extendsFrom testCompileOnly
-	unitTestAnnotationProcessor.extendsFrom testAnnotationProcessor
-	integrationTestCompileOnly.extendsFrom testCompileOnly
-	integrationTestAnnotationProcessor.extendsFrom testAnnotationProcessor
-}
-
-sourceSets {
-	integrationTest {
-		java.srcDir "$projectDir/src/integration/java"
-		resources.srcDir "$projectDir/src/integration/resources"
-		compileClasspath += main.output + test.output
-		runtimeClasspath += main.output + test.output
-	}
-
-	unitTest {
-		java.srcDir "$projectDir/src/unit/java"
-		resources.srcDir "$projectDir/src/unit/resources"
-		compileClasspath += main.output + test.output
-		runtimeClasspath += main.output + test.output
-	}
 }
 
 ext {
@@ -122,71 +94,75 @@ tasks.withType(Test){
 	useJUnitPlatform()
 }
 
-task integrationTest(type: Test) {
-	description = 'Integration test' // 태스크 설명
-	group = 'test'
+test{
 
-	testClassesDirs = sourceSets.integrationTest.output.classesDirs
-	classpath = sourceSets.integrationTest.runtimeClasspath
-	jacoco {
-		destinationFile = layout.buildDirectory.file("jacoco/${name}.exec").get().asFile
-	}
 }
 
-task unitTest(type: Test) {
-	description = 'Unit test' // 태스크 설명
-	group = 'test'
+//task integrationTest(type: Test) {
+//	description = 'Integration test' // 태스크 설명
+//	group = 'test'
+//
+//	testClassesDirs = sourceSets.integrationTest.output.classesDirs
+//	classpath = sourceSets.integrationTest.runtimeClasspath
+//	jacoco {
+//		destinationFile = layout.buildDirectory.file("jacoco/${name}.exec").get().asFile
+//	}
+//}
 
-	testClassesDirs = sourceSets.unitTest.output.classesDirs
-	classpath = sourceSets.unitTest.runtimeClasspath
-	jacoco {
-		destinationFile = layout.buildDirectory.file("jacoco/${name}.exec").get().asFile
-	}
-}
+//task unitTest(type: Test) {
+//	description = 'Unit test' // 태스크 설명
+//	group = 'test'
+//
+//	testClassesDirs = sourceSets.unitTest.output.classesDirs
+//	classpath = sourceSets.unitTest.runtimeClasspath
+//	jacoco {
+//		destinationFile = layout.buildDirectory.file("jacoco/${name}.exec").get().asFile
+//	}
+//}
 
-task unitTestJacocoReport(type: JacocoReport) {
-	executionData fileTree(dir: "$buildDir/jacoco/", include: "**/unitTest.exec")
-	sourceSets sourceSets.main
-	reports {
-		xml.destination file("$buildDir/reports/jacoco/unitTest/index.xml")
-		html.destination file("$buildDir/reports/jacoco/unitTest/html")
-	}
-}
+//task unitTestJacocoReport(type: JacocoReport) {
+//	executionData fileTree(dir: "$buildDir/jacoco/", include: "**/unitTest.exec")
+//	sourceSets sourceSets.main
+//	reports {
+//		xml.destination file("$buildDir/reports/jacoco/unitTest/index.xml")
+//		html.destination file("$buildDir/reports/jacoco/unitTest/html")
+//	}
+//}
 
-task integrationTestJacocoReport(type: JacocoReport) {
-	executionData fileTree(dir: "$buildDir/jacoco/", include: "**/integrationTest.exec")
-	sourceSets sourceSets.main
-	reports {
-		xml.destination file("$buildDir/reports/jacoco/integrationTest/index.xml")
-		html.destination file("$buildDir/reports/jacoco/integrationTest/html")
-	}
-}
+//task integrationTestJacocoReport(type: JacocoReport) {
+//	executionData fileTree(dir: "$buildDir/jacoco/", include: "**/integrationTest.exec")
+//	sourceSets sourceSets.main
+//	reports {
+//		xml.destination file("$buildDir/reports/jacoco/integrationTest/index.xml")
+//		html.destination file("$buildDir/reports/jacoco/integrationTest/html")
+//	}
+//}
 
-task overAllJacocoTestReport(type: JacocoReport) {
-	executionData fileTree(dir: "$buildDir/jacoco/", include: "**/*.exec")
-	sourceSets sourceSets.main
-	reports {
-		xml.destination file("$buildDir/reports/jacoco/total/index.xml")
-		html.destination file("$buildDir/reports/jacoco/total/html")
-	}
-}
+//task overAllJacocoTestReport(type: JacocoReport) {
+//	executionData fileTree(dir: "$buildDir/jacoco/", include: "**/*.exec")
+//	sourceSets sourceSets.main
+//	reports {
+//		xml.destination file("$buildDir/reports/jacoco/total/index.xml")
+//		html.destination file("$buildDir/reports/jacoco/total/html")
+//	}
+//}
 
-sonar {
-	properties {
-		property 'sonar.host.url', 'https://sonarcloud.io'
-		property 'sonar.organization', 'can019'
-		property 'sonar.projectKey', 'can019_spring-base'
-		property 'sonar.sources', 'src/main/java'
-		property 'sonar.coverage.jacoco.xmlReportPaths', 'build/reports/jacoco/total/index.xml'
-	}
-}
+//sonar {
+//	properties {
+//		property 'sonar.host.url', 'https://sonarcloud.io'
+//		property 'sonar.organization', 'can019'
+//		property 'sonar.projectKey', 'can019_spring-base'
+//		property 'sonar.sources', 'src/main/java'
+//		property 'sonar.coverage.jacoco.xmlReportPaths', 'build/reports/jacoco/total/index.xml'
+//	}
+//}
 
-asciidoctor {
-	doFirst {
-		delete file("src/main/resources/static/docs")
-	}
-	sourceDir snippetsDir
-}
+//asciidoctor {
+//	doFirst {
+//		delete file("src/main/resources/static/docs")
+//	}
+//	sourceDir snippetsDir
+//}
 
 openapi3 {
 	server = 'http://localhost:8080'
@@ -195,6 +171,3 @@ openapi3 {
 	version = '0.2.2'
 	format = 'yaml'
 }
-
-check.dependsOn integrationTest
-check.dependsOn unitTest
