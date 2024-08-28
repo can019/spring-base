@@ -10,7 +10,7 @@ plugins {
 
 allprojects {
 	group = 'com.github.can019.base'
-	version = '0.2.2'
+	version = '0.3.0-SNAPSHOT'
 
 	repositories {
 		mavenCentral()
@@ -185,6 +185,6 @@ openapi3 {
 	server = 'http://localhost:8080'
 	title = 'SPRING-BASE'
 	description = 'Spring base'
-	version = '0.2.2'
+	version = '0.3.0-SNAPSHOT'
 	format = 'yaml'
 }
