@@ -76,10 +76,6 @@ subprojects {
 		testImplementation 'org.testcontainers:mysql:1.19.7'
 	}
 
-	jacoco {
-		toolVersion = "0.8.11"
-	}
-
 	configurations {
 		compileOnly {
 			extendsFrom annotationProcessor
