@@ -44,14 +44,8 @@ jobs:
         run: gradle unitTest --configuration-cache --info
         continue-on-error: true
 
-      - name: Generate unit jacoco report
-        run: gradle unitTestJacocoReport --configuration-cache
-
-      - name: Generate integration jacoco report
-        run: gradle integrationTestJacocoReport --configuration-cache
-
-      - name: Generate over all jacoco report
-        run: gradle overAllJacocoTestReport --configuration-cache
+      - name: Generate jacoco report
+        run: gradle  jacocoTestReport --configuration-cache
 
       - name: Generate OpenApi3 yml
         run: gradle openapi3 -x check
