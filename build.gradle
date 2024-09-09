@@ -122,6 +122,14 @@ subprojects {
 			includeTestsMatching "*E2ETest"
 		}
 	}
+
+	openapi3 {
+		server = 'http://localhost:8080'
+		title = 'SPRING-BASE'
+		description = 'Spring base'
+		version = "${applicationVersion}"
+		format = 'yaml'
+	}
 }
 
 bootJar.enabled = false
@@ -178,11 +186,3 @@ bootJar.enabled = false
 //	}
 //	sourceDir snippetsDir
 //}
-
-openapi3 {
-	server = 'http://localhost:8080'
-	title = 'SPRING-BASE'
-	description = 'Spring base'
-	version = "${applicationVersion}"
-	format = 'yaml'
-}
