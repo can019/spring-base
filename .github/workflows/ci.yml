@@ -28,7 +28,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v3
         continue-on-error: true
         with:
-          add-job-summary-as-pr-comment: on-failure
+#          add-job-summary-as-pr-comment: on-failure
           gradle-version: 8.8
           cache-read-only: false
           cache-encryption-key: ${{ secrets.GradleEncryptionKey }}
