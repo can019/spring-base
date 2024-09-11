@@ -35,12 +35,6 @@ tasks.register('copyJunitXmlResults', Copy) {
 	into "$buildDir/test-results" // 병합된 결과를 저장할 위치
 }
 
-tasks.register('testReport', TestReport) {
-	dependsOn copyJunitXmlResults
-	destinationDir = file("$buildDir/reports/tests")
-	reportOn subprojects*.test
-}
-
 tasks.register('copyJunitHtmlResults', Copy) {
 	subprojects.each { subproject ->
 		def htmlTestResultsDir = file("${subproject.buildDir}/reports/tests")
