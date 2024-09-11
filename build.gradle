@@ -18,52 +18,6 @@ allprojects {
 	}
 }
 
-tasks.register('copyJunitXmlResults', Copy) {
-	subprojects.each { subproject ->
-		def xmlTestResultsDir = file("${subproject.buildDir}/test-results/test")
-
-		if (xmlTestResultsDir.exists()) {
-			from(xmlTestResultsDir) {
-				into "${subproject.name}"
-			}
-		} else {
-			logger.info("No test result xml in submodule [${subproject.name}]")
-		}
-	}
-	into "$buildDir/test-results" // 병합된 결과를 저장할 위치
-}
-
-tasks.register('copyJunitHtmlResults', Copy) {
-	subprojects.each { subproject ->
-		def htmlTestResultsDir = file("${subproject.buildDir}/reports/tests")
-
-		if (htmlTestResultsDir.exists()) {
-			from(htmlTestResultsDir) {
-				into "${subproject.name}"
-			}
-		} else {
-			logger.info("No test result xml in submodule [${subproject.name}]")
-		}
-	}
-	into "$buildDir/reports/submodule/tests" // 병합된 결과를 저장할 위치
-}
-
-tasks.register('copyOpenApi3Results',Copy) {
-	subprojects.each { subproject ->
-		def openApi3ResultsDir = file("${subproject.buildDir}/api-spec/")
-
-		if (openApi3ResultsDir.exists()) {
-			from(openApi3ResultsDir) {
-				into "${subproject.name}"
-			}
-		} else {
-			logger.info("No openapi3 file in submodule [${subproject.name}]")
-		}
-	}
-	into "$buildDir/api-spec" // 병합된 결과를 저장할
-}
-
-
 subprojects {
 	java{
 		sourceCompatibility = '21'
@@ -187,8 +141,6 @@ subprojects {
 
 }
 
-bootJar.enabled = false
-
 sonar {
 	properties {
 		property 'sonar.host.url', 'https://sonarcloud.io'
@@ -200,3 +152,50 @@ sonar {
 		property 'sonar.sourceEncoding', 'UTF-8'
 	}
 }
+
+tasks.register('copyJunitXmlResults', Copy) {
+	subprojects.each { subproject ->
+		def xmlTestResultsDir = file("${subproject.buildDir}/test-results/test")
+
+		if (xmlTestResultsDir.exists()) {
+			from(xmlTestResultsDir) {
+				into "${subproject.name}"
+			}
+		} else {
+			logger.info("No test result xml in submodule [${subproject.name}]")
+		}
+	}
+	into "$buildDir/test-results" // 병합된 결과를 저장할 위치
+}
+
+tasks.register('copyJunitHtmlResults', Copy) {
+	subprojects.each { subproject ->
+		def htmlTestResultsDir = file("${subproject.buildDir}/reports/tests")
+
+		if (htmlTestResultsDir.exists()) {
+			from(htmlTestResultsDir) {
+				into "${subproject.name}"
+			}
+		} else {
+			logger.info("No test result xml in submodule [${subproject.name}]")
+		}
+	}
+	into "$buildDir/reports/submodule/tests" // 병합된 결과를 저장할 위치
+}
+
+tasks.register('copyOpenApi3Results',Copy) {
+	subprojects.each { subproject ->
+		def openApi3ResultsDir = file("${subproject.buildDir}/api-spec/")
+
+		if (openApi3ResultsDir.exists()) {
+			from(openApi3ResultsDir) {
+				into "${subproject.name}"
+			}
+		} else {
+			logger.info("No openapi3 file in submodule [${subproject.name}]")
+		}
+	}
+	into "$buildDir/api-spec" // 병합된 결과를 저장할
+}
+
+bootJar.enabled = false
