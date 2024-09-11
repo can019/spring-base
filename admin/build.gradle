@@ -1,0 +1,3 @@
+dependencies {
+    implementation project(':core')  // 다른 모듈에 대한 의존성
+}
