@@ -44,7 +44,9 @@ jobs:
         run: gradle  jacocoTestReport --configuration-cache
 
       - name: Generate OpenApi3 yml
-        run: gradle openapi3 -x check
+        run: |
+          gradle openapi3 -x check
+          gradle copyOpenApi3Results
 
       - name: Generate javadoc
         run: gradle javadoc -x check
