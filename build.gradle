@@ -48,6 +48,21 @@ tasks.register('copyJunitHtmlResults', Copy) {
 	into "$buildDir/reports/submodule/tests" // 병합된 결과를 저장할 위치
 }
 
+tasks.register('copyOpenApi3Results',Copy) {
+	subprojects.each { subproject ->
+		def openApi3ResultsDir = file("${subproject.buildDir}/api-spec/")
+
+		if (openApi3ResultsDir.exists()) {
+			from(openApi3ResultsDir) {
+				into "${subproject.name}"
+			}
+		} else {
+			logger.info("No openapi3 file in submodule [${subproject.name}]")
+		}
+	}
+	into "$buildDir/api-spec" // 병합된 결과를 저장할
+}
+
 
 subprojects {
 	java{
@@ -162,6 +177,7 @@ subprojects {
 		version = "${applicationVersion}"
 		format = 'yaml'
 	}
+
 	sonarqube {
 		properties {
 			property 'sonar.java.binaries', "${buildDir}/classes"
@@ -173,49 +189,6 @@ subprojects {
 
 bootJar.enabled = false
 
-//java {
-//	sourceCompatibility = '21'
-//}
-
-
-//task integrationTest(type: Test) {
-//	description = 'Integration test' // 태스크 설명
-//	group = 'test'
-//
-//	testClassesDirs = sourceSets.integrationTest.output.classesDirs
-//	classpath = sourceSets.integrationTest.runtimeClasspath
-//	jacoco {
-//		destinationFile = layout.buildDirectory.file("jacoco/${name}.exec").get().asFile
-//	}
-//}
-
-//task unitTest(type: Test) {
-//	description = 'Unit test' // 태스크 설명
-//	group = 'test'
-//
-//	testClassesDirs = sourceSets.unitTest.output.classesDirs
-//	classpath = sourceSets.unitTest.runtimeClasspath
-//	jacoco {
-//		destinationFile = layout.buildDirectory.file("jacoco/${name}.exec").get().asFile
-//	}
-//}
-
-//task overAllJacocoTestReport(type: JacocoReport) {
-//	executionData fileTree(dir: "$buildDir/jacoco/", include: "**/*.exec")
-//	sourceSets sourceSets.main
-//	reports {
-//		xml.destination file("$buildDir/reports/jacoco/total/index.xml")
-//		html.destination file("$buildDir/reports/jacoco/total/html")
-//	}
-//}
-
-
-//asciidoctor {
-//	doFirst {
-//		delete file("src/main/resources/static/docs")
-//	}
-//	sourceDir snippetsDir
-//}
 sonar {
 	properties {
 		property 'sonar.host.url', 'https://sonarcloud.io'
