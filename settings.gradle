@@ -9,8 +9,13 @@ pluginManagement {
     }
 }
 rootProject.name = 'base'
+
 include 'api'
 include 'core'
 include 'admin'
 include 'admin'
+include 'support'
+include 'support:jacoco'
+include 'support:jacoco'
+findProject(':support:jacoco')?.name = 'jacoco'
 

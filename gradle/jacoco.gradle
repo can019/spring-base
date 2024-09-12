@@ -1,6 +1,9 @@
+import java.util.stream.Collectors
+
 subprojects {
     apply plugin: 'java'
     apply plugin: 'jacoco'
+    apply plugin: 'jacoco-report-aggregation'
 
     repositories {
         mavenCentral()
@@ -15,6 +18,12 @@ subprojects {
         finalizedBy 'jacocoTestReport'
     }
 
+    dependencies {
+        jacocoAggregation  project(":core")
+        jacocoAggregation  project(":api")
+        jacocoAggregation  project(":admin")
+    }
+
     jacocoTestReport {
         reports {
             html.required = true
@@ -24,3 +33,7 @@ subprojects {
         dependsOn test
     }
 }
+
+//project(':support:jacoco') {
+//    apply plugin: 'jacoco-report-aggregation'
+//}
