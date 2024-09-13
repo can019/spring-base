@@ -24,16 +24,11 @@ subprojects {
         jacocoAggregation  project(":admin")
     }
 
-    jacocoTestReport {
+    testCodeCoverageReport {
         reports {
-            html.required = true
-            csv.required = true
+            csv.required = false
             xml.required = true
+            html.required = true
         }
-        dependsOn test
     }
 }
-
-//project(':support:jacoco') {
-//    apply plugin: 'jacoco-report-aggregation'
-//}
