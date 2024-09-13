@@ -41,7 +41,7 @@ jobs:
         continue-on-error: true
 
       - name: Generate jacoco report
-        run: gradle  jacocoTestReport --configuration-cache
+        run: gradle testCodeCoverageReport -x check --info --configuration-cache
 
       - name: Generate OpenApi3 yml
         run: |
@@ -71,6 +71,7 @@ jobs:
             build/test-results
             build/api-spec
             build/docs
+            support/jacoco/reports
 
       - name: Save build artifacts
         if: github.event.action == 'published'
