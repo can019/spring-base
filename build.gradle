@@ -1,174 +1,144 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.2.5'
-	id 'io.spring.dependency-management' version '1.1.4'
-	id 'jacoco'
-	id 'org.sonarqube' version '4.2.1.3168'
-	id "org.asciidoctor.jvm.convert" version "3.3.2"
-	id 'com.epages.restdocs-api-spec' version '0.19.2' // 1
+	id 'org.springframework.boot'
+	id 'io.spring.dependency-management'
+	id 'org.sonarqube'
+	id "org.asciidoctor.jvm.convert"
+	id 'com.epages.restdocs-api-spec'
 }
 
-group = 'com.github.can019'
-version = '0.2.2'
+apply from: 'gradle/jacoco.gradle'
 
-java {
-	sourceCompatibility = '21'
+allprojects {
+	group = 'com.github.can019.base'
+	version = "${applicationVersion}"
+
+	repositories {
+		mavenCentral()
+	}
 }
 
-jacoco {
-	toolVersion = "0.8.11"
-}
+subprojects {
+	java{
+		sourceCompatibility = '21'
+	}
 
-repositories {
-	mavenCentral()
-}
+	apply plugin: 'java'
+	apply plugin: 'org.springframework.boot'
+	apply plugin: 'io.spring.dependency-management'
+	apply plugin: 'com.epages.restdocs-api-spec'
+	apply plugin: 'jacoco'
+	apply plugin: 'org.sonarqube'
 
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.2.5'
-	implementation 'org.springframework.boot:spring-boot-starter-web:3.2.5'
-	implementation 'org.springframework.boot:spring-boot-devtools:3.2.5'
-	implementation 'com.fasterxml.uuid:java-uuid-generator:5.0.0'
+	dependencies {
+		implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.2.5'
+		implementation 'org.springframework.boot:spring-boot-starter-web:3.2.5'
+		implementation 'org.springframework.boot:spring-boot-devtools:3.2.5'
+		implementation 'com.fasterxml.uuid:java-uuid-generator:5.0.0'
 
-	testImplementation 'org.springframework.boot:spring-boot-starter-test:3.2.5'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.2'
-	runtimeOnly 'com.h2database:h2:2.2.224'
-	runtimeOnly 'com.mysql:mysql-connector-j:8.3.0'
+		testImplementation 'org.springframework.boot:spring-boot-starter-test:3.2.5'
+		testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.2'
+		runtimeOnly 'com.h2database:h2:2.2.224'
+		runtimeOnly 'com.mysql:mysql-connector-j:8.3.0'
 
-	// aop
-	implementation 'org.springframework.boot:spring-boot-starter-aop:3.2.5'
+		// aop
+		implementation 'org.springframework.boot:spring-boot-starter-aop:3.2.5'
 
-	// docker compose
-	testAndDevelopmentOnly 'org.springframework.boot:spring-boot-docker-compose:3.2.5'
+		// docker compose
+		testAndDevelopmentOnly 'org.springframework.boot:spring-boot-docker-compose:3.2.5'
 
-	// lombok
-	compileOnly 'org.projectlombok:lombok:1.18.32'
-	annotationProcessor 'org.projectlombok:lombok:1.18.32'
-	testCompileOnly 'org.projectlombok:lombok:1.18.32'
-	testAnnotationProcessor 'org.projectlombok:lombok:1.18.32'
+		// lombok
+		compileOnly 'org.projectlombok:lombok:1.18.32'
+		annotationProcessor 'org.projectlombok:lombok:1.18.32'
+		testCompileOnly 'org.projectlombok:lombok:1.18.32'
+		testAnnotationProcessor 'org.projectlombok:lombok:1.18.32'
 
-	// Logback을 log4j2로 대체
-	implementation 'org.springframework.boot:spring-boot-starter-log4j2:3.2.5'
-	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.4'
-	modules {
-		module("org.springframework.boot:spring-boot-starter-logging") {
-			replacedBy("org.springframework.boot:spring-boot-starter-log4j2")
+		// Logback을 log4j2로 대체
+		implementation 'org.springframework.boot:spring-boot-starter-log4j2:3.2.5'
+		implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.4'
+		modules {
+			module("org.springframework.boot:spring-boot-starter-logging") {
+				replacedBy("org.springframework.boot:spring-boot-starter-log4j2")
+			}
+		}
+		// actuator
+		implementation 'org.springframework.boot:spring-boot-starter-actuator:3.2.5'
+
+		// rest assured
+		testImplementation 'io.rest-assured:rest-assured:5.3.2' // add rest-assured dependency
+		testImplementation 'org.springframework.restdocs:spring-restdocs-restassured:3.0.1'
+
+		testImplementation 'com.epages:restdocs-api-spec-restassured:0.19.2' // 3
+		testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.19.2'
+
+		// test container
+		testImplementation 'org.testcontainers:junit-jupiter:1.19.7'
+		runtimeOnly 'com.mysql:mysql-connector-j:8.3.0'
+		testImplementation 'org.testcontainers:mysql:1.19.7'
+	}
+
+	configurations {
+		compileOnly {
+			extendsFrom annotationProcessor
+			extendsFrom testAnnotationProcessor
 		}
 	}
-	// actuator
-	implementation 'org.springframework.boot:spring-boot-starter-actuator:3.2.5'
 
-	// rest assured
-	testImplementation 'io.rest-assured:rest-assured:5.3.2' // add rest-assured dependency
-	testImplementation 'org.springframework.restdocs:spring-restdocs-restassured:3.0.1'
-
-	testImplementation 'com.epages:restdocs-api-spec-restassured:0.19.2' // 3
-	testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.19.2'
-
-	// test container
-	testImplementation 'org.testcontainers:junit-jupiter:1.19.7'
-	runtimeOnly 'com.mysql:mysql-connector-j:8.3.0'
-	testImplementation 'org.testcontainers:mysql:1.19.7'
-
-}
-
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-		extendsFrom testAnnotationProcessor
-	}
-	integrationTestImplementation.extendsFrom implementation
-	integrationTestImplementation.extendsFrom testImplementation
-	integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
-
-	unitTestImplementation.extendsFrom implementation
-	unitTestImplementation.extendsFrom testImplementation
-	unitTestRuntimeOnly.extendsFrom testRuntimeOnly
-
-	unitTestCompileOnly.extendsFrom testCompileOnly
-	unitTestAnnotationProcessor.extendsFrom testAnnotationProcessor
-	integrationTestCompileOnly.extendsFrom testCompileOnly
-	integrationTestAnnotationProcessor.extendsFrom testAnnotationProcessor
-}
-
-sourceSets {
-	integrationTest {
-		java.srcDir "$projectDir/src/integration/java"
-		resources.srcDir "$projectDir/src/integration/resources"
-		compileClasspath += main.output + test.output
-		runtimeClasspath += main.output + test.output
+	ext {
+		snippetsDir = file("build/generated-snippets")
 	}
 
-	unitTest {
-		java.srcDir "$projectDir/src/unit/java"
-		resources.srcDir "$projectDir/src/unit/resources"
-		compileClasspath += main.output + test.output
-		runtimeClasspath += main.output + test.output
+	tasks.withType(JacocoReport) {
+		reports {
+			html.required = true
+			xml.required = true
+			csv.required = false
+		}
 	}
-}
 
-ext {
-	snippetsDir = file("build/generated-snippets")
-}
-
-tasks.withType(JacocoReport) {
-	reports {
-		html.required = true
-		xml.required = true
-		csv.required = false
+	tasks.withType(Test){
+		useJUnitPlatform()
 	}
-}
 
-tasks.withType(Test){
-	useJUnitPlatform()
-}
+	task unitTest(type: Test) {
+		group = 'verification'
+		description = 'Runs unit tests.'
+		testClassesDirs = sourceSets.test.output.classesDirs
+		classpath = sourceSets.test.runtimeClasspath
 
-task integrationTest(type: Test) {
-	description = 'Integration test' // 태스크 설명
-	group = 'test'
-
-	testClassesDirs = sourceSets.integrationTest.output.classesDirs
-	classpath = sourceSets.integrationTest.runtimeClasspath
-	jacoco {
-		destinationFile = layout.buildDirectory.file("jacoco/${name}.exec").get().asFile
+		filter {
+			includeTestsMatching "*UnitTest"
+		}
 	}
-}
 
-task unitTest(type: Test) {
-	description = 'Unit test' // 태스크 설명
-	group = 'test'
+	task integrationTest(type: Test) {
+		group = 'verification'
+		description = 'Runs integration tests.'
+		testClassesDirs = sourceSets.test.output.classesDirs
+		classpath = sourceSets.test.runtimeClasspath
 
-	testClassesDirs = sourceSets.unitTest.output.classesDirs
-	classpath = sourceSets.unitTest.runtimeClasspath
-	jacoco {
-		destinationFile = layout.buildDirectory.file("jacoco/${name}.exec").get().asFile
+		filter {
+			includeTestsMatching "*IntegrationTest"
+			includeTestsMatching "*SliceTest"
+			includeTestsMatching "*E2ETest"
+		}
 	}
-}
 
-task unitTestJacocoReport(type: JacocoReport) {
-	executionData fileTree(dir: "$buildDir/jacoco/", include: "**/unitTest.exec")
-	sourceSets sourceSets.main
-	reports {
-		xml.destination file("$buildDir/reports/jacoco/unitTest/index.xml")
-		html.destination file("$buildDir/reports/jacoco/unitTest/html")
+	openapi3 {
+		server = 'http://localhost:8080'
+		title = 'SPRING-BASE'
+		description = 'Spring base'
+		version = "${applicationVersion}"
+		format = 'yaml'
 	}
-}
 
-task integrationTestJacocoReport(type: JacocoReport) {
-	executionData fileTree(dir: "$buildDir/jacoco/", include: "**/integrationTest.exec")
-	sourceSets sourceSets.main
-	reports {
-		xml.destination file("$buildDir/reports/jacoco/integrationTest/index.xml")
-		html.destination file("$buildDir/reports/jacoco/integrationTest/html")
+	sonarqube {
+		properties {
+			property 'sonar.java.binaries', "${buildDir}/classes"
+			property 'sonar.coverage.jacoco.xmlReportPaths', "${buildDir}/reports/jacoco.xml"
+		}
 	}
-}
 
-task overAllJacocoTestReport(type: JacocoReport) {
-	executionData fileTree(dir: "$buildDir/jacoco/", include: "**/*.exec")
-	sourceSets sourceSets.main
-	reports {
-		xml.destination file("$buildDir/reports/jacoco/total/index.xml")
-		html.destination file("$buildDir/reports/jacoco/total/html")
-	}
 }
 
 sonar {
@@ -177,24 +147,55 @@ sonar {
 		property 'sonar.organization', 'can019'
 		property 'sonar.projectKey', 'can019_spring-base'
 		property 'sonar.sources', 'src/main/java'
-		property 'sonar.coverage.jacoco.xmlReportPaths', 'build/reports/jacoco/total/index.xml'
+		property 'sonar.test.inclusions', '**/*Test.java'
+		property 'sonar.language', 'java'
+		property 'sonar.sourceEncoding', 'UTF-8'
 	}
 }
 
-asciidoctor {
-	doFirst {
-		delete file("src/main/resources/static/docs")
+tasks.register('copyJunitXmlResults', Copy) {
+	subprojects.each { subproject ->
+		def xmlTestResultsDir = file("${subproject.buildDir}/test-results/test")
+
+		if (xmlTestResultsDir.exists()) {
+			from(xmlTestResultsDir) {
+				into "${subproject.name}"
+			}
+		} else {
+			logger.info("No test result xml in submodule [${subproject.name}]")
+		}
 	}
-	sourceDir snippetsDir
+	into "$buildDir/test-results" // 병합된 결과를 저장할 위치
 }
 
-openapi3 {
-	server = 'http://localhost:8080'
-	title = 'SPRING-BASE'
-	description = 'Spring base'
-	version = '0.2.2'
-	format = 'yaml'
+tasks.register('copyJunitHtmlResults', Copy) {
+	subprojects.each { subproject ->
+		def htmlTestResultsDir = file("${subproject.buildDir}/reports/tests")
+
+		if (htmlTestResultsDir.exists()) {
+			from(htmlTestResultsDir) {
+				into "${subproject.name}"
+			}
+		} else {
+			logger.info("No test result xml in submodule [${subproject.name}]")
+		}
+	}
+	into "$buildDir/reports/submodule/tests" // 병합된 결과를 저장할 위치
 }
 
-check.dependsOn integrationTest
-check.dependsOn unitTest
+tasks.register('copyOpenApi3Results',Copy) {
+	subprojects.each { subproject ->
+		def openApi3ResultsDir = file("${subproject.buildDir}/api-spec/")
+
+		if (openApi3ResultsDir.exists()) {
+			from(openApi3ResultsDir) {
+				into "${subproject.name}"
+			}
+		} else {
+			logger.info("No openapi3 file in submodule [${subproject.name}]")
+		}
+	}
+	into "$buildDir/api-spec" // 병합된 결과를 저장할
+}
+
+bootJar.enabled = false

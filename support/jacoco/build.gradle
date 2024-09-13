@@ -1,0 +1,4 @@
+plugins {
+    id 'org.springframework.boot' apply false
+}
+bootJar.enabled = false
