@@ -94,7 +94,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: reports
-          path: build
+          path: .
 
       - name: Check all dir
         run: ls -R
