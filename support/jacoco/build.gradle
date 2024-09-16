@@ -15,8 +15,8 @@ test {
 
 ext {
     excludedPatterns = [
-            '**/*Application.class',
-            '**/Main.class',
+            '**/*Application.*',
+            '**/Main.*',
             '**/config/**',
             '**/*config*',
             '**/dto/**',
