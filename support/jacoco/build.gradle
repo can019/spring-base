@@ -32,7 +32,9 @@ testCodeCoverageReport {
                     '**/*Application.class',
                     '**/Main.class',
                     '**/config/**',
-                    '**/dto/**'
+                    '**/*config*',
+                    '**/dto/**',
+                    '**/*PointCut*'
             ])
         }))
     }
