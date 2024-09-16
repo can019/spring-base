@@ -11,13 +11,12 @@ jacoco {
 
 test {
     useJUnitPlatform()
-    finalizedBy 'jacocoTestReport'
 }
 
 dependencies {
-    jacocoAggregation  project(":core")
-    jacocoAggregation  project(":api")
-    jacocoAggregation  project(":admin")
+    jacocoAggregation project(":core")
+    jacocoAggregation project(":api")
+    jacocoAggregation project(":admin")
 }
 
 testCodeCoverageReport {
@@ -25,6 +24,17 @@ testCodeCoverageReport {
         csv.required = false
         xml.required = true
         html.required = true
+    }
+
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    '**/*Application.class',
+                    '**/Main.class',
+                    '**/config/**',
+                    '**/dto/**'
+            ])
+        }))
     }
 }
 
