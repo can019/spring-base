@@ -17,6 +17,4 @@ include 'admin'
 include 'admin'
 include 'support'
 include 'support:jacoco'
-include 'core:spring-boot-web'
-findProject(':core:spring-boot-web')?.name = 'spring-boot-web'
 
