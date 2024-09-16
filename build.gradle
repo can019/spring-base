@@ -157,7 +157,7 @@ sonar {
 		property 'sonar.test.inclusions', '**/*Test.java'
 		property 'sonar.language', 'java'
 		property 'sonar.sourceEncoding', 'UTF-8'
-		property 'sonar.coverage.jacoco.xmlReportPaths', "support/jacoco/build/reports/jacoco/testCodeCoverageReport/jacoco.xml"
+		property 'sonar.coverage.jacoco.xmlReportPaths', "${buildDir}/reports/jacoco/testCodeCoverageReport/testCodeCoverageReport.xml"
 	}
 }
 
