@@ -143,7 +143,6 @@ subprojects {
 	sonarqube {
 		properties {
 			property 'sonar.java.binaries', "${buildDir}/classes"
-			property 'sonar.coverage.jacoco.xmlReportPaths', "${buildDir}/reports/jacoco.xml"
 		}
 	}
 
@@ -158,6 +157,7 @@ sonar {
 		property 'sonar.test.inclusions', '**/*Test.java'
 		property 'sonar.language', 'java'
 		property 'sonar.sourceEncoding', 'UTF-8'
+		property 'sonar.coverage.jacoco.xmlReportPaths', "support/jacoco/build/reports/jacoco/testCodeCoverageReport/jacoco.xml"
 	}
 }
 
