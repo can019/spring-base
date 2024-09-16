@@ -81,6 +81,9 @@ subprojects {
 		testImplementation 'org.testcontainers:mysql:1.19.7'
 
 		implementation 'net.datafaker:datafaker:2.3.1'
+
+		// uuid v7
+		implementation 'com.github.f4b6a3:uuid-creator:4.4.0'
 	}
 
 	configurations {
