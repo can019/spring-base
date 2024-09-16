@@ -13,6 +13,17 @@ test {
     useJUnitPlatform()
 }
 
+ext {
+    excludedPatterns = [
+            '**/*Application.class',
+            '**/Main.class',
+            '**/config/**',
+            '**/*config*',
+            '**/dto/**',
+            '**/*PointCut*'
+    ]
+}
+
 dependencies {
     jacocoAggregation project(":core")
     jacocoAggregation project(":api")
@@ -28,14 +39,7 @@ testCodeCoverageReport {
 
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: [
-                    '**/*Application.class',
-                    '**/Main.class',
-                    '**/config/**',
-                    '**/*config*',
-                    '**/dto/**',
-                    '**/*PointCut*'
-            ])
+            fileTree(dir: it, exclude: excludedPatterns)
         }))
     }
 }
