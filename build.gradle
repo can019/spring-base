@@ -7,8 +7,8 @@ plugins {
 	id 'com.epages.restdocs-api-spec'
 }
 
-apply from: 'gradle/jacoco.gradle'
-
+//apply from: 'gradle/jacoco.gradle'
+apply from: 'support/jacoco/build.gradle'
 allprojects {
 	group = 'com.github.can019.base'
 	version = "${applicationVersion}"

@@ -1,4 +1,31 @@
-plugins {
-    id 'org.springframework.boot' apply false
+apply plugin: 'jacoco'
+apply plugin: 'jacoco-report-aggregation'
+
+repositories {
+    mavenCentral()
 }
+
+jacoco {
+    toolVersion = "0.8.11"
+}
+
+test {
+    useJUnitPlatform()
+    finalizedBy 'jacocoTestReport'
+}
+
+dependencies {
+    jacocoAggregation  project(":core")
+    jacocoAggregation  project(":api")
+    jacocoAggregation  project(":admin")
+}
+
+testCodeCoverageReport {
+    reports {
+        csv.required = false
+        xml.required = true
+        html.required = true
+    }
+}
+
 bootJar.enabled = false
