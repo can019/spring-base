@@ -7,8 +7,8 @@ plugins {
 	id 'com.epages.restdocs-api-spec'
 }
 
-apply from: 'gradle/jacoco.gradle'
-
+//apply from: 'gradle/jacoco.gradle'
+apply from: 'support/jacoco/build.gradle'
 allprojects {
 	group = 'com.github.can019.base'
 	version = "${applicationVersion}"
@@ -143,7 +143,6 @@ subprojects {
 	sonarqube {
 		properties {
 			property 'sonar.java.binaries', "${buildDir}/classes"
-			property 'sonar.coverage.jacoco.xmlReportPaths', "${buildDir}/reports/jacoco.xml"
 		}
 	}
 
@@ -158,6 +157,7 @@ sonar {
 		property 'sonar.test.inclusions', '**/*Test.java'
 		property 'sonar.language', 'java'
 		property 'sonar.sourceEncoding', 'UTF-8'
+		property 'sonar.coverage.jacoco.xmlReportPaths', "${buildDir}/reports/jacoco/testCodeCoverageReport/testCodeCoverageReport.xml"
 	}
 }
 
