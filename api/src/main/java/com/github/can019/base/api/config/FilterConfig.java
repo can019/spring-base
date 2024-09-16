@@ -1,6 +1,6 @@
 package com.github.can019.base.api.config;
 
-import com.github.can019.base.core.filter.GenerateThreadContextIdFilter;
+import com.github.can019.base.core.spring.boot.web.filter.GenerateThreadContextIdFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
