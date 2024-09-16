@@ -1,12 +1,9 @@
-package com.github.can019.base.api.config;
+package com.github.can019.base.core.spring.boot.web.filter;
 
-import com.github.can019.base.core.spring.boot.web.filter.GenerateThreadContextIdFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
-@Configuration
-public class FilterConfig {
+public class GeneralThreadContextFilterTestConfig {
 
     @Bean
     public FilterRegistrationBean<GenerateThreadContextIdFilter> registerGlobalThreadContextFilter() {
@@ -15,4 +12,12 @@ public class FilterConfig {
 
         return registrationBean;
     }
+
+    @Bean FilterRegistrationBean<ThreadContextSliceTestCheckFilter> registerThreadContextSliceTestCheckFilter() {
+        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+        registrationBean.setFilter(new ThreadContextSliceTestCheckFilter());
+        return registrationBean;
+    }
+
+
 }
