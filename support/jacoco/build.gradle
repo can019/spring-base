@@ -11,13 +11,23 @@ jacoco {
 
 test {
     useJUnitPlatform()
-    finalizedBy 'jacocoTestReport'
+}
+
+ext {
+    excludedPatterns = [
+            '**/*Application.*',
+            '**/Main.*',
+            '**/config/**',
+            '**/*config*',
+            '**/dto/**',
+            '**/*PointCut*'
+    ]
 }
 
 dependencies {
-    jacocoAggregation  project(":core")
-    jacocoAggregation  project(":api")
-    jacocoAggregation  project(":admin")
+    jacocoAggregation project(":core")
+    jacocoAggregation project(":api")
+    jacocoAggregation project(":admin")
 }
 
 testCodeCoverageReport {
@@ -25,6 +35,12 @@ testCodeCoverageReport {
         csv.required = false
         xml.required = true
         html.required = true
+    }
+
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: excludedPatterns)
+        }))
     }
 }
 
