@@ -181,7 +181,7 @@ tasks.register('aggregateJunitHtmlReports', TestReport){
 	reportOn subprojects*.test
 }
 
-tasks.register('aggregateJunitXmlReports', TestReport){
+tasks.register('aggregateJunitXmlReports', Copy){
 	def xmlReportDir = file("$buildDir/reports/tests/xml")
 	xmlReportDir.mkdirs()
 
@@ -203,23 +203,6 @@ tasks.register('aggregateJunitXmlReports', TestReport){
 			logger.lifecycle("Skipping ${subproject.path}: No test results found.")
 		}
 	}
-
-
-//	def xmlReportDir = file("$buildDir/reports/tests/xml")
-//	xmlReportDir.mkdirs()
-//
-//	subprojects.each { subproject ->
-//		copy {
-//			from subproject.test.reports.junitXml.outputLocation
-//			into xmlReportDir
-//			include "**/*.xml"
-//			// Rename files to avoid conflicts
-//			rename { String fileName ->
-//				def projectPath = subproject.path.substring(1).replace(':', '-')
-//				"${projectPath}-${fileName}"
-//			}
-//		}
-//	}
 }
 
 tasks.register('aggregateJunitTestReports', TestReport) {
