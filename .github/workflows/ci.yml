@@ -33,6 +33,9 @@ jobs:
           cache-read-only: false
           cache-encryption-key: ${{ secrets.GradleEncryptionKey }}
 
+      - name: Test gradle buildSrc srcipts
+        run: gradle :buildSrc:test --configuration-cache --info
+
       - name: Build
         run: gradle build -x check --configuration-cache --info
 

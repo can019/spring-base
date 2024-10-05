@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+    id 'java-gradle-plugin'
+}
+
+group = 'com.github.can019.base'
+version = '0.3.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    implementation 'net.datafaker:datafaker:2.3.1'
+    testImplementation "org.assertj:assertj-core:3.26.3"
+}
+
+gradlePlugin {
+    plugins {
+        githubPagesPlugin {
+            id = 'com.github.can019.base.github-pages'
+            implementationClass = 'com.github.can019.base.gradle.github.GitHubPagesPlugin'
+        }
+    }
+}
+
+test {
+    useJUnitPlatform()
+}

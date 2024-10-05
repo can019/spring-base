@@ -5,6 +5,7 @@ plugins {
 	id 'org.sonarqube'
 	id "org.asciidoctor.jvm.convert"
 	id 'com.epages.restdocs-api-spec'
+	id 'com.github.can019.base.github-pages'
 }
 
 //apply from: 'gradle/jacoco.gradle'
