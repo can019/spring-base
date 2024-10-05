@@ -45,7 +45,8 @@ jobs:
 
       - name: Collect test reports
         run: |
-          gradle aggregateJunitTestReports
+          gradle aggregateJunitHtmlReports
+          gradle aggregateJunitXmlReports
           ls build/reports/tests
 
       - name: Generate jacoco report

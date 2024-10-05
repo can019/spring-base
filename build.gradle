@@ -207,6 +207,7 @@ tasks.register('aggregateJunitXmlReports', Copy){
 }
 
 tasks.register('aggregateJunitTestReports', TestReport) {
+	// aggregateJunitXmlReports가 계속 no source로 됨
 	aggregateJunitXmlReports.mustRunAfter(aggregateJunitHtmlReports)
 	dependsOn(aggregateJunitHtmlReports)
 	dependsOn(aggregateJunitXmlReports)
