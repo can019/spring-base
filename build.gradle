@@ -182,6 +182,7 @@ tasks.register('aggregateJunitHtmlReports', TestReport){
 }
 
 tasks.register('aggregateJunitXmlReports', Copy){
+	onlyIf { true }
 	def xmlReportDir = file("$buildDir/reports/tests/xml")
 	xmlReportDir.mkdirs()
 
