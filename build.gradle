@@ -206,6 +206,7 @@ tasks.register('aggregateJunitXmlReports', Copy){
 }
 
 tasks.register('aggregateJunitTestReports', TestReport) {
+	aggregateJunitXmlReports.mustRunAfter(aggregateJunitHtmlReports)
 	dependsOn(aggregateJunitHtmlReports)
 	dependsOn(aggregateJunitXmlReports)
 }
