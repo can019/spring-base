@@ -61,7 +61,9 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Collect test reports
-        run: gradle aggregateJunitTestReports --configuration-cache
+        run: |
+          gradle aggregateJunitTestReports --configuration-cache
+          ls build/reports/tests
 
       - name: Save test reports
         uses: actions/upload-artifact@v4
