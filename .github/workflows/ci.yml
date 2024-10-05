@@ -47,6 +47,8 @@ jobs:
         run: |
           gradle aggregateJunitXmlReports --configuration-cache
           ls build/reports/tests
+          gradle aggregateJunitHtmlReports --configuration-cache
+          ls build/reports/tests
 
       - name: Generate jacoco report
         run: gradle testCodeCoverageReport -x check --info --configuration-cache
