@@ -61,9 +61,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Collect test reports
-        run: |
-          gradle copyJunitHtmlResults --configuration-cache
-          gradle copyJunitXmlResults --configuration-cache
+        run: gradle aggregateJunitTestReports --configuration-cache
 
       - name: Save test reports
         uses: actions/upload-artifact@v4
@@ -71,7 +69,6 @@ jobs:
           name: reports
           path: |
             build/reports
-            build/test-results
             build/api-spec
             build/docs
             support/jacoco/reports
@@ -105,19 +102,19 @@ jobs:
       - name: publish core test results
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
-          files: './build/test-results/core/TEST-*.xml'
+          files: './build/reports/tests/xml/core-*.xml'
           check_name: 'Core'
 
       - name: publish api test results
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
-          files: './build/test-results/api/TEST-*.xml'
+          files: './build/reports/tests/xml/api-*.xml'
           check_name: 'Api'
 
       - name: publish admin test results
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
-          files: './build/test-results/admin/TEST-*.xml'
+          files: './build/reports/tests/xml/admin-*.xml'
           check_name: 'Admin'
 
   set-github-pages-resource:
