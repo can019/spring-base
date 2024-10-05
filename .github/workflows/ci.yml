@@ -70,6 +70,7 @@ jobs:
           path: |
             build/reports
             build/api-spec
+            !build/reports/configuration-cache
             build/docs
             support/jacoco/reports
 
