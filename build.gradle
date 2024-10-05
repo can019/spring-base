@@ -186,17 +186,40 @@ tasks.register('aggregateJunitXmlReports', TestReport){
 	xmlReportDir.mkdirs()
 
 	subprojects.each { subproject ->
-		copy {
-			from subproject.test.reports.junitXml.outputLocation
-			into xmlReportDir
-			include "**/*.xml"
-			// Rename files to avoid conflicts
-			rename { String fileName ->
-				def projectPath = subproject.path.substring(1).replace(':', '-')
-				"${projectPath}-${fileName}"
+		def testResultDir = subproject.file("${subproject.buildDir}/test-results/test")
+
+		if (testResultDir.exists()) {
+			copy {
+				from subproject.test.reports.junitXml.outputLocation
+				into xmlReportDir
+				include "**/*.xml"
+				// Rename files to avoid conflicts
+				rename { String fileName ->
+					def projectPath = subproject.path.substring(1).replace(':', '-')
+					"${projectPath}-${fileName}"
+				}
 			}
+		} else {
+			logger.lifecycle("Skipping ${subproject.path}: No test results found.")
 		}
 	}
+
+
+//	def xmlReportDir = file("$buildDir/reports/tests/xml")
+//	xmlReportDir.mkdirs()
+//
+//	subprojects.each { subproject ->
+//		copy {
+//			from subproject.test.reports.junitXml.outputLocation
+//			into xmlReportDir
+//			include "**/*.xml"
+//			// Rename files to avoid conflicts
+//			rename { String fileName ->
+//				def projectPath = subproject.path.substring(1).replace(':', '-')
+//				"${projectPath}-${fileName}"
+//			}
+//		}
+//	}
 }
 
 tasks.register('aggregateJunitTestReports', TestReport) {
