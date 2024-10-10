@@ -33,12 +33,21 @@ jobs:
           cache-read-only: false
           cache-encryption-key: ${{ secrets.GradleEncryptionKey }}
 
+      - name: Test gradle buildSrc srcipts
+        run: gradle :buildSrc:test --configuration-cache --info
+
       - name: Build
         run: gradle build -x check --configuration-cache --info
 
       - name: Test
         run: gradle test --configuration-cache --info
         continue-on-error: true
+
+      - name: Collect test reports
+        run: |
+          gradle aggregateJunitHtmlReports
+          gradle aggregateJunitXmlReports
+          ls build/reports/tests
 
       - name: Generate jacoco report
         run: gradle testCodeCoverageReport -x check --info --configuration-cache
@@ -57,19 +66,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-      - name: Collect test reports
-        run: |
-          gradle copyJunitHtmlResults --configuration-cache
-          gradle copyJunitXmlResults --configuration-cache
-
       - name: Save test reports
         uses: actions/upload-artifact@v4
         with:
           name: reports
           path: |
             build/reports
-            build/test-results
             build/api-spec
+            !build/reports/configuration-cache
             build/docs
             support/jacoco/reports
 
@@ -102,19 +106,19 @@ jobs:
       - name: publish core test results
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
-          files: './build/test-results/core/TEST-*.xml'
+          files: './build/reports/tests/xml/core-*.xml'
           check_name: 'Core'
 
       - name: publish api test results
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
-          files: './build/test-results/api/TEST-*.xml'
+          files: './build/reports/tests/xml/api-*.xml'
           check_name: 'Api'
 
       - name: publish admin test results
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
-          files: './build/test-results/admin/TEST-*.xml'
+          files: './build/reports/tests/xml/admin-*.xml'
           check_name: 'Admin'
 
   set-github-pages-resource:

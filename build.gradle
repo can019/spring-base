@@ -5,6 +5,7 @@ plugins {
 	id 'org.sonarqube'
 	id "org.asciidoctor.jvm.convert"
 	id 'com.epages.restdocs-api-spec'
+	id 'com.github.can019.base.github-pages'
 }
 
 //apply from: 'gradle/jacoco.gradle'
@@ -145,7 +146,6 @@ subprojects {
 			property 'sonar.java.binaries', "${buildDir}/classes"
 		}
 	}
-
 }
 
 sonar {
@@ -162,36 +162,6 @@ sonar {
 	}
 }
 
-tasks.register('copyJunitXmlResults', Copy) {
-	subprojects.each { subproject ->
-		def xmlTestResultsDir = file("${subproject.buildDir}/test-results/test")
-
-		if (xmlTestResultsDir.exists()) {
-			from(xmlTestResultsDir) {
-				into "${subproject.name}"
-			}
-		} else {
-			logger.info("No test result xml in submodule [${subproject.name}]")
-		}
-	}
-	into "$buildDir/test-results" // 병합된 결과를 저장할 위치
-}
-
-tasks.register('copyJunitHtmlResults', Copy) {
-	subprojects.each { subproject ->
-		def htmlTestResultsDir = file("${subproject.buildDir}/reports/tests")
-
-		if (htmlTestResultsDir.exists()) {
-			from(htmlTestResultsDir) {
-				into "${subproject.name}"
-			}
-		} else {
-			logger.info("No test result xml in submodule [${subproject.name}]")
-		}
-	}
-	into "$buildDir/reports/submodule/tests" // 병합된 결과를 저장할 위치
-}
-
 tasks.register('copyOpenApi3Results',Copy) {
 	subprojects.each { subproject ->
 		def openApi3ResultsDir = file("${subproject.buildDir}/api-spec/")
@@ -205,6 +175,42 @@ tasks.register('copyOpenApi3Results',Copy) {
 		}
 	}
 	into "$buildDir/api-spec" // 병합된 결과를 저장할
+}
+tasks.register('aggregateJunitHtmlReports', TestReport){
+	destinationDirectory = file("$buildDir/reports/tests")
+	reportOn subprojects*.test
+}
+
+tasks.register('aggregateJunitXmlReports', Copy){
+	onlyIf { true }
+	def xmlReportDir = file("$buildDir/reports/tests/xml")
+	xmlReportDir.mkdirs()
+
+	subprojects.each { subproject ->
+		def testResultDir = subproject.file("${subproject.buildDir}/test-results/test")
+
+		if (testResultDir.exists()) {
+			copy {
+				from subproject.test.reports.junitXml.outputLocation
+				into xmlReportDir
+				include "**/*.xml"
+				// Rename files to avoid conflicts
+				rename { String fileName ->
+					def projectPath = subproject.path.substring(1).replace(':', '-')
+					"${projectPath}-${fileName}"
+				}
+			}
+		} else {
+			logger.lifecycle("Skipping ${subproject.path}: No test results found.")
+		}
+	}
+}
+
+tasks.register('aggregateJunitTestReports', TestReport) {
+	// aggregateJunitXmlReports가 계속 no source로 됨
+	aggregateJunitXmlReports.mustRunAfter(aggregateJunitHtmlReports)
+	dependsOn(aggregateJunitHtmlReports)
+	dependsOn(aggregateJunitXmlReports)
 }
 
 bootJar.enabled = false
